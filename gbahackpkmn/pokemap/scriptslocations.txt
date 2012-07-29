@@ -1,0 +1,7 @@
+'Syntax:
+' $pointername bank map type=[people|sign|script] number
+'Example
+' $helloworld 3 0 person 1   #Set script of person 1 on map 0 of bank 3 to the new pointer
+
+'Pallet town
+$begin 

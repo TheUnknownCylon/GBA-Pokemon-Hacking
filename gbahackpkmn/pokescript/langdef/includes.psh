@@ -1,0 +1,55 @@
+ 
+#fulllog off
+' Includes are made relative to the langdef
+#include commands.psh
+#include texttable.psh
+#include items.psh
+#include stdpoke.psh
+
+
+#define BOXSET_DONTCLOSE &H4 BOXSET
+#define BOXSET_YESNO   &H5 BOXSET
+#define BOXSET_NORMAL    &H6 BOXSET
+
+#define SPRITEMOVE_INDEX  &H8008 movesprite
+#define SPRITEMOVE_NEWXPOS  &H8009 movesprite
+#define SPRITEMOVE_NEWYPOS  &H800A movesprite
+
+#define APPLYMOVE_PLAYER &HFF applymovement
+ 
+#define SPECIAL_CHOOSEPOKEMON   &H9C SPECIAL
+#define SPECIAL_WALLYCATCH  &H9D SPECIAL
+
+#define LASTRESULT &H800D
+#define PERSON_TALKINGTO &H800F
+'-----------------------------------------
+'NEW! Menu item enabling flags!
+'For example, to enable the Party screen,
+'setflag MENU_PARTY
+
+#define MENU_PARTY  &H800   setflag
+#define MENU_POKEDEX  &H801   setflag
+#define MENU_NAVIGATOR  &H802   setflag
+'-----------------------------------------
+
+#define B_TRUE  1
+#define B_FALSE 0 
+#define B_YES   1 
+#define B_NO  0
+#define B_GIRL  1 
+#define B_BOY   0
+#define B_< 0
+#define B_== 1
+#define B_> 2
+#define B_>> 2
+#define B_<= 3
+#define B_>= 4
+#define B_!= 5
+#define JUMP_BAGISFULL &H1A029B 'Warning - Assumes Autobank is ON and you're using Ruby.
+
+#define COL_BLUE 0
+#define COL_RED 1
+#define COL_BLACK 2
+#autobank on
+
+#fulllog on

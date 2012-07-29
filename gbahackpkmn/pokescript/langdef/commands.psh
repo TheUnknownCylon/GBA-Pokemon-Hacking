@@ -1,0 +1,980 @@
+/***************************************************************\
+ -----
+ USAGE
+ -----
+
+ addcmmd <command name> <command code> ' [description]
+  Please note command name must be one word.
+  Commmand code must be one byte value.
+
+ alias <command alias> ' [description]
+  Alias allows you to map commands to new commands.
+
+  Descriptions and comments are ignored here and the
+  alias must read as the completed command line
+  replacing the values with $# (ie $1 $2 etc).
+
+  Must be followed by addparm which acts to list the
+  components of the expanded script.
+
+ addparm <size> [data] ' [description]
+  Addparm must directly follow a command initialized
+  by the addcmmd or alias command. 
+
+  When following addcmmd it lists the size and
+  descriptions of the command paramaters.
+
+  When following alias it lists the commands values
+  and paramaters written in their expanded form,
+  
+  The data option is used to supply details when needed
+  and will override the description. Under an alias it will
+  act like a mask.
+
+
+  <   Descriptions and comments are ignored when creating an alias.   >
+
+ addparm values:
+  Data will not be writen if non-numeric
+  0 = byte 
+  1 = word 
+  2 = dword
+  3 = pointer
+  4 = Indicates the end of a script segment (used in decoding)
+  5 = Enumerate Values - [data] provides a list of elements
+      seperated by commas. The value will be matched up
+      to the element in [data]. If no value is provided the
+      first element is used.
+  6 = Mask
+  7 = Keyword
+  8 = Indicates a pointer that links to textual data
+  9 = Indicates a pointer that links to movement data
+
+    OPTIONS 10+ act as pointers to #RECORDS
+    
+-----------------------------------------------------------------
+Noob-Friendly PkmAdv commands database
+GBA-Rom: Fire Red
+Version: 1.0.3-20071009
+Author: Dabomstew
+-----------------------------------------------------------------
+
+\***************************************************************/
+
+' ----------------
+' COMMAND DATABASE
+' ----------------
+'  Please note. If an item is duplicated on either side then that
+'  side will not be added and only the first item will be used in
+'  decoding/encoding
+'
+'  All values must be in hex
+
+#lock
+addcmmd nop #01 'Does Nothing
+addcmmd end #02 'Ends Script Execution
+addparm 4 ' Decode Command
+addcmmd return #03 'Pop back to calling command
+addparm 4 ' Decode Command
+addcmmd fadeout #37 'Fade out music
+addcmmd fadein #38 'Fade in music
+addcmmd faceplayer #5A 'Turn caller to player
+addcmmd jingle #69 'Plays sound effect
+addcmmd lock #6A 'Locks down the movement of the caller
+addcmmd releaseplayer #6B ' Resumes movement for player but not NPC
+addcmmd release #6c 'Resumes movement for caller
+addcmmd checkgender #A0 'Checks if player is boy or girl and places in LASTRESULT (0x800d)
+addcmmd doweather #A5 'Triggers the weather change set with SetWeather
+addcmmd killscript #0D 'Kill script and erase all script stuff
+
+addcmmd if1 #06 'compare and jump
+addparm 0 '0 false, 1 true
+addparm 3 'Point to jump to
+
+addcmmd if2 #07 'Calling version of if
+addparm 0 '0 false, 1 true
+addparm 3 'Point to call
+
+addcmmd if3 #0A 'jumpstd version of if
+addparm 0 '0 false, 1 true
+addparm 0 'function number to jump to
+
+addcmmd if4 #0B 'callstd version of if
+addparm 0 '0 false, 1 true
+addparm 0 'function to call
+
+addcmmd if #06
+addparm 0
+addparm 3
+
+addcmmd call #04 'Jump to another pointin script. Can be returned to
+addparm 3 'Point to jump to
+
+addcmmd gosub #04 'Jump to another pointin script. Can be returned to
+addparm 3 'Point to jump to
+
+addcmmd goto #05 'Continue execution from another point
+addparm 3 'Point to continue from
+
+addcmmd jump #05 'Continue execution from another point
+addparm 3 'Point to continue from
+
+addcmmd jumpstd #08 'Jump to a built in function
+addparm 0 'Function numder to jump to
+
+addcmmd boxset #09  'Call a built in function
+addparm 0 'Function to call. 1- text no close. 2- yes/no box, 3-text clost on keypress
+
+addcmmd callstd #09 'Call a built in function
+addparm 0 'Function to call. 1- text no close. 2- yes/no box, 3-text clost on keypress
+
+addcmmd setbyte #0E 'set 0x2039288 + 6c to a specific value
+addparm 0 'byte to use
+
+addcmmd loadpointer #0F 'Load a pointer into script RAM so commands can use it
+addparm 0 'Memory bank to use
+addparm 3 'Pointer to load into memory
+
+addcmmd writebytetooffset #11 'Set a byte at an offset to a certain value
+addparm 0 'Value to write
+addparm 3 'Location to write to
+
+addcmmd loadbytefrompointer #12 'Load the byte found at a pointer into ram so other commands can use it
+addparm 0 'Memory bank to use
+addparm 3 'Pointer to byte to load into memory
+
+addcmmd copyscriptbanks #14 'Copy one script to another
+addparm 0 'bank 1
+addparm 0 'bank 2
+
+addcmmd copybyte #15 'Copy value from one place to another
+addparm 3 'Source location
+addparm 3 'Destination location
+
+addcmmd setvar #16 'Set variable a to any value
+addparm 1 'Variable no
+addparm 1 'Value
+
+addcmmd addvar #17 'Add value b to variable A
+addparm 1 'Variable A
+addparm 1 'Value b
+
+addcmmd subvar #18 'Subtract value b from variable A
+addparm 1 'Variable A
+addparm 1 'Value b
+
+addcmmd copyvar #19 'copy variable from var A to var B
+addparm 1 'Variable A
+addparm 1 'Variable B
+
+addcmmd copyvarifnotzero #1A 'Copy var A to var B if var A > 0
+addparm 1 'Variable A
+addparm 1 'Variable B
+
+addcmmd comparevars #1B 'Compare to variables
+addparm 1 'Variable A
+addparm 1 'Variable 2
+
+addcmmd comparevartobyte #1C 'Compares a variable to a byte
+addparm 1 'Variable A
+addparm 0 'Byte Value
+
+addcmmd comparevartofarbyte #1D 'Compare a variable with a byte at some location
+addparm 1 'Variable A
+addparm 3 'Pointer to a byte value to compare A to
+
+
+addcmmd comparefarbytetovar #1E 'Compares a byte at some location to a variable
+addparm 3 'Pointer to a byte value to compare B to
+addparm 1 'Variable B
+
+addcmmd comparefarbytetobyte #1F 'Compares a byte at some location to a byte value
+addparm 3 'Pointer to a byte value to compare with
+addparm 0 'Byte value to compare with
+
+addcmmd comparefarbytetofarbyte #20 'Compares bytes at pointer locations
+addparm 3 'Pointer to a byte value to compare with
+addparm 3 'Pointer to a byte value to compare with
+
+addcmmd compare #21 'Compare variable A to a value
+addparm 1 'Variable A
+addparm 1 'Value to compare A to
+
+addcmmd comparepointer #22 'Compare variable A to variable B
+addparm 1 'Variable A
+addparm 1 'Variable B
+
+addcmmd callasm #23 'Call a custom ASM routine
+addparm 3 'Address of custom ASM routine
+
+addcmmd special #25 'Call a special event
+addparm 1 'Number of special command to call
+
+addcmmd special2 #26 'Like Special, but can store a returned value
+addparm 1 'Variable to store returned value in
+addparm 1 'Special event to call
+
+addcmmd pause #28 'Pause script execution,1
+addparm 1 'delay period
+
+addcmmd setflag #29 'Set a flag value to control values stored in game
+addparm 1 'Flag index
+
+addcmmd clearflag #2A 'Clear a flag,1
+addparm 1 'Flag index
+
+addcmmd checkflag #2B 'Check the value of a flag and pu result in LASTRESULT
+addparm 1 'Flag index
+
+addcmmd playsfx #2F
+addparm 1 'entry in music/sounds table
+
+addcmmd cry #30 'Play back a pokemon cry
+addparm 0 'bank no
+addparm 1 'Pokemon Species
+
+addcmmd fanfare #31 'Play background music
+addparm 1 'Song # to play
+
+addcmmd waitfanfare #32 'Wait for the fanfare to finish
+addparm 1 'Song number
+
+addcmmd playsound #33 'switch background music
+addparm 1 'Song number to play
+
+addcmmd fadedefault #34 'Fade music back to map song
+
+addcmmd fadesound #35 'Fade into another song
+addparm 1 'Song number
+
+addcmmd warp #39 'Warp to another level
+addparm 0 'Bank to warp to
+addparm 0 'Level to warp to
+addparm 0 'Exit to warp to
+
+addcmmd countpokemon #43
+
+addcmmd Raw44 #44
+addparm 1
+addparm 1
+
+addcmmd RemoveItem #45 ' Remove Item
+addparm 1 ' Item Number
+addparm 1 ' Number of Items
+
+addcmmd Raw46 #46
+addparm 1 
+addparm 1
+
+addcmmd checkitem #47 'Check if the player has an item
+addparm 1 'Item to check for
+addparm 1 'quantity
+
+addcmmd applymovement #4F 'Applyies movement at a pointer location to a sprite
+addparm 1 'Sprite to control
+addparm 9 'Pointer to the movement data
+
+addcmmd pausemove #51 'Wait for an event to finish
+addparm 1 'Zero for applymovement
+
+addcmmd removesprite #53
+addparm 1 'people no
+
+addcmmd showsprite #55
+addparm 1 'people no
+
+addcmmd movesprite #57 'Move a sprite to the specified location
+addparm 1 'Sprite to move
+addparm 1 'x co-ordinates to move to
+addparm 1 'y co-ordinates to move to
+
+addcmmd trainerbattle #5c
+addparm 0 bind(1,4)textra 'kind of battle
+addparm 1 'Battle no to start
+addparm 1 mask(#0000) 'Filler
+addparm 8 'text Pointer to challenge text
+addparm 8 'text Pointer to defeat text
+
+addcmmd textra #5C
+addparm 8 'text Pointer to either denial or ?
+
+addcmmd checktrainer #60
+addparm 1 'Trainers Pet ID???
+
+addcmmd disabletrainer #61
+addparm 1 'Trainers Pet ID????
+
+addcmmd enabletrainer #62
+addparm 1 'Trainers Pet ID???
+
+addcmmd changeobjposition #63
+addparm 1 'Sprite to move
+addparm 1 'x co-ordinates to move to
+addparm 1 'y co-ordinates to move to
+
+addcmmd spritebehave #65
+addparm 1 'Sprite
+addparm 0 'behave id
+
+addcmmd waitmsgbox2 #66
+
+addcmmd msgbox2 #67
+addparm 8 'pointer to text
+
+addcmmd closeonkeypress #68 'see HackMew post on PC for reason of change
+
+addcmmd multi #6F 'Put up a list of choices for the player to make
+addparm 0 'Left co-ordinate for window
+addparm 0 'Top coordinate to draw the window
+addparm 0 'choice list # to use
+addparm 0 'Determines wether you can use the B button to cancel
+
+addcmmd showpokepic #75
+addparm 1 'Variable containing pokemon. ID
+addparm 0 'X-pos
+addparm 0 'Y-pos
+addcmmd hidepokepic #76
+
+addcmmd addpokemon #79 'Gives the player a pokemon
+addparm 1 'Pokemon species to give
+addparm 0 'Level of pokemon
+addparm 1 'Item # to be held
+
+addcmmd checkmove #7C
+addparm 1 'move id
+
+addcmmd namedisplay #7D
+addparm 0 'bank of names
+addparm 1 'name number
+
+addcmmd partynamedisplay #7F
+addparm 0 'slot as in namedisplay
+addparm 1 'var, default LASTRESULT
+
+addcmmd itemnamedisplay #80
+addparm 0 'slot, blah blah blah
+addparm 1 'item id - check to see if this uses < or not
+
+addcmmd movedisplay #82
+addparm 0 'slot as in namedisplay etc
+addparm 1 'move id, not variable
+
+addcmmd vardisplay #83
+addparm 0 'position no, 0 or 1, 2
+addparm 1 'variable
+
+addcmmd storetext #85 'thanks to "score_under" from PC for this definition
+addparm 0 'slot
+addparm 8 'pointer to text
+
+addcmmd pokemart #86 'Opens the pokemart shop system
+addparm 3 'Pointer to the item/price list
+
+addcmmd buymart #87 'Opens the shop system with buy only (RSE exclusive, acts as normal mart in FRLG)
+addparm 3 'Pointer to the item list
+
+addcmmd rand #8F
+addparm 1 'amount to random up to. will generate random number -> 800d from 0 to (amount-1)
+
+addcmmd fadescreen #97 'Fades the screan in or out
+addparm 0 '0 fade in, 1 fade out
+
+addcmmd PlayAnimation #9C
+addparm 1 '? use 0x25
+addparm 0 '? use 0x27
+
+addcmmd StorePartySlotForAnimation #9D
+addparm 0 '?
+addparm 1 'variable containing animation
+
+addcmmd setmaptile #A2 'Sets a tile on the map. You must somehow refresh that part, can be done by scrolling out of view and back in or by calling this command from a Level Script
+addparm 1 'X coordinate
+addparm 1 'Y coordinate
+addparm 1 'Tile number
+addparm 1 'Tile attributes
+
+addcmmd setweather #A4 'Prepare to fade the weather into the type specified,1
+addparm 0 'New weather value
+
+addcmmd opendoor #AC
+addparm 1 'x-pos of door to open
+addparm 1 'y-pos
+
+addcmmd closedoor #AD
+addparm 1 'x-pos of door to close
+addparm 1 'y-pos
+
+addcmmd doorflush #AE 'always called directly after "opendoor" and "closedoor", waits for door animation to finish
+
+addcmmd getcoins #B3
+addparm 1 'variable to store current coin amount in
+
+addcmmd givecoins #B4
+addparm 1 'amount of coins to give to player
+
+addcmmd takecoins #B5
+addparm 1 'variable in which the amount of coins to take away is stored
+
+addcmmd setmsgcolor #C7
+addparm 0 '0=blue 1=red 2+=black
+
+addcmmd boxtypesign #CA 'changes the msgbox appearance to that of a sign
+addcmmd boxtypeperson #CB 'changes the msgbox appearance to normal, the one where you're talking to someone
+
+addcmmd pokenav #DF 'emerald only, equivalent to "msgbox2" so call "waitmsgbox2" after this.
+addparm 8 'ptr to text
+
+
+' ------------------
+'  NOTE
+' ------------------
+' Below this are commands used to make other commands work. As such, it is recommended not to modify them.
+
+addcmmd hashpoke #7D
+addparm 1
+addparm 0
+
+addcmmd Battle #B6 ' Commence a wild battle
+addparm 1     ' pokemon race
+addparm 0     ' pokemon lavel
+
+addcmmd HashNamePoke #27
+addparm 2
+addparm 2
+addparm 2
+addparm 2
+addparm 2
+addparm 0
+
+addcmmd gmhandler #90
+addparm 2
+addparm 0
+
+addcmmd tmhandler #91
+addparm 2
+addparm 0
+
+addcmmd cmhandler #92
+addparm 2
+addparm 0
+
+addcmmd egghandler #7A
+addparm 1
+
+addcmmd wlhandler #39
+addparm 0
+addparm 0
+addparm 0
+addparm 1
+addparm 1
+
+/************\
+| CONSTRUCTS |
+\------------ */
+
+alias givepokemon $1 $2 $3 ' Give pokemon to Player
+addparm 7 copyvar
+addparm 1 mask(#8004)
+addparm 1 mask(#800D)
+addparm 7 addpokemon
+addparm 1     'Pokemon species to give
+addparm 0     'Level of pokemon
+addparm 1     'Item # to be held
+addparm 2 mask(#00000000)
+addparm 2 mask(#00000000)
+addparm 7 hashpoke
+addparm 1 mask(#1901)
+addparm 0 mask(#00)
+addparm 2 mask(#00000000)
+addparm 2 mask(#00000000)
+
+alias namepokemon ' Name a pokemon identified with Selectpokemon or givepokemon
+addparm 7 fadescreen
+addparm 0 mask(#01)
+addparm 7 special
+addparm 1 mask(#009E)
+addparm 7 HashNamePoke
+addparm 2 mask(#04008003)
+addparm 2 mask(#01743180)
+addparm 2 mask(#1A149867)
+addparm 2 mask(#45326608)
+addparm 2 mask(#00018004)
+addparm 0 mask(#6b)
+
+alias healpokemon 'grabmove; gosub 0x1a6c26
+addparm 0 mask(#68)
+addparm 0 mask(#04)
+addparm 0 mask(#26)
+addparm 0 mask(#6c)
+addparm 0 mask(#1a)
+addparm 0 mask(#08)
+
+alias selectpokemon ' Display "Select pokemon" dialog
+addparm 7 special
+addparm 0 mask(#73)
+addparm 7 copyvar
+addparm 1 mask(#800a)
+addparm 1 mask(#8004)
+
+alias wildbattle $1 $2 $3 'Commence Wild Battle
+addparm 7 Battle  ' Wildbattle
+addparm 1     ' pokemon race
+addparm 0     ' pokemon lavel
+addparm 1 mask(#0000)
+addparm 7 special
+addparm 1 select(#0143,#0137,#0138,#0139) 'Battle Type
+
+alias giveitem $1 $2 $3   ' Give item to player
+addparm 7 copyvarifnotzero  ' Item to Give
+addparm 1 mask(#8000)   
+addparm 1 '$Val   ' $Val
+addparm 7 copyvarifnotzero  ' No of Items
+addparm 1 mask(#8001)
+addparm 1 '$Val
+addparm 7 callstd   ' Display 'Obtained' or 'Found'
+addparm 0 select(#00,#01) '0: obtained, 1: found
+
+alias msgbox $1   ' loadpointer for use in text
+addparm 7 loadpointer 
+addparm 0 mask(#00)
+addparm 8     ' text offset
+
+alias message $1  ' loadpointer for use in text
+addparm 7 loadpointer 
+addparm 0 mask(#00)
+addparm 8     ' text offset
+
+alias frmart $1
+addparm 0 mask(#67)
+addparm 7 writebytetooffset
+addparm 0 mask(#62)
+addparm 0 mask(#1a)
+addparm 0 mask(#08)
+addparm 0 mask(#66)
+addparm 0 mask(#8e)
+addparm 7 pokemart
+addparm 3 'Pointer to pokemart data
+
+alias givemoney $1
+addparm 7 gmhandler
+addparm 2 'Money amt
+addparm 0 mask(#00)
+
+alias takemoney $1
+addparm 7 tmhandler
+addparm 2 'Money amt
+addparm 0 mask(#00)
+
+alias checkmoney $1
+addparm 7 cmhandler
+addparm 2 'Money amt
+addparm 0 mask(#00)
+
+alias showmoneybox 'show the current money in a box a la safari zone etc
+addparm 0 mask(#93)
+addparm 0 mask(#00)
+addparm 0 mask(#00)
+addparm 0 mask(#00)
+
+alias hidemoneybox 'kill the money box shown by #93
+addparm 0 mask(#94)
+addparm 1 mask(#0000)
+
+alias updatemoneybox
+addparm 0 mask(#95)
+addparm 0 mask(#00)
+addparm 0 mask(#00)
+addparm 0 mask(#00)
+
+alias getrunningshoes
+addparm 7 setflag
+addparm 1 mask(#082f)
+
+alias getpokemonmenu
+addparm 7 setflag
+addparm 1 mask(#0828)
+
+alias getpokedex
+addparm 7 setflag
+addparm 1 mask(#0829)
+
+alias getnationaldex
+addparm 7 special
+addparm 1 mask(#016F)
+
+alias starterpokemon $1
+addparm 7 copyvar
+addparm 1 mask(#8004)
+addparm 1 mask(#800D)
+addparm 7 addpokemon
+addparm 1     'Pokemon species to give
+addparm 0 mask(#05)     'Level of pokemon
+addparm 1 mask(#0000)   'Item held
+addparm 2 mask(#00000000)
+addparm 2 mask(#00000000)
+addparm 7 hashpoke
+addparm 1 mask(#1901)
+addparm 0 mask(#00)
+addparm 2 mask(#00000000)
+addparm 2 mask(#00000000)
+
+alias vanish $1
+addparm 7 removesprite
+addparm 1
+
+alias giveegg $1
+addparm 2 mask(#67007231)
+addparm 2 mask(#0816C2EA)
+addparm 1 mask(#6632)
+addparm 7 egghandler
+addparm 1   'pokemon to be given
+
+alias checkpokemon $1
+addparm 7 setvar
+addparm 1 mask(#4036)
+addparm 1 'pokemon to check for
+addparm 7 copyvar
+addparm 1 mask(#8004)
+addparm 1 mask(#4036)
+addparm 7 special2
+addparm 1 mask(#800D)
+addparm 1 mask(#017C)
+
+alias getname $1
+addparm 7 setvar
+addparm 1 mask(#800D)
+addparm 1 'pokemon id
+addparm 0 mask(#7D) 'cmd
+addparm 0 mask(#00)
+addparm 1 mask(#800D)
+
+alias warplocation $1 $2 $3 $4 'Warp to another level at a specific XY point
+addparm 7 wlhandler
+addparm 0 'Bank to warp to
+addparm 0 'Level to warp to
+addparm 0 mask(#FF)
+addparm 1 'x-pos
+addparm 1 'y-pos
+
+alias showmsg $1    ' loadpointer for use in text
+addparm 7 loadpointer 
+addparm 0 mask(#00)
+addparm 8
+addparm 7 callstd
+addparm 0 mask(#06)
+
+alias simplenpc $1    ' loadpointer for use in text
+addparm 7 lock
+addparm 7 faceplayer
+addparm 7 loadpointer 
+addparm 0 mask(#00)
+addparm 8
+addparm 7 callstd
+addparm 0 mask(#06)
+addparm 7 release
+addparm 7 end
+
+alias simplesign $1   ' loadpointer for use in text
+addparm 7 loadpointer
+addparm 0 mask(#00)
+addparm 8
+addparm 7 callstd
+addparm 0 mask(#06)
+addparm 7 release
+addparm 7 end
+
+alias showmsgstatic $1    ' loadpointer for use in text
+addparm 7 loadpointer 
+addparm 0 mask(#00)
+addparm 8
+addparm 7 callstd
+addparm 0 mask(#04)
+
+alias question $1
+addparm 7 loadpointer
+addparm 0 mask(#00)
+addparm 8
+addparm 7 callstd
+addparm 0 mask(#05)
+
+alias simpletakecoins $1
+addparm 7 setvar
+addparm 1 mask(#4002)
+addparm 1 'coins to take
+addparm 7 takecoins
+addparm 1 mask(#4002)
+
+'
+' If Construct
+'
+' DETERMINES IF THE RESULTS FROM COMPARE RETURNED
+' GREATER, LOWER, EQUAL OR NOT EQUAL
+' THEN JUMPS TO OR CALLS A POINTER ACCORDINGLY.
+'
+'
+alias if $1 goto $2 ' if1
+addparm 7 if1     
+addparm 0     ' $Val
+addparm 3     ' $Val
+
+alias if $1 jump $2 ' if1
+addparm 7 if1     
+addparm 0     '$Val
+addparm 3     '$Val
+
+alias if $1 call $2 ' if2
+addparm 7 if2     
+addparm 0     '$Val
+addparm 3     '$Val
+
+alias if $1 gosub $2  ' if2
+addparm 7 if2     
+addparm 0     '$Val
+addparm 3     '$Val
+
+alias if $1 jumpstd $2 'if3
+addparm 7 if3
+addparm 0 '$Val
+addparm 0 '$Val2
+
+alias if $1 callstd $2 'if4
+addparm 7 if4
+addparm 0 '$Val
+addparm 0 '$Val2
+
+alias if $1 boxset $2 'if4
+addparm 7 if4
+addparm 0 '$Val
+addparm 0 '$Val2
+
+alias TIF $1
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+alias FIF $1
+addparm 7 if1
+addparm 0 mask(#00)
+addparm 3
+
+alias ifvar $1 equal $2 goto $3
+addparm 7 compare
+addparm 1 'variable
+addparm 1 'word
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+alias ifvar $1 equal $2 jump $3
+addparm 7 compare
+addparm 1 'variable
+addparm 1 'word
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+alias ifvar $1 equal $2 gosub $3
+addparm 7 compare
+addparm 1 'variable
+addparm 1 'word
+addparm 7 if2
+addparm 0 mask(#01)
+addparm 3
+
+alias ifvar $1 equal $2 call $3
+addparm 7 compare
+addparm 1 'variable
+addparm 1 'word
+addparm 7 if2
+addparm 0 mask(#01)
+addparm 3
+
+alias ifflag $1 jump $2
+addparm 7 checkflag
+addparm 1 'flag
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+alias ifflag $1 goto $2
+addparm 7 checkflag
+addparm 1 'flag
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+alias ifflag $1 gosub $2
+addparm 7 checkflag
+addparm 1 'flag
+addparm 7 if2
+addparm 0 mask(#01)
+addparm 3
+
+alias ifflag $1 call $2
+addparm 7 checkflag
+addparm 1 'flag
+addparm 7 if2
+addparm 0 mask(#01)
+addparm 3
+
+alias ifboy goto $1
+addparm 7 checkgender
+addparm 7 compare
+addparm 1 mask(#800D)
+addparm 1 mask(#0000)
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+alias ifboy jump $1
+addparm 7 checkgender
+addparm 7 compare
+addparm 1 mask(#800D)
+addparm 1 mask(#0000)
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+alias ifboy gosub $1
+addparm 7 checkgender
+addparm 7 compare
+addparm 1 mask(#800D)
+addparm 1 mask(#0000)
+addparm 7 if2
+addparm 0 mask(#01)
+addparm 3
+
+alias ifboy call $1
+addparm 7 checkgender
+addparm 7 compare
+addparm 1 mask(#800D)
+addparm 1 mask(#0000)
+addparm 7 if2
+addparm 0 mask(#01)
+addparm 3
+
+alias ifgirl goto $1
+addparm 7 checkgender
+addparm 7 compare
+addparm 1 mask(#800D)
+addparm 1 mask(#0001)
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+alias ifgirl jump $1
+addparm 7 checkgender
+addparm 7 compare
+addparm 1 mask(#800D)
+addparm 1 mask(#0001)
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+alias ifgirl gosub $1
+addparm 7 checkgender
+addparm 7 compare
+addparm 1 mask(#800D)
+addparm 1 mask(#0001)
+addparm 7 if2
+addparm 0 mask(#01)
+addparm 3
+
+alias ifgirl call $1
+addparm 7 checkgender
+addparm 7 compare
+addparm 1 mask(#800D)
+addparm 1 mask(#0001)
+addparm 7 if2
+addparm 0 mask(#01)
+addparm 3
+
+alias ifpartyfull jump $1
+addparm 7 countpokemon
+addparm 7 compare
+addparm 1 mask(#800D)
+addparm 1 mask(#0006)
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+alias ifpartyfull goto $1
+addparm 7 countpokemon
+addparm 7 compare
+addparm 1 mask(#800D)
+addparm 1 mask(#0006)
+addparm 7 if1
+addparm 0 mask(#01)
+addparm 3
+
+'
+' Compare Constructs (Geeze there's a lot of them!)
+'
+' compares two values and puts the result of the comparison
+' in <lastresult>
+'
+alias   compare var $1 var $2 'Compare to variables
+addparm 7 comparevars
+addparm 1 'Variable A
+addparm 1 'Variable 2
+
+alias  compare var $1 byte $2 'Compares a variable to a byte
+addparm 7 comparevartobyte
+addparm 1 'Variable A
+addparm 0 'Byte Value
+
+alias  compare var $1 word $2 'Compares a variable to a value
+addparm 7 compare
+addparm 1 'Variable A
+addparm 1 'word Value
+
+alias  compare var $1 val $2 'Compares a variable to a value
+addparm 7 compare
+addparm 1 'Variable A
+addparm 1 'word Value
+
+alias  compare var $1 int $2 'Compares a variable to a value
+addparm 7 compare
+addparm 1 'Variable A
+addparm 1 'word Value
+
+alias   compare var $1 farbyte $2 'Compare a variable with a byte at some location
+addparm 7 comparevartofarbyte
+addparm 1 'Variable A
+addparm 3 'Pointer to a byte value to compare A to
+
+alias   compare var $1 pointer $2 'Compare a variable with a byte at some location
+addparm 7 comparevartofarbyte
+addparm 1 'Variable A
+addparm 3 'Pointer to a byte value to compare A to
+
+alias   compare farbyte $1 var $2 'Compares a byte at some location to a variable
+addparm 7 comparefarbytetovar
+addparm 3 'Pointer to a byte value to compare B to
+addparm 1 'Variable B
+
+alias   compare farbyte $1 byte $2 'Compares a byte at some location to a byte value
+addparm 7  comparefarbytetobyte
+addparm 3 'Pointer to a byte value to compare with
+addparm 0 'Byte value to compare with
+
+alias   compare farbyte $1 farbyte $2 'Compares bytes at pointer locations
+addparm 7 comparefarbytetofarbyte
+addparm 3 'Pointer to a byte value to compare with
+addparm 3 'Pointer to a byte value to compare with
+
+alias   compare pointer $1 var $2 'Compares a byte at some location to a variable
+addparm 7 comparefarbytetovar
+addparm 3 'Pointer to a byte value to compare B to
+addparm 1 'Variable B
+
+alias   compare pointer $1 byte $2 'Compares a byte at some location to a byte value
+addparm 7  comparefarbytetobyte
+addparm 3 'Pointer to a byte value to compare with
+addparm 0 'Byte value to compare with
+
+alias   compare pointer $1 pointer $2 'Compares bytes at pointer locations
+addparm 7 comparefarbytetofarbyte
+addparm 3 'Pointer to a byte value to compare with
+addparm 3 'Pointer to a byte value to compare with
+#unlock
