@@ -22,9 +22,9 @@ class BBlock():
     return self.value
     
   @staticmethod
-  def fromBytes(bytearray):
+  def fromBytes(barray):
     x = BBlock()
-    for b in bytearray:
+    for b in barray:
       x.addByte(b)
     return x
     

@@ -1,10 +1,6 @@
-
-import json
-from array import array
-
 from gbahack.music import RomMusicReader
 from gbahack.music import RomMusicWriter
-import pokesuitelib.filesystem as fs
+import gbahack.tools.filesystem as fs
 
 # The following documentation document the GBA-music code. 
 # Note that is information I gathered myself from inspecting a ROM,
@@ -43,7 +39,6 @@ class RomMusic():
     fs.removedirs(romdir)
     fs.makedirs(romdir)
     
-    songtable = reader.songtable
     for songindex in range(0, len(reader.songtable)):
       songdir = "%s/%d" %(romdir,songindex)
       song = reader.getSong(songindex)

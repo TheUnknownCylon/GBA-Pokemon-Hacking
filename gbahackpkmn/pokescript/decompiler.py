@@ -28,25 +28,25 @@ class DecompileJob():
     
     while len(self.pointerqueue) > 0:
       pointer = list(self.pointerqueue.keys())[0]
-      type = self.pointerqueue.pop(pointer)
+      ptype = self.pointerqueue.pop(pointer)
       
       #Do not decompile already decompiled routines
       if pointer in self.routines: continue
 
-      if type == DecompileTypes.POKESCRIPT:
+      if ptype == DecompileTypes.POKESCRIPT:
         routine = self.decompileRoutine(pointer)
-      elif type == DecompileTypes.STRING:
+      elif ptype == DecompileTypes.STRING:
         routine = self.decompileString(pointer)
-      elif type == DecompileTypes.MOVEMENT:
+      elif ptype == DecompileTypes.MOVEMENT:
         routine = self.decompileMovement(pointer)
       else: raise Exception("BUG! No such routine type.")
 
       self.routines[pointer] = routine
     
     
-  def queue(self, pointer, type):
+  def queue(self, pointer, ptype):
     '''Add a script pointer to the queue of scripts to be decompiled.'''
-    self.pointerqueue[pointer] = type
+    self.pointerqueue[pointer] = ptype
  
  
   def decompileString(self, pointer):

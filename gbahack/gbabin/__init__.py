@@ -114,7 +114,7 @@ class RawFile():
   def trunc(self, pointer, length):
     # I think there is a nicer way to do this
     c = []
-    for i in range(0, length):
+    for _ in range(0, length):
       c.append(0xff)
     self.write(pointer, BBlock.fromBytes(c))
     

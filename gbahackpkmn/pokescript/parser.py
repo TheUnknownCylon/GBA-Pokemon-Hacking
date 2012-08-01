@@ -1,7 +1,6 @@
-import pprint
 import struct
 from array import array
-from gbahackpkmn.pokescript.lang import ScriptLang, Command, ParamType, toint
+from gbahackpkmn.pokescript.lang import toint
 
 
 class Routine():
@@ -37,7 +36,7 @@ class PokeScript():
     try:
       self.parsefile(filename)    #Parse the input
       self.validatePointers() #Make sure that all pointerrefs are correct
-    except Exception as e:
+    except Exception:
       raise
       #print(" Parsing failed: "+str(e))
     
@@ -81,13 +80,14 @@ class PokeScript():
   def parselines(self, lines, routine):
     for line in lines:
       try: routine = self.parseline(line, routine)
-      except Exception as e: raise
+      except Exception: raise
       #  raise Exception("Error in line:\n %s %s\n "%(line, str(e)))
     return routine
     
   def parseline(self, line, routine):
     '''Parses a line of the script. THe method returns the routine object
     parsing is doing (from) now (on).'''
+    print(">> %s"%line)
     linenorm = self.normalizeline(line)
     if len(linenorm) == 0: return routine
 
@@ -109,8 +109,8 @@ class PokeScript():
         
     if command == "#inline":   #inline $Variable 1 = Hi I'm John!
       offset = args[0]
-      bank   = args[1]
-      type   = args[2]
+      #bank   = args[1]
+      ctype   = args[2]
       
       if offset[0] == "#": raise Exception("Incorrect offset: only $vardef is supported.")
       if offset[0] != "$": raise Exception("Offset expected.")
@@ -118,14 +118,14 @@ class PokeScript():
       
       #TODO: Okay, this can give bugs if using = or ; in one of the arguments
       innerroutine = self.routineDef(offset[1:])
-      if type == "=": #Rewrite all after = to a String
+      if ctype == "=": #Rewrite all after = to a String
         string = line.split("=", 1)[1]
         innerroutine.addBytes(self.langdef.encodeText(string))
-      elif type == ";": #Rewrite rest as a normal command
+      elif ctype == ";": #Rewrite rest as a normal command
         string = line.split(";", 1)[1]
         self.parseline(string, innerroutine)
       else:
-        raise Exception("= or ; excpected, got %s."%type)
+        raise Exception("= or ; excpected, got %s."%ctype)
       
       #All done, inline is over. Continue with normal param
       return routine

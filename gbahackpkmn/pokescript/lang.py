@@ -21,7 +21,6 @@
 #  -  addcmmd <command name> <command code> ' [description]
 #  -  alias <command alias> ' [description]
 #  -  addparm <size> [data] ' [description]
-import pprint
 
 import os
 import sys
@@ -343,7 +342,7 @@ class ScriptLang():
   
   def decodeChar(self, char):
     if char == 0x00: return " "  #special case
-    if char in self.texthashinv: return "[%s]"%texthashinv(char)
+    if char in self.texthashinv: return "[%s]"%self.texthashinv(char)
     try: return self.textinv[char]
     except: raise Exception("Can not decode text char %X (not defined)."%char)
     

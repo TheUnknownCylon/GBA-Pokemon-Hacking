@@ -64,7 +64,7 @@ class SReader():
     
     try:
       for line in open(file, 'r'): self._handle(line)
-    except Exception as e: raise
+    except Exception: raise
     finally: os.chdir(mypath)
       
   def getGlobalKeys(self):
@@ -143,7 +143,7 @@ class SReader():
     values = list(map(lambda x: x.strip(), param.split(",")))
     for value in values:
       try: self.parsefile(value[1:-1])
-      except IOError as e: raise IOError("Could not no find or open include %s"%value)
+      except IOError: raise IOError("Could not no find or open include %s"%value)
     
   def _handle_global(self, param):
     values = list(map(lambda x: x.strip(), param.split(",")))

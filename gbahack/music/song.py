@@ -2,8 +2,9 @@ import json
 import os
 from array import array
 
-import pokesuitelib.filesystem as fs
+import gbahack.tools.filesystem as fs
 from gbamusicmanager.s import SReader
+from gbahack.music import RomMusicReader #Hmm, cyclic dependency :(
 
 class Song():
   '''Representation of a song. A song is simply the voice group, and
@@ -68,9 +69,6 @@ class Song():
   
   @staticmethod
   def loadFromS(file):
-    from musicreader import RomMusicReader #Hmm, cyclic dependency :(
-    import tempfile
-    
     '''Loads a song from a s-file.'''
     #First convert the .s file to a ROM-file with all tracks
     s = SReader("/home/remco/downloads/Sappy/Mid2Agb/Dfleon.s")

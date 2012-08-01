@@ -1,7 +1,5 @@
 
-from array import array
-
-from gbabin import BBlock
+from gbahack.gbabin import BBlock
 from gbamusicmanager.musicreader import RomMusicReader
 
 class RomMusicWriter():
@@ -23,7 +21,6 @@ class RomMusicWriter():
   def writeSong(self, index, song):
     '''Writes a song to the ROM, if there is already a song
     at the given index, this song will be overwritten.'''
-    table = self.reader.songtable
     rom = self.rom
     
     voicegroup = song.voicegroup

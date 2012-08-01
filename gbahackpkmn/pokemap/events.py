@@ -16,59 +16,59 @@ class PokeMapEvents(DataStruct):
     self.rom = rom
     self.loadValues(rom, p)
 
-  def get(self, type, id):
-    if type == "person": return self.getPerson(id)
-    if type == "sign"  : return self.getSign(id)
-    if type == "script": return self.getScript(id)
-    raise Exception("Unknown type")
+  def get(self, etype, eid):
+    if etype == "person": return self.getPerson(eid)
+    if etype == "sign"  : return self.getSign(eid)
+    if etype == "script": return self.getScript(eid)
+    raise Exception("Unknown etype")
  
-  def write(self, type, id, script):
-    if type == "person": return self.writePerson(id, script)
-    if type == "sign"  : return self.writeSign(id, script)
-    if type == "script": return self.writeScript(id, script)
+  def write(self, etype, eid, script):
+    if etype == "person": return self.writePerson(eid, script)
+    if etype == "sign"  : return self.writeSign(eid, script)
+    if etype == "script": return self.writeScript(eid, script)
     raise Exception("Unknown type")
     
   ## Thats the way (a ha a ha), I don't like it :(
   ## SCRIPT
-  def scriptpointer(self, id):
-    if id > self.numscripts:
+  def scriptpointer(self, eid):
+    if eid > self.numscripts:
       raise Exception("Script index too high, there are only %d scripts on this map."%self.numscripts)
-    return self.pointerScripts + id * PokeMapEventScript.size()
+    return self.pointerScripts + eid * PokeMapEventScript.size()
     
-  def getScript(self, id):
-    scriptpointer = self.scriptpointer(id)
+  def getScript(self, eid):
+    scriptpointer = self.scriptpointer(eid)
     return PokeMapEventScript.loadFromRom(self.rom, scriptpointer)
     
-  def writeScript(self, id, script):
-    scriptpointer = self.scriptpointer(id)
+  def writeScript(self, eid, script):
+    scriptpointer = self.scriptpointer(eid)
     self.rom.writeArray(scriptpointer, script.toArray())
 
   ## PERSON
-  def personpointer(self, id):
-    if id > self.numpersons:
+  def personpointer(self, eid):
+    if eid > self.numpersons:
       raise Exception("Person index too high, there are only %d persons on this map."%self.numscripts)
-    return self.pointerPersons + id * PokeMapEventPerson.size()
+    return self.pointerPersons + eid * PokeMapEventPerson.size()
     
-  def getPerson(self, id):
-    p = self.personpointer(id)
+  def getPerson(self, eid):
+    p = self.personpointer(eid)
     return PokeMapEventPerson.loadFromRom(self.rom, p)
     
-  def writePerson(self, id, person):
-    p = self.personpointer(id)
+  def writePerson(self, eid, person):
+    p = self.personpointer(eid)
     self.rom.writeArray(p, person.toArray())
 
   ## SIGN
-  def signpointer(self, id):
-    if id > self.numsigns:
+  def signpointer(self, eid):
+    if eid > self.numsigns:
       raise Exception("Sign index too high, there are only %d signs on this map."%self.numscripts)
-    return self.pointerSigns + id * PokeMapEventSignpost.size()
+    return self.pointerSigns + eid * PokeMapEventSignpost.size()
     
-  def getSign(self, id):
-    p = self.signpointer(id)
+  def getSign(self, eid):
+    p = self.signpointer(eid)
     return PokeMapEventSignpost.loadFromRom(self.rom, p)
     
-  def writeSign(self, id, sign):
-    p = self.signpointer(id)
+  def writeSign(self, eid, sign):
+    p = self.signpointer(eid)
     self.rom.writeArray(p, sign.toArray())
 
     
@@ -83,7 +83,7 @@ class PokeMapEventPerson(DataStruct):
     (RT.byte, "talklvl"), (RT.byte, "movementtype"), (RT.byte, "movementid"), (RT.byte, "uu1"),
     (RT.byte, "trainer"), (RT.byte, "uu2"), (RT.short, "radius"),
     (RT.pointer, "scriptpointer"),
-    (RT.short, "id"), (RT.short, "uu3")
+    (RT.short, "eid"), (RT.short, "uu3")
   ]
     
 class PokeMapEventScript(DataStruct):

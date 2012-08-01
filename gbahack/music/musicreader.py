@@ -60,7 +60,7 @@ class RomMusicReader():
     
     song = SongRom(headerpointer, voicegroup, numblks, priority, reverb)
     
-    for track in range(0, trackscount):
+    for _ in range(0, trackscount):
       p, tpointer = self.rom.readPointer(p)
       song.addTrack(self.getTrack(tpointer), tpointer)
     

@@ -17,7 +17,7 @@ class PokeMapManager():
     # ended with an end of list.
     # TODO: Maybe the 02 00 00 00 00 00 00 00 at the end is the end of list
     #       Then a warning can be raised if searching too far.
-    p, bankpointer = self.rom.readPointer(self.tablepointer + 4*bankid)
+    _, bankpointer = self.rom.readPointer(self.tablepointer + 4*bankid)
     return PokeMapBank(self.rom, bankpointer)
   
   def getMap(self, bankid, mapid):
@@ -36,7 +36,7 @@ class PokeMapBank():
     self.pointer = pointer
   
   def getMap(self, mapid):
-    p, mapheaderpointer  = self.rom.readPointer(self.pointer + 4 * mapid)
+    _, mapheaderpointer  = self.rom.readPointer(self.pointer + 4 * mapid)
     return PokeMap(self.rom, mapheaderpointer)
   
     

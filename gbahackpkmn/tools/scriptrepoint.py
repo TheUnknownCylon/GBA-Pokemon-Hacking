@@ -29,28 +29,28 @@ def repoint(rom, mappointer, newpointers, lookupfile):
     
     #check args
     if len(args) != 5:
-       raise Exception("Malformed line, needs 5 parameters.\nLine: %s"%line)
+      raise Exception("Malformed line, needs 5 parameters.\nLine: %s"%line)
        
     scriptname = args[0]
-    bank   = args[1]
-    map    = args[2]
-    type   = args[3]
-    id     = args[4]
+    mapbank    = args[1]
+    mapid      = args[2]
+    scripttype = args[3]
+    scriptid    = args[4]
     if not scriptname[0] == "$": raise Exception("Not a valid pointer name (add a $ ??): %s"%scriptname)
-    if not isint(bank): raise Exception("Bank should be an integer, got %s."%bank)
-    if not isint(map) : raise Exception("Map should be an integer, got %s."%map)
-    if not (type == "script" or type =="person" or type=="sign"):
-      raise Exception("Type should be script, people or sign. Got: %s."%type)
-    if not isint(id): raise Exception("Number should be an integer, got %s"%id)
+    if not isint(mapbank): raise Exception("Bank should be an integer, got %s."%mapbank)
+    if not isint(mapid) : raise Exception("Map should be an integer, got %s."%mapid)
+    if not (scripttype == "script" or scripttype =="person" or scripttype=="sign"):
+      raise Exception("Type should be script, people or sign. Got: %s."%scripttype)
+    if not isint(scriptid): raise Exception("Number should be an integer, got %s"%scriptid)
     
     #if this script is updateable
     if scriptname[1:] in newpointers:
-      events = gamemap.getMap(int(bank), int(map)).events 
+      events = gamemap.getMap(int(mapbank), int(mapid)).events 
 
-      script = events.get(type, int(id))
+      script = events.get(scripttype, int(scriptid))
       script.scriptpointer = newpointers[scriptname[1:]]
-      events.write(type, int(id), script)
+      events.write(scripttype, int(scriptid), script)
         
-      print("Updated pointer to script of %s on map %s of bank %s."%(type, map, bank))
+      print("Updated pointer to script of %s on map %s of bank %s."%(scripttype, mapid, mapbank))
       
     
