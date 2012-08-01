@@ -58,7 +58,15 @@ class ParamType:
   pointer = 0x03
   eos     = 0x04 #end of script
   command = 0x07 #name of command to call
+  pointer_text = 0x08
+  pointer_movement = 0x09
   
+  @staticmethod
+  def ispointer(type):
+    if type == ParamType.pointer: return True
+    if type == ParamType.pointer_text: return True
+    if type == ParamType.pointer_movement: return True
+    return False
   
   @staticmethod
   def rewrite(type, value):
@@ -66,7 +74,7 @@ class ParamType:
       return struct.pack("<B", value)
     elif type == ParamType.word:
       return struct.pack("<H", value)
-    elif type == ParamType.pointer or type == ParamType.int:
+    elif ParamType.ispointer(type) or type == ParamType.int:
       return struct.pack("<I", value)
 
       
@@ -82,13 +90,17 @@ class CodeCommand():
   def __init__(self):
     self.params = []
     self.neededparams = 0
+    self.endofscript = False
     
   def addParam(self, paramtype, defaultvalue=None):
     '''Adds a parameter to the command. Note that values without a default
     are the values that should be set by the user.'''
     
     #Pokescript does some additional footers which are not required!
-    if paramtype == ParamType.eos: return 
+    if paramtype == ParamType.eos:
+      self.endofscript = True
+      return
+      
     self.params.append((paramtype, defaultvalue))
     
     if defaultvalue == None or isinstance(defaultvalue, SELECT):
@@ -177,8 +189,11 @@ class Alias(CodeCommand):
 
       
 class Command(CodeCommand):
-  def __init__(self, code, constants):
+  def __init__(self, name, code, constants):
+    '''Binary code which the command represents. Constants holds a list of
+    all defines, i.e. constants.'''
     CodeCommand.__init__(self)
+    self.name = name
     self.code = code
     self.constants = constants
       
@@ -204,7 +219,7 @@ class Command(CodeCommand):
       else:
         value = param[1]
 
-      if param[0] == ParamType.pointer:
+      if ParamType.ispointer(param[0]):
         pointer = value
         if pointer[0] != "$": raise Exception("Only Pointers to $ are supported yet!")
         value = 0 #we can not determine the pointer yet, write something: write 0!
@@ -238,6 +253,11 @@ class ScriptLang():
       startfile = os.path.dirname(sys.modules[__name__].__file__) + "/langdef/includes.psh"
     self.handleInclude(startfile)
     
+    #Store the inverse of the text-tables, for faster lookup
+    self.texthashinv = dict(zip(self.texthash.values(),self.texthash))
+    self.textinv = dict(zip(self.text.values(),self.text))
+    
+    
   def parse(self, filename):
     lastcommand = None
     
@@ -270,8 +290,10 @@ class ScriptLang():
         if len(char) > 1: char = chr(toint(char))  #If char is represented as a number, rewrite
         self.text[char] = toint(instructions[2])
       elif instruction == "addcmmd":
-        lastcommand = Command(toint(instructions[2]), self.defines)
-        self.commands[instructions[1].lower()] = lastcommand
+        commandname = instructions[1].lower()
+        commandcode = toint(instructions[2])
+        lastcommand = Command(commandname, commandcode, self.defines)
+        self.commands[commandname] = lastcommand
       elif instruction == "alias":
         lastcommand = Alias(' '.join(instructions[1:]), self.commands)
         self.aliases.append(lastcommand)
@@ -290,7 +312,7 @@ class ScriptLang():
             elif instructions[2][0:5] == "mask(":        #format: mask(number)
               defaultvalue = toint(instructions[2][5:-1])
             elif instructiontype == ParamType.command:
-              defaultvalue = instructions[2]
+              defaultvalue = instructions[2] 
             else:
               raise Exception("Unknown default value for param: "+repr(instructions[2]))
             
@@ -308,6 +330,23 @@ class ScriptLang():
     except Exception as e: raise
     finally: os.chdir(mypath)
 
+    
+  
+  def getCommand(self, code):
+    '''Get a command for the given code.'''
+    for commandname in self.commands:
+      command = self.commands[commandname]
+      if command.code == code:
+        return command
+    raise Exception("No command with code %x"%code)
+  
+  
+  def decodeChar(self, char):
+    if char == 0x00: return " "  #special case
+    if char in self.texthashinv: return "[%s]"%texthashinv(char)
+    try: return self.textinv[char]
+    except: raise Exception("Can not decode text char %X (not defined)."%char)
+    
     
   def encodeText(self, text):
     textarray = array('B')

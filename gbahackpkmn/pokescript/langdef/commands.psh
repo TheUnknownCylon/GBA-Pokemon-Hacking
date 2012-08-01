@@ -133,7 +133,7 @@ addparm 0 'byte to use
 
 addcmmd loadpointer #0F 'Load a pointer into script RAM so commands can use it
 addparm 0 'Memory bank to use
-addparm 3 'Pointer to load into memory
+addparm 8 'Pointer to load into memory
 
 addcmmd writebytetooffset #11 'Set a byte at an offset to a certain value
 addparm 0 'Value to write

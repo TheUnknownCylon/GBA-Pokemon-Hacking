@@ -80,7 +80,9 @@ class PokeScript():
   
   def parselines(self, lines, routine):
     for line in lines:
-      routine = self.parseline(line, routine)
+      try: routine = self.parseline(line, routine)
+      except Exception as e: raise
+      #  raise Exception("Error in line:\n %s %s\n "%(line, str(e)))
     return routine
     
   def parseline(self, line, routine):
