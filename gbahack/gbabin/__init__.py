@@ -90,18 +90,25 @@ class RawFile():
     
   
   
-  def findSpace(self, pointer, length):
+  def findSpace(self, pointer, length, safe=True):
     '''Returns a pointer to a place in the ROM where is enough free space.
-    Free space is always found in blocks of 4 bytes'''
+    Free space is always found in blocks of 4 bytes.
+    Using the safe == True will make sure that one 0xFF is left as free space,
+    so the end of the previous command may not be overwritten.
+    '''
     #TODO: now its just a quick implementation, it should work
     #      but a faster implementations are possible :)
     p = pointer
 
-    while True:
-      #print(" > FInding free space of %d bytes, starting at %x" %(length, p))
-
-      if self.hasSpace(p, length): return p
-      else: p+= 4
+    if safe:
+      while True:
+        if self.hasSpace(p, length+1): return p+1
+        else: p+= 4
+        
+    if not safe:
+      while True:
+        if self.hasSpace(p, length): return p
+        else: p+= 4      
       
       
   def trunc(self, pointer, length):
