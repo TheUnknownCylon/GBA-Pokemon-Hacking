@@ -73,7 +73,7 @@ class DecompileJob():
     
     while True:
       p, byte = self.rom.readByte(p)
-      instructions.append("0x%x"%byte)
+      instructions += "0x%x"%byte +" "
       if byte == 0xFE: break
       
     return ["#ORG 0x%X"%pointer, "; %s"%instructions]

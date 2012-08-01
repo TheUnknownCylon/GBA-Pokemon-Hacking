@@ -262,7 +262,7 @@ class ScriptLang():
     lastcommand = None
     
     comment = False
-    for line in open(filename, encoding="UTF-8"):
+    for line in open(filename, encoding="iso-8859-15"):
       #normalize the line
       line.replace("\t", " ")
       line = line.strip()

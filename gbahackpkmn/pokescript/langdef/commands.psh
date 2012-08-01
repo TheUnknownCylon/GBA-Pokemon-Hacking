@@ -4,54 +4,54 @@
  -----
 
  addcmmd <command name> <command code> ' [description]
-  Please note command name must be one word.
-  Commmand code must be one byte value.
+	Please note command name must be one word.
+	Commmand code must be one byte value.
 
  alias <command alias> ' [description]
-  Alias allows you to map commands to new commands.
+	Alias allows you to map commands to new commands.
 
-  Descriptions and comments are ignored here and the
-  alias must read as the completed command line
-  replacing the values with $# (ie $1 $2 etc).
+	Descriptions and comments are ignored here and the
+	alias must read as the completed command line
+	replacing the values with $# (ie $1 $2 etc).
 
-  Must be followed by addparm which acts to list the
-  components of the expanded script.
+	Must be followed by addparm which acts to list the
+	components of the expanded script.
 
  addparm <size> [data] ' [description]
-  Addparm must directly follow a command initialized
-  by the addcmmd or alias command. 
+ 	Addparm must directly follow a command initialized
+	by the addcmmd or alias command. 
 
-  When following addcmmd it lists the size and
-  descriptions of the command paramaters.
+	When following addcmmd it lists the size and
+	descriptions of the command paramaters.
 
-  When following alias it lists the commands values
-  and paramaters written in their expanded form,
-  
-  The data option is used to supply details when needed
-  and will override the description. Under an alias it will
-  act like a mask.
+	When following alias it lists the commands values
+	and paramaters written in their expanded form,
+	
+	The data option is used to supply details when needed
+	and will override the description. Under an alias it will
+	act like a mask.
 
 
   <   Descriptions and comments are ignored when creating an alias.   >
 
  addparm values:
-  Data will not be writen if non-numeric
-  0 = byte 
-  1 = word 
-  2 = dword
-  3 = pointer
-  4 = Indicates the end of a script segment (used in decoding)
-  5 = Enumerate Values - [data] provides a list of elements
-      seperated by commas. The value will be matched up
-      to the element in [data]. If no value is provided the
-      first element is used.
-  6 = Mask
-  7 = Keyword
-  8 = Indicates a pointer that links to textual data
-  9 = Indicates a pointer that links to movement data
+	Data will not be writen if non-numeric
+	0 = byte 
+	1 = word 
+	2 = dword
+	3 = pointer
+	4 = Indicates the end of a script segment (used in decoding)
+	5 = Enumerate Values - [data] provides a list of elements
+	    seperated by commas. The value will be matched up
+	    to the element in [data]. If no value is provided the
+	    first element is used.
+	6 = Mask
+	7 = Keyword
+	8 = Indicates a pointer that links to textual data
+	9 = Indicates a pointer that links to movement data
 
-    OPTIONS 10+ act as pointers to #RECORDS
-    
+		OPTIONS 10+ act as pointers to #RECORDS
+		
 -----------------------------------------------------------------
 Noob-Friendly PkmAdv commands database
 GBA-Rom: Fire Red
@@ -435,8 +435,8 @@ addparm 1
 addparm 0
 
 addcmmd Battle #B6 ' Commence a wild battle
-addparm 1     ' pokemon race
-addparm 0     ' pokemon lavel
+addparm 1 		' pokemon race
+addparm 0 		' pokemon lavel
 
 addcmmd HashNamePoke #27
 addparm 2
@@ -470,16 +470,16 @@ addparm 1
 
 /************\
 | CONSTRUCTS |
-\------------ */
+\------------*/
 
 alias givepokemon $1 $2 $3 ' Give pokemon to Player
 addparm 7 copyvar
 addparm 1 mask(#8004)
 addparm 1 mask(#800D)
 addparm 7 addpokemon
-addparm 1     'Pokemon species to give
-addparm 0     'Level of pokemon
-addparm 1     'Item # to be held
+addparm 1 		'Pokemon species to give
+addparm 0 		'Level of pokemon
+addparm 1 		'Item # to be held
 addparm 2 mask(#00000000)
 addparm 2 mask(#00000000)
 addparm 7 hashpoke
@@ -490,7 +490,7 @@ addparm 2 mask(#00000000)
 
 alias namepokemon ' Name a pokemon identified with Selectpokemon or givepokemon
 addparm 7 fadescreen
-addparm 0 mask(#01)
+addparm 7 nop
 addparm 7 special
 addparm 1 mask(#009E)
 addparm 7 HashNamePoke
@@ -517,32 +517,32 @@ addparm 1 mask(#800a)
 addparm 1 mask(#8004)
 
 alias wildbattle $1 $2 $3 'Commence Wild Battle
-addparm 7 Battle  ' Wildbattle
-addparm 1     ' pokemon race
-addparm 0     ' pokemon lavel
+addparm 7 Battle	' Wildbattle
+addparm 1 		' pokemon race
+addparm 0 		' pokemon lavel
 addparm 1 mask(#0000)
 addparm 7 special
 addparm 1 select(#0143,#0137,#0138,#0139) 'Battle Type
 
-alias giveitem $1 $2 $3   ' Give item to player
-addparm 7 copyvarifnotzero  ' Item to Give
-addparm 1 mask(#8000)   
-addparm 1 '$Val   ' $Val
-addparm 7 copyvarifnotzero  ' No of Items
+alias giveitem $1 $2		' Give item to player
+addparm 7 copyvarifnotzero	' Item to Give
+addparm 1 mask(#8000)		
+addparm 1 '$Val		' $Val
+addparm 7 copyvarifnotzero 	' No of Items
 addparm 1 mask(#8001)
 addparm 1 '$Val
-addparm 7 callstd   ' Display 'Obtained' or 'Found'
-addparm 0 select(#00,#01) '0: obtained, 1: found
+addparm 7 callstd		' Display 'Obtained' or 'Found'
+addparm 0 select(#00,#01)
 
-alias msgbox $1   ' loadpointer for use in text
+alias msgbox $1		' loadpointer for use in text
 addparm 7 loadpointer 
 addparm 0 mask(#00)
-addparm 8     ' text offset
+addparm 8 		' text offset
 
-alias message $1  ' loadpointer for use in text
-addparm 7 loadpointer 
+alias message $1 	' loadpointer for use in text
+addparm 7 loadpointer	
 addparm 0 mask(#00)
-addparm 8     ' text offset
+addparm 8 		' text offset
 
 alias frmart $1
 addparm 0 mask(#67)
@@ -607,9 +607,9 @@ addparm 7 copyvar
 addparm 1 mask(#8004)
 addparm 1 mask(#800D)
 addparm 7 addpokemon
-addparm 1     'Pokemon species to give
-addparm 0 mask(#05)     'Level of pokemon
-addparm 1 mask(#0000)   'Item held
+addparm 1 		'Pokemon species to give
+addparm 0 mask(#05) 		'Level of pokemon
+addparm 1 mask(#0000)		'Item held
 addparm 2 mask(#00000000)
 addparm 2 mask(#00000000)
 addparm 7 hashpoke
@@ -627,7 +627,7 @@ addparm 2 mask(#67007231)
 addparm 2 mask(#0816C2EA)
 addparm 1 mask(#6632)
 addparm 7 egghandler
-addparm 1   'pokemon to be given
+addparm 1		'pokemon to be given
 
 alias checkpokemon $1
 addparm 7 setvar
@@ -656,14 +656,14 @@ addparm 0 mask(#FF)
 addparm 1 'x-pos
 addparm 1 'y-pos
 
-alias showmsg $1    ' loadpointer for use in text
+alias showmsg $1		' loadpointer for use in text
 addparm 7 loadpointer 
 addparm 0 mask(#00)
 addparm 8
 addparm 7 callstd
 addparm 0 mask(#06)
 
-alias simplenpc $1    ' loadpointer for use in text
+alias simplenpc $1		' loadpointer for use in text
 addparm 7 lock
 addparm 7 faceplayer
 addparm 7 loadpointer 
@@ -674,7 +674,7 @@ addparm 0 mask(#06)
 addparm 7 release
 addparm 7 end
 
-alias simplesign $1   ' loadpointer for use in text
+alias simplesign $1		' loadpointer for use in text
 addparm 7 loadpointer
 addparm 0 mask(#00)
 addparm 8
@@ -683,7 +683,7 @@ addparm 0 mask(#06)
 addparm 7 release
 addparm 7 end
 
-alias showmsgstatic $1    ' loadpointer for use in text
+alias showmsgstatic $1		' loadpointer for use in text
 addparm 7 loadpointer 
 addparm 0 mask(#00)
 addparm 8
@@ -712,25 +712,25 @@ addparm 1 mask(#4002)
 ' THEN JUMPS TO OR CALLS A POINTER ACCORDINGLY.
 '
 '
-alias if $1 goto $2 ' if1
-addparm 7 if1     
-addparm 0     ' $Val
-addparm 3     ' $Val
+alias if $1 goto $2	' if1
+addparm 7 if1 		
+addparm 0 		' $Val
+addparm 3 		' $Val
 
-alias if $1 jump $2 ' if1
-addparm 7 if1     
-addparm 0     '$Val
-addparm 3     '$Val
+alias if $1 jump $2	' if1
+addparm 7 if1 		
+addparm 0 		'$Val
+addparm 3 		'$Val
 
-alias if $1 call $2 ' if2
-addparm 7 if2     
-addparm 0     '$Val
-addparm 3     '$Val
+alias if $1 call $2	' if2
+addparm 7 if2 		
+addparm 0 		'$Val
+addparm 3 		'$Val
 
-alias if $1 gosub $2  ' if2
-addparm 7 if2     
-addparm 0     '$Val
-addparm 3     '$Val
+alias if $1 gosub $2	' if2
+addparm 7 if2 		
+addparm 0 		'$Val
+addparm 3 		'$Val
 
 alias if $1 jumpstd $2 'if3
 addparm 7 if3
@@ -918,22 +918,22 @@ addparm 7 comparevars
 addparm 1 'Variable A
 addparm 1 'Variable 2
 
-alias  compare var $1 byte $2 'Compares a variable to a byte
+alias	 compare var $1 byte $2 'Compares a variable to a byte
 addparm 7 comparevartobyte
 addparm 1 'Variable A
 addparm 0 'Byte Value
 
-alias  compare var $1 word $2 'Compares a variable to a value
+alias	 compare var $1 word $2 'Compares a variable to a value
 addparm 7 compare
 addparm 1 'Variable A
 addparm 1 'word Value
 
-alias  compare var $1 val $2 'Compares a variable to a value
+alias	 compare var $1 val $2 'Compares a variable to a value
 addparm 7 compare
 addparm 1 'Variable A
 addparm 1 'word Value
 
-alias  compare var $1 int $2 'Compares a variable to a value
+alias	 compare var $1 int $2 'Compares a variable to a value
 addparm 7 compare
 addparm 1 'Variable A
 addparm 1 'word Value
