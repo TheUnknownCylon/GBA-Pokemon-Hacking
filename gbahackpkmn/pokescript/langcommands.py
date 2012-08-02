@@ -1,7 +1,6 @@
 import struct
 from array import array
 from gbahack.tools.numbers import toint
-from gbahack.tools.numbers import toint
 
 class ParamType:
   '''Represents all allowed parameter types'''
@@ -21,8 +20,15 @@ class ParamType:
     if type == ParamType.pointer_movement: return True
     return False
   
+  @classmethod
+  def rewrite(cls, type, value):
+    try:
+      return cls.rewritehelper(type, value)
+    except:
+      raise Exception("Could not rewrite value %s of type %X."%(repr(value), type))
+  
   @staticmethod
-  def rewrite(type, value):
+  def rewritehelper(type, value):
     if type == ParamType.byte:
       return struct.pack("<B", value)
     elif type == ParamType.word:
@@ -99,7 +105,9 @@ class Alias(CodeCommand):
   def bytesignature(self):
     sig = []
     skip = 0
-    for param in self.params:
+    for paramindex in range(0, len(self.params)):
+      param = self.params[paramindex]
+      
       #We have to skip a param, because it was consumed with another called command
       if skip > 0:
         skip -= 1
@@ -111,8 +119,16 @@ class Alias(CodeCommand):
       if paramdefault == None:
         valuestoappend = [''] * len(ParamType.rewrite(paramtype, 0))
       elif paramtype == ParamType.command:
+        currentparamindex = paramindex + 1
         command = self.commands[paramdefault.lower()]
-        valuestoappend = command.bytesignature()
+        
+        commandefaultargs = []
+        for parami in range(0, command.neededparams):
+          parami_default = self.params[currentparamindex + parami][1]
+          if parami_default == None: commandefaultargs.append(None)
+          else: commandefaultargs.append(parami_default)
+        
+        valuestoappend = command.bytesignature(*commandefaultargs)
         skip = command.neededparams
       else:
         valuestoappend = ParamType.rewrite(paramtype, paramdefault)
@@ -178,13 +194,30 @@ class Command(CodeCommand):
     self.name = name
     self.code = code
     self.constants = constants
+    self.signature = [self.name]
+    
+  def addParam(self, paramtype, defaultvalue=None):
+    super().addParam(paramtype, defaultvalue)
+    if defaultvalue == None and paramtype != ParamType.eos:
+      self.signature.append("$%d"%len(self.signature))
 
-  def bytesignature(self):
+  def bytesignature(self, *args):
+    '''Returns the commands byte signature. It is possible to
+    set expected values, by providing an *args array with default values'''
     sig = [self.code]
+    argstaken = 0
     for param in self.params:
       paramtype    = param[0]
       paramdefault = param[1]
-      if paramdefault == None:
+      
+      if paramdefault == None and argstaken < len(args):
+        paramdefault = args[argstaken]
+        argstaken += 1
+
+      if isinstance(paramdefault, SELECT):
+        paramdefault = None
+        
+      if paramdefault == None:        
         valuestoappend = [''] * len(ParamType.rewrite(paramtype, 0))
       else:
         valuestoappend = ParamType.rewrite(paramtype, paramdefault)

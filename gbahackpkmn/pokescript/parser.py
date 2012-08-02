@@ -70,9 +70,6 @@ class PokeScript():
     routine.overwrite(offset+3, pointerbytes[3])
     
 
-    
-    
-    
   def parsefile(self, filename):
     self.parselines(open(filename), None)
   
