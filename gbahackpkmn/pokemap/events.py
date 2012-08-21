@@ -78,7 +78,7 @@ class PokeMapEvents(DataStruct):
     
 class PokeMapEventPerson(DataStruct):
   fields = [
-    (RT.byte, "event"), (RT.byte, "picture"), (RT.short, "uu0"),
+    (RT.byte, "event"), (RT.byte, "spriteid"), (RT.short, "uu0"),
     (RT.short, "posx"), (RT.short, "posy"),
     (RT.byte, "talklvl"), (RT.byte, "movementtype"), (RT.byte, "movementid"), (RT.byte, "uu1"),
     (RT.byte, "trainer"), (RT.byte, "uu2"), (RT.short, "radius"),
