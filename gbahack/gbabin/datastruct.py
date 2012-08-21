@@ -72,6 +72,10 @@ class DataStruct:
       p, v = RomDataType.read(rom, p, field[0])
       self.__setattr__(field[1], v)
   
+  def get(self, key):
+    '''Returns a read field-value from the fields-array.'''
+    return self.__getattribute__(key)
+  
   def toArray(self):
     '''Returns a binary array, containing all values set for this datablock.'''
     block = BBlock()

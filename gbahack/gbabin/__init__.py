@@ -73,7 +73,7 @@ class RawFile():
   
   def readBytes(self, pointer, length):
     ep = pointer + length
-    return ep, self.f[pointer, ep]
+    return ep, self.f[pointer: ep]
   
   
   def hasSpace(self, pointer, length):
