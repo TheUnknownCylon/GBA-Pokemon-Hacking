@@ -6,6 +6,12 @@ class Decompiler():
   def __init__(self, langdef, rom):
     self.langdef = langdef
     self.rom = rom
+    
+  def decompile(self, scriptpointer):
+    '''Decompiles a script and all its other subscript at a given pointer.
+    A list of pointers and their scripts are returned.'''  
+    return DecompileJob(self.langdef, self.rom, scriptpointer).routines  
+  
 
 class NotAMatchException(Exception): pass
 class EndOfScript(Exception):
@@ -47,6 +53,7 @@ class DecompileJob():
       else: raise Exception("BUG! No such routine type.")
 
       self.routines[pointer] = routine
+
     
     
   def queue(self, pointer, ptype):
@@ -116,7 +123,7 @@ class DecompileJob():
           if byte != '' and byte != v: raise NotAMatchException()
           if byte == '': argbytes.append(v)
         
-        print("Selected command to parse: "+' '.join(command.signature))
+        #print("Selected command to parse: "+' '.join(command.signature))
         #read the entire command bytes, and this all matches!
         try:
           commandstring = self.parsecommandargs(command, argbytes)
