@@ -70,9 +70,15 @@ class DecompileJob():
       p, byte = self.rom.readByte(p)
 
       if byte == 0xFF: break
-      
-      try: text += self.langdef.decodeChar(byte)
-      except: text += "?"
+      if byte == 0xFD:  #\v
+        p, nextbyte = self.rom.readByte(p)
+        if nextbyte in self.langdef.texthashinv:
+          text += self.langdef.texthashinv[nextbyte]
+        else:
+          text += "\v\h%X"%nextbyte
+      else:
+        try: text += self.langdef.decodeChar(byte)
+        except: text += "?"
       
     return ["#ORG 0x%X"%pointer, "= %s"%text]
 
