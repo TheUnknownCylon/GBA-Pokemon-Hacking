@@ -48,14 +48,15 @@ def readSprite(rom, pointer, width, height):
 
 def toPNG(f, matrix, palette):
   '''Rewrites a given matrix (which can be the output of readSprite), to a PNG
-  file. A palette should be a list of (RGB) triplets (optionally with
-  transparency set). For each entry in the matrix, a PNG pixel is written with
-  corresponding palette color.
+  file. A palette should be a Palette object which could be 
   
   Note: PyPNG (https://github.com/drj11/pypng/) is required.'''
   
+  #Rewrite the palette object to a PNG-palette
+  p = palette.aslist()
+  
   #write the matrix to the file-object
-  w = png.Writer(len(matrix[0]), len(matrix), palette=palette)
+  w = png.Writer(len(matrix[0]), len(matrix), palette=p)
   w.write(f, matrix)
   
   

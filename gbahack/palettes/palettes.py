@@ -20,3 +20,5 @@ class Palette16(DataStruct):
     
     return (red, green, blue, transparency)
   
+  def aslist(self):
+    return [self.getRGB(i) for i in range(0, 16)] 

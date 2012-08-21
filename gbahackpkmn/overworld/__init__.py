@@ -35,9 +35,8 @@ class Sprite():
   def toPNG(self, frame, f):
     '''Converts a sprite to a PNG. F should be a file object opened for wb.'''
     #build a palette
-    p = [self.palette.getRGB(i) for i in range(0, 16)]    
     matrix = self.getFrame(frame)
-    toPNG(f, matrix, p)
+    toPNG(f, matrix, self.palette)
 
 
   def getFrame(self, id):
