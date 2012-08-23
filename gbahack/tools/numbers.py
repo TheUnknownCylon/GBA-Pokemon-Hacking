@@ -6,6 +6,9 @@ def toint(v):
   try: return int(v)
   except: pass
   
+  try: v = v.strip()
+  except: pass
+  
   if len(v) > 1 and v[0] == '#':
     try: return int('0x'+v[1:], 16)
     except: pass

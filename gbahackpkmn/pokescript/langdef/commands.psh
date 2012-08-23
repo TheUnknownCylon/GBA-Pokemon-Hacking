@@ -71,41 +71,13 @@ Author: Dabomstew
 '  All values must be in hex
 
 #lock
-addcmmd nop #01 'Does Nothing
-addcmmd end #02 'Ends Script Execution
+addcmmd nop0 #00 'Does nothing
+addcmmd nop  #01 'Does Nothing
+addcmmd end  #02 'Ends Script Execution
 addparm 4 ' Decode Command
+
 addcmmd return #03 'Pop back to calling command
 addparm 4 ' Decode Command
-addcmmd fadeout #37 'Fade out music
-addcmmd fadein #38 'Fade in music
-addcmmd faceplayer #5A 'Turn caller to player
-addcmmd jingle #69 'Plays sound effect
-addcmmd lock #6A 'Locks down the movement of the caller
-addcmmd releaseplayer #6B ' Resumes movement for player but not NPC
-addcmmd release #6c 'Resumes movement for caller
-addcmmd checkgender #A0 'Checks if player is boy or girl and places in LASTRESULT (0x800d)
-addcmmd doweather #A5 'Triggers the weather change set with SetWeather
-addcmmd killscript #0D 'Kill script and erase all script stuff
-
-addcmmd if1 #06 'compare and jump
-addparm 0 '0 false, 1 true
-addparm 3 'Point to jump to
-
-addcmmd if2 #07 'Calling version of if
-addparm 0 '0 false, 1 true
-addparm 3 'Point to call
-
-addcmmd if3 #0A 'jumpstd version of if
-addparm 0 '0 false, 1 true
-addparm 0 'function number to jump to
-
-addcmmd if4 #0B 'callstd version of if
-addparm 0 '0 false, 1 true
-addparm 0 'function to call
-
-addcmmd if #06
-addparm 0
-addparm 3
 
 addcmmd call #04 'Jump to another pointin script. Can be returned to
 addparm 3 'Point to jump to
@@ -119,6 +91,18 @@ addparm 3 'Point to continue from
 addcmmd jump #05 'Continue execution from another point
 addparm 3 'Point to continue from
 
+addcmmd if #06
+addparm 0
+addparm 3
+
+addcmmd if1 #06 'compare and jump
+addparm 0 '0 false, 1 true
+addparm 3 'Point to jump to
+
+addcmmd if2 #07 'Calling version of if
+addparm 0 '0 false, 1 true
+addparm 3 'Point to call
+
 addcmmd jumpstd #08 'Jump to a built in function
 addparm 0 'Function numder to jump to
 
@@ -128,6 +112,19 @@ addparm 0 'Function to call. 1- text no close. 2- yes/no box, 3-text clost on ke
 addcmmd callstd #09 'Call a built in function
 addparm 0 'Function to call. 1- text no close. 2- yes/no box, 3-text clost on keypress
 
+addcmmd if3 #0A 'jumpstd version of if
+addparm 0 '0 false, 1 true
+addparm 0 'function number to jump to
+
+addcmmd if4 #0B 'callstd version of if
+addparm 0 '0 false, 1 true
+addparm 0 'function to call
+
+
+'TODO #0C: JumpRAM (no params)
+
+addcmmd killscript #0D 'Kill script and erase all script stuff
+
 addcmmd setbyte #0E 'set 0x2039288 + 6c to a specific value
 addparm 0 'byte to use
 
@@ -135,21 +132,25 @@ addcmmd loadpointer #0F 'Load a pointer into script RAM so commands can use it
 addparm 0 'Memory bank to use
 addparm 8 'Pointer to load into memory
 
+'TODO #10 SETBYTE 2
+
 addcmmd writebytetooffset #11 'Set a byte at an offset to a certain value
 addparm 0 'Value to write
-addparm 3 'Location to write to
+addparm 2 'Location to write to
 
 addcmmd loadbytefrompointer #12 'Load the byte found at a pointer into ram so other commands can use it
 addparm 0 'Memory bank to use
-addparm 3 'Pointer to byte to load into memory
+addparm 2 'Pointer to byte to load into memory
+
+'TODO #13: SETFARBYTE
 
 addcmmd copyscriptbanks #14 'Copy one script to another
 addparm 0 'bank 1
 addparm 0 'bank 2
 
 addcmmd copybyte #15 'Copy value from one place to another
-addparm 3 'Source location
-addparm 3 'Destination location
+addparm 2 'Source location
+addparm 2 'Destination location
 
 addcmmd setvar #16 'Set variable a to any value
 addparm 1 'Variable no
@@ -181,20 +182,20 @@ addparm 0 'Byte Value
 
 addcmmd comparevartofarbyte #1D 'Compare a variable with a byte at some location
 addparm 1 'Variable A
-addparm 3 'Pointer to a byte value to compare A to
+addparm 2 'Pointer to a byte value to compare A to
 
 
 addcmmd comparefarbytetovar #1E 'Compares a byte at some location to a variable
-addparm 3 'Pointer to a byte value to compare B to
+addparm 2 'Pointer to a byte value to compare B to
 addparm 1 'Variable B
 
 addcmmd comparefarbytetobyte #1F 'Compares a byte at some location to a byte value
-addparm 3 'Pointer to a byte value to compare with
+addparm 2 'Pointer to a byte value to compare with
 addparm 0 'Byte value to compare with
 
 addcmmd comparefarbytetofarbyte #20 'Compares bytes at pointer locations
-addparm 3 'Pointer to a byte value to compare with
-addparm 3 'Pointer to a byte value to compare with
+addparm 2 'Pointer to a byte value to compare with
+addparm 2 'Pointer to a byte value to compare with
 
 addcmmd compare #21 'Compare variable A to a value
 addparm 1 'Variable A
@@ -205,7 +206,10 @@ addparm 1 'Variable A
 addparm 1 'Variable B
 
 addcmmd callasm #23 'Call a custom ASM routine
-addparm 3 'Address of custom ASM routine
+addparm 2 'Address of custom ASM routine
+
+addcmmd callasm2 #24
+addparm 2
 
 addcmmd special #25 'Call a special event
 addparm 1 'Number of special command to call
@@ -213,6 +217,8 @@ addparm 1 'Number of special command to call
 addcmmd special2 #26 'Like Special, but can store a returned value
 addparm 1 'Variable to store returned value in
 addparm 1 'Special event to call
+
+addcmmd waitspecial #27
 
 addcmmd pause #28 'Pause script execution,1
 addparm 1 'delay period
@@ -226,82 +232,188 @@ addparm 1 'Flag index
 addcmmd checkflag #2B 'Check the value of a flag and pu result in LASTRESULT
 addparm 1 'Flag index
 
+addcmmd CMD2C #2C
+addparm 1
+addparm 1
+
+addcmmd CMD2D #2D
+
+addcmmd RESETVARS #2E
+
 addcmmd playsfx #2F
 addparm 1 'entry in music/sounds table
 
-addcmmd cry #30 'Play back a pokemon cry
-addparm 0 'bank no
-addparm 1 'Pokemon Species
+'addcmmd[rs][e] cry #30 'Play back a pokemon cry
+'addparm 0 'bank no
+'addparm 1 'Pokemon Species
 
-addcmmd fanfare #31 'Play background music
-addparm 1 'Song # to play
+addcmmd[frlg] checksound #30
+addparm 0             'bank no
+addparm 1             'Song number
+
+addcmmd fanfare #31   'Play background music
+addparm 1             'Song # to play
 
 addcmmd waitfanfare #32 'Wait for the fanfare to finish
-addparm 1 'Song number
+addparm 1             'Song number
 
-addcmmd playsound #33 'switch background music
-addparm 1 'Song number to play
+'addcmmd[rs][e] playsound #33 'switch background music
+'addparm 1  'Song number to play
 
-addcmmd fadedefault #34 'Fade music back to map song
+addcmmd[frlg] playsound #33 'switch background music
+addparm 1  'Song number to play
+addparm 0  'extra FRLG parameter
 
-addcmmd fadesound #35 'Fade into another song
-addparm 1 'Song number
+addcmmd playsong #34  'Fade music back to map song
+addparm 1             'Song
 
-addcmmd warp #39 'Warp to another level
-addparm 0 'Bank to warp to
-addparm 0 'Level to warp to
-addparm 0 'Exit to warp to
+addcmmd fadedefault #35 'Fade into another song
+
+addcmmd fadesong #36   '
+addparm 1              '
+
+addcmmd fadeout #37    'Fade out music
+addparm 0              '??? Speed ??? Required?
+
+addcmmd fadein #38     'Fade in music
+addparm 0              '??? Speed ??? Required?
+
+'TODO: FInd out how the following warp commands work!
+'addcmmd WARP #39
+'addcmmd WARP_MUTED #3A
+'addcmmd WARP_WALKING  #3B
+'addcmmd WARP_DOWNHOLE #3C
+'addcmmd WARP_TELEPORT #3D
+'addcmmd WARP_3        #3E
+'addcmmd WARP_ELEVATOR #3F
+'addcmmd WARP_4        #40
+'addcmmd WARP_5        #41
+
+addcmmd GETPLAYERXY #42
+addparm 1
+addparm 1
 
 addcmmd countpokemon #43
 
-addcmmd Raw44 #44
-addparm 1
-addparm 1
+addcmmd AddItem #44
+addparm 1 ' Item
+addparm 1 ' Number of items
 
-addcmmd RemoveItem #45 ' Remove Item
-addparm 1 ' Item Number
-addparm 1 ' Number of Items
+addcmmd removeitem #45 ' Remove Item
+addparm 1 'Item to check for
+addparm 1 'Number of Items
 
-addcmmd Raw46 #46
-addparm 1 
-addparm 1
+addcmmd checkitemspaceinbag #46
+addparm 1 'Item to check for
+addparm 1 '???
 
 addcmmd checkitem #47 'Check if the player has an item
 addparm 1 'Item to check for
 addparm 1 'quantity
 
+addcmmd checkitemtype #48
+addparm 1 ' Item to check for
+
+addcmmd itemtopc #49
+addparm 1 'Item to move
+addparm 1 'Quantity
+
+addcmmd checkitempc #4A
+addparm 1 'Item to check
+addparm 1 'Quantity
+
+addcmmd addfurniture #4B
+addparm 1 'Type
+
+addcmmd takefurniture #4C
+addparm 1 'Type
+
+addcmmd checkifroomforfurniture #4D
+addparm 1
+
+addcmmd checkfurniture #4E
+addparm 1
+
 addcmmd applymovement #4F 'Applyies movement at a pointer location to a sprite
 addparm 1 'Sprite to control
 addparm 9 'Pointer to the movement data
 
+'TODO: Alias this
+addcmmd applymovement2 #50 'Applymovement Finish At
+addparm 1 'Sprite to control
+addparm 9 'Pointer to movement data
+addparm 0 'X
+addparm 0 'Y
+
 addcmmd pausemove #51 'Wait for an event to finish
 addparm 1 'Zero for applymovement
+
+'TODO: Missing: #52
 
 addcmmd removesprite #53
 addparm 1 'people no
 
+addcmmd removespriteat #54
+addparm 1 'people no
+addparm 0 'x
+addparm 0 'y
+
 addcmmd showsprite #55
 addparm 1 'people no
+
+'TODO: Alias
+addcmmd showspriteat #56
+addparm 1 'people no
+addparm 0 'x
+addparm 0 'y
 
 addcmmd movesprite #57 'Move a sprite to the specified location
 addparm 1 'Sprite to move
 addparm 1 'x co-ordinates to move to
 addparm 1 'y co-ordinates to move to
 
+addcmmd farreappear #58
+addparm 1 'Sprite
+addparm 0 'bank
+addparm 0 'map
+
+addcmmd fardisappear #59
+addparm 1 'Sprite
+addparm 0 'bank
+addparm 0 'map
+
+addcmmd faceplayer #5A 'Turn caller to player
+
+addcmmd spriteface #5B
+addparm 1 'Sprite
+addparm 0 'Face
+
+'addcmmd trainerbattle #5C
+'' Trainer Battles are added as aliases, since number of
+'' Parameters differ on different parameters
+
+addcmmd lasttrainerbattle #5D
+
+addcmmd endtrainerbattle #5E
+
+addcmmd endtrainerbattle2 #5F
 
 addcmmd checktrainer #60
-addparm 1 'Trainers Pet ID???
+addparm 1
 
 addcmmd disabletrainer #61
-addparm 1 'Trainers Pet ID????
+addparm 1
 
-addcmmd enabletrainer #62
-addparm 1 'Trainers Pet ID???
+addcmmd enabletriner #62
+addparm 1
 
-addcmmd changeobjposition #63
+addcmmd movesprite2 #63
 addparm 1 'Sprite to move
 addparm 1 'x co-ordinates to move to
 addparm 1 'y co-ordinates to move to
+
+addcmmd moveofscreen #64
+addparm 1 'Sprite to move
 
 addcmmd spritebehave #65
 addparm 1 'Sprite
@@ -314,37 +426,107 @@ addparm 8 'pointer to text
 
 addcmmd closeonkeypress #68 'see HackMew post on PC for reason of change
 
+addcmmd lockall #69 'Locks all players
+
+addcmmd lock #6A 'Locks down the movement of the caller
+
+addcmmd releaseplayer #6B ' Resumes movement for player but not NPC
+
+addcmmd release #6C 'Resumes movement for caller
+
+addcmmd waitbutton #6D
+
+addcmmd showyesno #6E
+addparm 0 'X
+addparm 0 'Y
+
 addcmmd multi #6F 'Put up a list of choices for the player to make
 addparm 0 'Left co-ordinate for window
 addparm 0 'Top coordinate to draw the window
 addparm 0 'choice list # to use
 addparm 0 'Determines wether you can use the B button to cancel
 
+addcmmd multichoice2 #70 'TODO: 4 or 5 params?
+addparm 0 'X
+addparm 0 'Y
+addparm 0 'List
+addparm 0 'Abletocancel: OR'd binary bits: 0x01 = unable, 0x02 = return 127
+
+addcmmd multichoise3 #71
+addparm 0 'X
+addparm 0 'Y
+addparm 0 'List
+addparm 0 'Default choise
+addparm 0 'Abletocancel: OR'd binary bits: 0x01 = unable, 0x02 = return 127
+
+addcmmd showbox #72    'TODO: Verify
+addparm 0 'X
+addparm 0 'Y
+addparm 0 'Width
+addparm 0 'Height
+
+addcmmd hidebox #73    'TODO: Verify
+addparm 0 'X
+addparm 0 'Y
+addparm 0 'Width
+addparm 0 'Height
+
+addcmmd clearbox #74    'TODO: Verify
+addparm 0 'X
+addparm 0 'Y
+addparm 0 'Width
+addparm 0 'Height
+
 addcmmd showpokepic #75
 addparm 1 'Variable containing pokemon. ID
 addparm 0 'X-pos
 addparm 0 'Y-pos
+
 addcmmd hidepokepic #76
 
-addcmmd addpokemon #79 'Gives the player a pokemon
+addcmmd picture #77
+addparm 0 'Num
+
+addcmmd braille #78 'TODO: Verify
+addparm 8 'Pointer to text
+
+addcmmd addpokemon #79 'Gives the player a pokemon (Not to be used by player!)
 addparm 1 'Pokemon species to give
 addparm 0 'Level of pokemon
 addparm 1 'Item # to be held
+'TODO: Maybe we need 0 2 2 here !?!?!
+
+addcmmd egghandler #7A
+addparm 1 'Poke
+
+addcmmd setpokemonpp #7B
+addparm 0 'slot
+addparm 0 'attackslot
+addparm 1 'pp
 
 addcmmd checkmove #7C
 addparm 1 'move id
 
-addcmmd namedisplay #7D
+addcmmd namedisplay #7D    'TODO: StorePokemon?!?
 addparm 0 'bank of names
-addparm 1 'name number
+addparm 1 'name number / poke
 
-addcmmd partynamedisplay #7F
+addcmmd namedisplayfirst #7E 'TODO: StoreFirstPokemon?
+addparm 0 'bank of names
+
+addcmmd partynamedisplay #7F 'TODO: StorePartyPokemon?
 addparm 0 'slot as in namedisplay
 addparm 1 'var, default LASTRESULT
+
+
 
 addcmmd itemnamedisplay #80
 addparm 0 'slot, blah blah blah
 addparm 1 'item id - check to see if this uses < or not
+
+addcmmd furnituredisplay #81
+addparm 0
+addparm 1
 
 addcmmd movedisplay #82
 addparm 0 'slot as in namedisplay etc
@@ -359,18 +541,86 @@ addparm 0 'slot
 addparm 8 'pointer to text
 
 addcmmd pokemart #86 'Opens the pokemart shop system
-addparm 3 'Pointer to the item/price list
+addparm 2 'Pointer to the item/price list
 
 addcmmd buymart #87 'Opens the shop system with buy only (RSE exclusive, acts as normal mart in FRLG)
-addparm 3 'Pointer to the item list
+addparm 2 'Pointer to the item list
+
+addcmmd[frlg] fakejumpstd #88 
+addparm 0 'type ??
+
+'addcmmd[rs][e] pokemarkt3 #88
+'addparm 3 'Pointer to the item list
+
+addcmmd[frlg] fakecallstd #89
+addparm 0 'type ??
+
+'addcmmd[rs][e] pokemarkt3 #89
+'addparm 1 '??
+
+addcmmd cmd8A #8A
+addparm 0
+addparm 0
+addparm 0 
+
+addcmmd choosecontestpokemon #8B
+
+addcmmd startcontest #8C
+
+'No #8D ??
+
+addcmmd[e] startwireles #8E
 
 addcmmd rand #8F
 addparm 1 'amount to random up to. will generate random number -> 800d from 0 to (amount-1)
 
+
+addcmmd givemoney #90
+addparm 2 'Amount
+addparm 0 '?
+
+addcmmd paymoney #91
+addparm 2 'Amount
+addparm 0 '?
+
+addcmmd checkmoney #92
+addparm 2 'Amount
+addparm 0 '?
+
+addcmmd showmoneybox #93
+addparm 0 'X
+addparm 0 'Y
+addparm 0 '?
+
+addcmmd hidemoneybox #94
+addparm 0 'X
+addparm 0 'Y
+
+addcmmd updatemoneybox #95
+addparm 0 'X
+addparm 0 'Y
+addparm 0 '?
+
+addcmmd cmd96 #96 '??
+addparm 1
+
 addcmmd fadescreen #97 'Fades the screan in or out
 addparm 0 '0 fade in, 1 fade out
 
-addcmmd PlayAnimation #9C
+addcmmd fadescreen_delay #98
+addparm 0 '0 fade in, 1 fade out
+addparm 0 'Delay
+
+addcmmd darkenroom #99
+addparm 1 'Size
+
+addcmmd lightroom #9A
+addparm 0 'Size
+
+addcmmd msgbox3 #9B
+addparm 8
+
+addcmmd PlayAnimation #9C  'TODO: FInd out params, only 1 is suggested by pk-script-view
 addparm 1 '? use 0x25
 addparm 0 '? use 0x27
 
@@ -378,14 +628,62 @@ addcmmd StorePartySlotForAnimation #9D
 addparm 0 '?
 addparm 1 'variable containing animation
 
+addcmmd CheckAnimation #9E
+addparm 1 '?
+
+addcmmd sethealingplace #9F
+addparm 1 'Place
+
+addcmmd checkgender #A0 'Checks if player is boy or girl and places in LASTRESULT (0x800d)
+
+addcmmd[frlg] cry #A1
+addparm 1
+addparm 0
+
 addcmmd setmaptile #A2 'Sets a tile on the map. You must somehow refresh that part, can be done by scrolling out of view and back in or by calling this command from a Level Script
 addparm 1 'X coordinate
 addparm 1 'Y coordinate
 addparm 1 'Tile number
 addparm 1 'Tile attributes
 
-addcmmd setweather #A4 'Prepare to fade the weather into the type specified,1
-addparm 0 'New weather value
+addcmmd resetweather #A3
+
+'addcmmd[rs][e] setweather #A4 'Prepare to fade the weather into the type specified,1
+'addparm 0 'New weather value
+
+addcmmd[frlg] setweather #A4 'Prepare to fade the weather into the type specified,1
+addparm 1 'New weather value
+
+addcmmd doweather #A5 'Triggers the weather change set with SetWeather
+
+addcmmd cmdA6 #A6
+addparm 0
+
+addcmmd setmapfooter #A7
+addparm 1
+
+addcmmd increasespritelevel #A8
+addparm 1 'id
+addparm 0 'bank
+addparm 0 'map
+addparm 0 '?
+
+addcmmd resetspritelevel #A9
+addparm 1 'id
+addparm 0 'bank
+addparm 0 'map
+
+addcmmd createtempsprite #AA
+addparm 0 'Sprite
+addparm 0 'ID
+addparm 1 'X
+addparm 1 'Y
+addparm 0 'Behave
+addparm 0 'Direciton
+
+addcmmd tempsriteface #AB
+addparm 0 'ID
+addparm 0 'Direction
 
 addcmmd opendoor #AC
 addparm 1 'x-pos of door to open
@@ -397,6 +695,22 @@ addparm 1 'y-pos
 
 addcmmd doorflush #AE 'always called directly after "opendoor" and "closedoor", waits for door animation to finish
 
+addcmmd opendoorpermanent #AF
+addparm 1 'x-pos of door to open
+addparm 1 'y-position
+
+addcmmd closedoorpermanent #B0
+addparm 1 'x-pos of door to close
+addparm 1 'y-pos
+
+addcmmd cmdB1 #B1
+addparm 0
+addparm 0
+addparm 1
+addparm 1
+
+addcmmd cmdB2 #B2
+
 addcmmd getcoins #B3
 addparm 1 'variable to store current coin amount in
 
@@ -406,36 +720,111 @@ addparm 1 'amount of coins to give to player
 addcmmd takecoins #B5
 addparm 1 'variable in which the amount of coins to take away is stored
 
-addcmmd setmsgcolor #C7
+addcmmd Battle #B6 ' Commence a wild battle
+addparm 1     ' pokemon race
+addparm 0     ' pokemon level
+addparm 1     ' Item
+
+addcmmd LastBattle #B7
+
+
+addcmmd showcoinbox #C0
+addparm 0 'X
+addparm 0 'Y
+
+addcmmd hidecoinbox #C1
+addparm 0 'X
+addparm 0 'Y
+
+addcmmd updatecoinbox #C2
+addparm 0 'X
+addparm 0 'Y
+
+addcmmd CMDC3 #C3
+addparm 0
+
+addcmmd warp6 #C4
+addparm 0 'Bank
+addparm 0 'Map
+addparm 0 'Exit
+addparm 1 'X
+addparm 1 'Y
+
+addcmmd waitcry #C5
+
+addcmmd storeboxname #C6  ' \v\hxx boxno
+addparm 0 'xx
+addparm 1 'boxno
+
+addcmmd textcolor #C7
 addparm 0 '0=blue 1=red 2+=black
 
 addcmmd boxtypesign #CA 'changes the msgbox appearance to that of a sign
-addcmmd boxtypeperson #CB 'changes the msgbox appearance to normal, the one where you're talking to someone
+addcmmd boxtypenormal #CB 'changes the msgbox appearance to normal, the one where you're talking to someone
 
-addcmmd pokenav #DF 'emerald only, equivalent to "msgbox2" so call "waitmsgbox2" after this.
+addcmmd comparehiddenvar #CC
+addparm 0 'Variable
+addparm 1 'Value
+
+addcmmd setobedience #CD
+addparm 1 'ID
+
+addcmmd checkobedience #CE
+addparm 1 'ID
+
+addcmmd executeram #CF
+
+addcmmd setworldmapflag #D0
+addparm 1 'Flag
+
+addcmmd warpteleport2 #D1
+addparm 0 'bank
+addparm 0 'map
+addparm 0 'ext
+addparm 1 'X
+addparm 1 'Y
+
+addcmmd setcatchlocation #D2
+addparm 1 'ID
+addparm 0 'location
+
+
+addcmmd cmdD3 #D3  'TODO: Verify
+addparm 8 'Braille
+
+addcmmd storeitems #D4 ' \v\hxx  id amount
+addparm 0  'xx
+addparm 1  'ID
+addparm 1  'Amount
+
+
+addcmmd[e] pokenav #DF 'emerald only, equivalent to "msgbox2" so call "waitmsgbox2" after this.
 addparm 8 'ptr to text
 
 
-' ------------------
-'  NOTE
-' ------------------
-' Below this are commands used to make other commands work. As such, it is recommended not to modify them.
+addcmmd cmdFB #FB '??
+addparm 2  'Addr?
+
+addcmmd cmdFE #FE '??
+addparm 0
+
+
+
+
+addcmmd wlhandler #39
+addparm 0
+addparm 0
+addparm 0
+addparm 1
+addparm 1
+
 
 addcmmd hashpoke #7D
 addparm 1
 addparm 0
 
-addcmmd Battle #B6 ' Commence a wild battle
-addparm 1 		' pokemon race
-addparm 0 		' pokemon lavel
 
-addcmmd HashNamePoke #27
-addparm 2
-addparm 2
-addparm 2
-addparm 2
-addparm 2
-addparm 0
+
 
 addcmmd gmhandler #90
 addparm 2
@@ -449,15 +838,9 @@ addcmmd cmhandler #92
 addparm 2
 addparm 0
 
-addcmmd egghandler #7A
-addparm 1
 
-addcmmd wlhandler #39
-addparm 0
-addparm 0
-addparm 0
-addparm 1
-addparm 1
+
+
 
 /************\
 | CONSTRUCTS |
@@ -484,7 +867,7 @@ addparm 7 fadescreen
 addparm 0 0x00
 addparm 7 special
 addparm 1 mask(#009E)
-addparm 7 HashNamePoke
+addparm 0 0x25      'Special
 addparm 2 mask(#04008003)
 addparm 2 mask(#01743180)
 addparm 2 mask(#1A149867)
@@ -544,7 +927,7 @@ addparm 0 mask(#08)
 addparm 0 mask(#66)
 addparm 0 mask(#8e)
 addparm 7 pokemart
-addparm 3 'Pointer to pokemart data
+addparm 2 'Pointer to pokemart data
 
 alias givemoney $1
 addparm 7 gmhandler
@@ -817,68 +1200,6 @@ addparm 7 if1
 addparm 0 mask(#01)
 addparm 3
 
-alias ifboy jump $1
-addparm 7 checkgender
-addparm 7 compare
-addparm 1 mask(#800D)
-addparm 1 mask(#0000)
-addparm 7 if1
-addparm 0 mask(#01)
-addparm 3
-
-alias ifboy gosub $1
-addparm 7 checkgender
-addparm 7 compare
-addparm 1 mask(#800D)
-addparm 1 mask(#0000)
-addparm 7 if2
-addparm 0 mask(#01)
-addparm 3
-
-alias ifboy call $1
-addparm 7 checkgender
-addparm 7 compare
-addparm 1 mask(#800D)
-addparm 1 mask(#0000)
-addparm 7 if2
-addparm 0 mask(#01)
-addparm 3
-
-alias ifgirl goto $1
-addparm 7 checkgender
-addparm 7 compare
-addparm 1 mask(#800D)
-addparm 1 mask(#0001)
-addparm 7 if1
-addparm 0 mask(#01)
-addparm 3
-
-alias ifgirl jump $1
-addparm 7 checkgender
-addparm 7 compare
-addparm 1 mask(#800D)
-addparm 1 mask(#0001)
-addparm 7 if1
-addparm 0 mask(#01)
-addparm 3
-
-alias ifgirl gosub $1
-addparm 7 checkgender
-addparm 7 compare
-addparm 1 mask(#800D)
-addparm 1 mask(#0001)
-addparm 7 if2
-addparm 0 mask(#01)
-addparm 3
-
-alias ifgirl call $1
-addparm 7 checkgender
-addparm 7 compare
-addparm 1 mask(#800D)
-addparm 1 mask(#0001)
-addparm 7 if2
-addparm 0 mask(#01)
-addparm 3
 
 alias ifpartyfull jump $1
 addparm 7 countpokemon
@@ -903,7 +1224,7 @@ addparm 3
 ' trainerbattle 0x00
 alias trainerbattle $1 $2 $3 $4
 addparm 0 0x5c   'addcmmd trainerbattle #5c
-addparm 0 0x00   'kind of battle 0
+addparm 0 0x00   'kind of battle 0:normal
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
@@ -912,7 +1233,7 @@ addparm 8        'pointer to text losing
 ' trainerbattle 0x01
 alias trainerbattle $1 $2 $3 $4 jump $5
 addparm 0 0x5c   'addcmmd trainerbattle #5c
-addparm 0 0x01   'kind of battle 0
+addparm 0 0x01   'kind of battle 1
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
@@ -922,7 +1243,7 @@ addparm 3        'pointer to text losing
 ' trainerbattle 0x02
 alias trainerbattle2 $1 $2 $3 $4 $5
 addparm 0 0x5c   'addcmmd trainerbattle #5c
-addparm 0 0x02   'kind of battle 0
+addparm 0 0x02   'kind of battle 2
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
@@ -932,7 +1253,7 @@ addparm 3        'pointer to text losing
 ' trainerbattle3 0x03
 alias trainerbattle $1 $2 $3
 addparm 0 0x5c   'addcmmd trainerbattle #5c
-addparm 0 0x03   'kind of battle 0
+addparm 0 0x03   'kind of battle 3
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
@@ -940,7 +1261,7 @@ addparm 8        'pointer to text winning
 ' trainerbattle4 0x04
 alias trainerbattle2 $1 $2 $3 $4 $5
 addparm 0 0x5c   'addcmmd trainerbattle #5c
-addparm 0 0x04   'kind of battle 0
+addparm 0 0x04   'kind of battle 4: Double (?)
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
@@ -1047,3 +1368,25 @@ addparm 7 comparefarbytetofarbyte
 addparm 3 'Pointer to a byte value to compare with
 addparm 3 'Pointer to a byte value to compare with
 #unlock
+
+
+
+
+
+
+
+
+
+'addcmmd HashNamePoke #27
+'addparm 2
+'addparm 2
+'addparm 2
+'addparm 2
+'addparm 2
+'addparm 0
+
+
+'addcmmd warp #39 'Warp to another level
+'addparm 0 'Bank to warp to
+'addparm 0 'Level to warp to
+'addparm 0 'Exit to warp to
