@@ -67,6 +67,14 @@ class ScriptLang():
         comment = False
       if comment: continue #Still in command parsing, skip line
       
+      try: 
+        lastcommand = self.parseline(line, lastcommand)
+      except:
+        print("Could not parse line from langdef: %s"%line)
+        raise Exception("Could not parse line from langdef: %s"%line)
+
+  def parseline(self, line, lastcommand):
+    if True:
       instructions = line.split('\'')[0].strip().split(" ")
       instructions = list(map(lambda x: x.strip(), instructions))
       instruction  = instructions[0].lower()
@@ -81,7 +89,7 @@ class ScriptLang():
         char = instructions[1]
         if len(char) > 1: char = chr(toint(char))  #If char is represented as a number, rewrite
         self.text[char] = toint(instructions[2])
-      elif instruction == "addcmmd":
+      elif instruction[0:len("addcmmd")] == "addcmmd":
         commandname = instructions[1].lower()
         commandcode = toint(instructions[2])
         lastcommand = Command(commandname, commandcode, self.defines)
@@ -109,7 +117,7 @@ class ScriptLang():
               raise Exception("Unknown default value for param: "+repr(instructions[2]))
             
         lastcommand.addParam(instructiontype, defaultvalue)
-  
+    return lastcommand
   
   def handleInclude(self, filename):
     '''Include a separate file with commands. Note that file includes are relative to the
