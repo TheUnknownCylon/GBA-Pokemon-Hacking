@@ -5,9 +5,9 @@ from gbahack.sprites import readSprite, toPNG
 class OverWorldSprites():
   def __init__(self, rom):
     self.rom = rom
-    self.palettetablepointer = 0x3A5158
-    self.spritetablepointer  = 0x3A3BB0
-    self.spritepersontablepointer = 0x39FDB0
+    self.palettetablepointer = rom.metadata['overworld_palettes']
+    self.spritetablepointer  = rom.metadata['overworld_sprites']
+    self.spritepersontablepointer = rom.metadata['overworld_spritepersonmap']
     self.palettetable = PaletteTable(rom, self.palettetablepointer)
   
   def getSprite(self, index):
