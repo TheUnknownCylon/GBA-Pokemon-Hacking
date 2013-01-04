@@ -1,6 +1,5 @@
 #fulllog off
 #include commands.psh
-#include texttable.psh
 #include items.psh
 #include stdpoke.psh
 

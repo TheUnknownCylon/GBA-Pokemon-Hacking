@@ -1,6 +1,9 @@
-from gbahackpkmn.pokescript.lang import ParamType
 from array import array
 import struct
+
+from gbahackpkmn.pokescript.lang import ParamType
+from gbahackpkmn.strings import PokeString
+from gbahackpkmn.movements import Movement as PokeMovement
 
 class Decompiler():
   def __init__(self, langdef, rom):
@@ -62,40 +65,17 @@ class DecompileJob():
  
  
   def decompileString(self, pointer):
-    '''Decompiles a String from the ROM. Note that we assume that
-    a String always ends with 0xFF, which is the case in Pokemon games.'''
-    #print("Decompile string %X\n"%pointer)
-
-    p = pointer
-    text = ""
-    while True:
-      p, byte = self.rom.readByte(p)
-
-      if byte == 0xFF: break
-      if byte == 0xFD:  #\v
-        p, nextbyte = self.rom.readByte(p)
-        if nextbyte in self.langdef.texthashinv:
-          text += self.langdef.texthashinv[nextbyte]
-        else:
-          text += "\v\h%X"%nextbyte
-      else:
-        try: text += self.langdef.decodeChar(byte)
-        except: text += "?"
-      
+    text = PokeString.read(self.rom, pointer).getText()
     return ["#ORG 0x%X"%pointer, "= %s"%text]
 
   
   def decompileMovement(self, pointer):
-    '''Decompiles a set of movement instructions at the given pointer.
-    Note that a movement instruction loop (should) always ends with 0xFE.'''
     print("Decompile movement %X\n"%pointer)
-    p = pointer
-    instructions = ""
+    movements = PokeMovement.read(self.rom, pointer).getMovements()
     
-    while True:
-      p, byte = self.rom.readByte(p)
+    instructions = ""
+    for byte in movements:
       instructions += "0x%x"%byte +" "
-      if byte == 0xFE: break
       
     return ["#ORG 0x%X"%pointer, "; %s"%instructions]
 
