@@ -3,25 +3,35 @@ from array import array
 from gbahackpkmn.pokescript.lang import toint
 
 
+
+
 class Routine():
   def __init__(self):
-    self.codes = array('B')
+    self._codes = array('B')
     
   def addByte(self, byte):
-    self.codes.append(byte)
+    self._codes.append(byte)
     
   def addBytes(self, otherarray):
-    self.codes.extend(otherarray)
+    self._codes.extend(otherarray)
   
   def overwrite(self, index, byte):
-    self.codes[index] = byte
+    self._codes[index] = byte
   
   def getBytes(self):
-    return self.codes
+    return self._codes
   
   def length(self):
-    return len(self.codes)
+    return len(self._codes)
+  
 
+class RoutineText(Routine):
+  def getBytes(self):
+    print("IK KOM HIER :D:D:D:D")
+    return self._codes + array('B', [0xff])
+  
+  def length(self):
+    return super().length() + 1
 
 
 class PokeScript():
@@ -44,6 +54,12 @@ class PokeScript():
   def routineDef(self, name, bank=0):
     '''Get a new routine, which will be registered as a known routine.'''
     r = Routine()
+    self.pointerdefs[name.lower()] = r
+    return r
+  
+  def textDef(self, name, bank=0):
+    '''Get a new routine, which will be registered as a known routine.'''
+    r = RoutineText()
     self.pointerdefs[name.lower()] = r
     return r
     
@@ -98,6 +114,16 @@ class PokeScript():
       else:
         raise Exception("Currently there is only support for routine definitions starting with $: e.g.: #ORG $NAME")
 
+
+    if command == "#text":
+      offset = args[0]
+      if offset[0] == "$":
+        return self.textDef(offset[1:])
+      else:
+        raise Exception("Currently there is only support for routine definitions starting with $: e.g.: #ORG $NAME")
+
+        
+
         
     if command[0] == "$":
       #$var 1 = Hi I'm John! is sugar for #inline $var 1
@@ -116,7 +142,7 @@ class PokeScript():
       #TODO: Okay, this can give bugs if using = or ; in one of the arguments
       innerroutine = self.routineDef(offset[1:])
       if ctype == "=": #Rewrite all after = to a String
-        string = line.split("=", 1)[1]
+        string = line.split("=", 1)[1].strip()
         innerroutine.addBytes(self.langdef.encodeText(string))
       elif ctype == ";": #Rewrite rest as a normal command
         string = line.split(";", 1)[1]
@@ -132,6 +158,11 @@ class PokeScript():
       if routine == None: raise Exception("#binary or #raw should be part of a routine.")
       for byte in args:
         routine.addByte(toint(byte))
+      return routine
+    
+    if command[0] == "=":
+      string = line.split("=", 1)[1].strip()
+      routine.addBytes(self.langdef.encodeText(string))
       return routine
       
     

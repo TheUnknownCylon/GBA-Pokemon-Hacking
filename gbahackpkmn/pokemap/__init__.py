@@ -8,8 +8,8 @@ from gbahack.gbabin.datastruct import DataStruct, RomDataType as RT
 from gbahackpkmn.pokemap.events import *
 
 class PokeMapManager():
-  def __init__(self, rom, tablepointer):
-    self.tablepointer = tablepointer
+  def __init__(self, rom):
+    self.tablepointer = rom.metadata['maptable']
     self.rom = rom
 
   def getBank(self, bankid):

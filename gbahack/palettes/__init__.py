@@ -36,3 +36,4 @@ class PaletteEntry(DataStruct):
     (RT.short,   "paletteid"),
     (RT.short,   "filler")
     ]
+    

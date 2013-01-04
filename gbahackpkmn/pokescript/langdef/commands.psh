@@ -255,7 +255,6 @@ addcmmd fanfare #31   'Play background music
 addparm 1             'Song # to play
 
 addcmmd waitfanfare #32 'Wait for the fanfare to finish
-addparm 1             'Song number
 
 'addcmmd[rs][e] playsound #33 'switch background music
 'addparm 1  'Song number to play
@@ -905,8 +904,19 @@ addparm 1 '$Val		' $Val
 addparm 7 copyvarifnotzero 	' No of Items
 addparm 1 mask(#8001)
 addparm 1 '$Val
-addparm 7 callstd		' Display 'Obtained' or 'Found'
-addparm 0 select(#00,#01)
+addparm 7 callstd		' Display 'Obtained'
+addparm 0 0
+
+alias finditem $1 $2    ' Give item to player
+addparm 7 copyvarifnotzero  ' Item to Give
+addparm 1 mask(#8000)   
+addparm 1 '$Val   ' $Val
+addparm 7 copyvarifnotzero  ' No of Items
+addparm 1 mask(#8001)
+addparm 1 '$Val
+addparm 7 callstd   ' Display  'Found'
+addparm 0 1
+
 
 alias msgbox $1		' loadpointer for use in text
 addparm 7 loadpointer 
@@ -1288,14 +1298,13 @@ addparm 8        'pointer to text losing
 addparm 3        'pointer to text losing
 
 ' trainerbattle4 0x09
-alias trainerbattle2 $1 $2 $3 $4 $5
+alias trainerbattle2 $1 $2 $3 $4
 addparm 0 0x5c   'addcmmd trainerbattle #5c
 addparm 0 0x09   'kind of battle 0
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
 addparm 8        'pointer to text losing
-addparm 3        'pointer to text losing
 
 '
 ' Compare Constructs (Geeze there's a lot of them!)

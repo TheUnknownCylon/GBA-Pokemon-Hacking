@@ -83,6 +83,7 @@ class Alias(CodeCommand):
     CodeCommand.__init__(self)
     self.signature = string.lower().split()
     self.commands = commands #pointer to list of all commands, needed for desugaring
+    self._bytesig = None
     
   def matches(self, line):
     try: self.stripParams(line)
@@ -103,6 +104,12 @@ class Alias(CodeCommand):
   
   
   def bytesignature(self):
+    if self._bytesig == None:
+      self._bytesig = self._generate_signature()
+    return self._bytesig
+    
+    
+  def _generate_signature(self):
     sig = []
     skip = 0
     for paramindex in range(0, len(self.params)):

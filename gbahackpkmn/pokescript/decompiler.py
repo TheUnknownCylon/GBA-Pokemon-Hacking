@@ -64,6 +64,8 @@ class DecompileJob():
   def decompileString(self, pointer):
     '''Decompiles a String from the ROM. Note that we assume that
     a String always ends with 0xFF, which is the case in Pokemon games.'''
+    #print("Decompile string %X\n"%pointer)
+
     p = pointer
     text = ""
     while True:
@@ -86,6 +88,7 @@ class DecompileJob():
   def decompileMovement(self, pointer):
     '''Decompiles a set of movement instructions at the given pointer.
     Note that a movement instruction loop (should) always ends with 0xFE.'''
+    print("Decompile movement %X\n"%pointer)
     p = pointer
     instructions = ""
     
@@ -99,12 +102,14 @@ class DecompileJob():
     
   def decompileRoutine(self, pointer):
     '''Decompiles a script from the ROM at the given pointer.'''
+    print("Decompile routine %X\n"%pointer)
     routine = ["#ORG 0x%X"%pointer]
     
     p = pointer
     while True:
       try:
         p, commandline = self.decompileCommand(p)
+        print("  >> %s"% commandline)
         routine.append(commandline)
       except EndOfScript as e:
         routine.append(e.commandline)
@@ -129,7 +134,7 @@ class DecompileJob():
           if byte != '' and byte != v: raise NotAMatchException()
           if byte == '': argbytes.append(v)
         
-        #print("Selected command to parse: "+' '.join(command.signature))
+        print("Selected command to parse: "+' '.join(command.signature))
         #read the entire command bytes, and this all matches!
         try:
           commandstring = self.parsecommandargs(command, argbytes)
@@ -145,6 +150,7 @@ class DecompileJob():
       except EndOfScript as eos: raise eos
 
     p, thebyte = self.rom.readByte(pointer)
+    print("Selected command: #raw 0x"+str(thebyte))
     return pointer+1, "#raw 0x"+str(thebyte)
    
    

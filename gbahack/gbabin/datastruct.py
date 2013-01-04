@@ -21,7 +21,7 @@ Example:
 '''
 from gbahack.gbabin import BBlock
 
-class RomDataType:
+class RomDataType():
   '''Class of rom datatypes. Can be used to read values from rom.'''
   byte = 0x00
   short = 0x01
@@ -56,7 +56,7 @@ class RomDataType:
     if t == cls.int:     return block.addInt(v)
     
   
-class DataStruct:
+class DataStruct():
   fields = []  #Tuples of (RomDataType.type, "fieldname") pairs.
 
   @classmethod
@@ -65,6 +65,11 @@ class DataStruct:
     s = cls()
     s.loadValues(rom, p)
     return s
+  
+  def validate(self):
+    '''Possible extention point. The object can validate itself based on
+    expected values.'''
+    pass
   
   def loadValues(self, rom, p):
     '''(re)Load all values from the given ROM into the object.'''

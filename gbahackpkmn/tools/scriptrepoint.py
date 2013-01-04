@@ -18,8 +18,8 @@ def isint(i):
   except: return False
   return True
 
-def repoint(rom, mappointer, newpointers, lookupfile):
-  gamemap = PokeMapManager(rom, mappointer)
+def repoint(rom, newpointers, lookupfile):
+  gamemap = PokeMapManager(rom)
   
   for line in open(lookupfile, encoding="utf-8"):
     line = line.split("\'")[0].strip()

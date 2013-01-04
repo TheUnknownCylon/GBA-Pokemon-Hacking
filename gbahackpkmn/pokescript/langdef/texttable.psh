@@ -27,6 +27,7 @@
 #addHash \d	&hF8
 #addHash \r	&hF9
 #addHash \c	&hFC
+#addHash \e &h1B
 #addHash [Lv]	&h34
 #addHash [PK]	&h53
 #addHash [MN]	&h54

@@ -144,8 +144,8 @@ class ScriptLang():
   def decodeChar(self, char):
     if char == 0x00: return " "  #special case
     if char in self.texthashinv:
-      print("DECODE SPECIAL CHAR: "+repr(char))
-      return "%s"%self.texthashinv[char]
+      #print("DECODE SPECIAL CHAR: "+repr(char))
+      return self.texthashinv[char]
     try: return self.textinv[char]
     except: raise Exception("Can not decode text char %X (not defined)."%char)
     
@@ -165,7 +165,7 @@ class ScriptLang():
           i+=1
           ctrl += char
           if char == "]":
-            print("Looking up: %s"%ctrl)
+            #print("Looking up: %s"%ctrl)
             if ctrl.lower() in self.texthash:
               textarray.append(self.texthash["\\v"])
               textarray.append(self.texthash[ctrl])
@@ -190,6 +190,5 @@ class ScriptLang():
        else:
          textarray.append(self.text[char])
     
-    textarray.append(0xff)
     return textarray
   

@@ -75,7 +75,8 @@ class PokeMapEvents(DataStruct):
 
     
 # ================ Below all event types are defined ========================
-    
+class HiddenItemException(Exception): pass
+
 class PokeMapEventPerson(DataStruct):
   fields = [
     (RT.byte, "event"), (RT.byte, "spriteid"), (RT.short, "uu0"),
@@ -93,6 +94,7 @@ class PokeMapEventScript(DataStruct):
     (RT.short, "valvalue"), (RT.short, "uu1"),
     (RT.pointer, "scriptpointer")
   ]
+  
 
 class PokeMapEventSignpost(DataStruct):
   '''Representation of a signpost. It is not aware of its location in the ROM.'''
@@ -101,6 +103,22 @@ class PokeMapEventSignpost(DataStruct):
     (RT.byte, "talklvl"), (RT.byte, "type"), (RT.short, "uu0"),
     (RT.pointer, "scriptpointer")
   ]
+  
+  def validate(self):
+    if self.type > 0x04:
+      raise HiddenItemException("This is not a signpost, but a hidden item!")
+  
+class PokemapHiddenItem(DataStruct):
+  '''Representation of a signpost. It is not aware of its location in the ROM.'''
+  fields = [
+    (RT.short, "posx"), (RT.short, "posy"),
+    (RT.byte, "talklvl"), (RT.byte, "type"), (RT.short, "uu0"),
+    (RT.short, "itemid"), (RT.byte, "hiddenid"), (RT.byte, "amount")
+  ]
+  
+  def validate(self):
+    if self.type < 0x05:
+      raise HiddenItemException("This is not a hidden item, but a signpost!")
   
 class PokeMapEventWarp(DataStruct):
   fields = [
