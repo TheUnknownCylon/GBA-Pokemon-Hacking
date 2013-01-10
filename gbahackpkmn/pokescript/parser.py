@@ -193,12 +193,4 @@ class PokeScript():
             self.pointerrefs.append((routine, pointer[0], pointer[1]))
         routine.addBytes(commandbytes)
         
-         
-    def normalizeline(self, line):
-        '''Normalizes the arguments. Returns a list of lowercased arguments.
-        Note that this will not be sufficient for String parsing: multiple spaces
-        are treated as single spaces.'''
-        if not line: return []
-        if line[0] == '\'': return []  #argument line
-        return line.lower().replace("\t", " ").strip().split()
         

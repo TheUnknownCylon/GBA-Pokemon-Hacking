@@ -20,23 +20,25 @@ class PokeString(Resource):
     Class that represents a String resource in the ROM.
     '''
     
-    def __init__(self, text):
-        '''
-        Initialize a new PokeString, with a given text.
-        '''
+    name = "string"
+    
+    def __init__(self, text=""):
+        '''Initialize a new PokeString, with a given text.'''
         self.text = text
         
         
     def getText(self):
-        '''
-        Returns the unicode text of this string.
-        '''
+        '''Returns the unicode text of this string.'''
         return self.text
+    
+    def append(self, appendtext):
+        '''Appends some text to the actual string.'''
+        self.text += appendtext
     
     
     @classmethod
     def read(self, rom, pointer):
-        print("Decompile string %X\n"%pointer)
+        #print("Decompile string %X\n"%pointer)
 
         p = pointer
         text = ""
@@ -60,7 +62,7 @@ class PokeString(Resource):
     
     
     def bytestring(self):
-        print("Compiling string %s" % self.text)
+        #print("Compiling string %s" % self.text)
         text = self.text
         textarray = array('B')
     

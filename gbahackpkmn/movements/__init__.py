@@ -12,7 +12,9 @@ from array import array
 
 class Movement(Resource):
     
-    def __init__(self, movements):
+    name = "movement"
+    
+    def __init__(self, movements=array('B')):
         '''
         Initializes the movement resource.
         Argument movement is an array.array('B') object, representing the
@@ -37,6 +39,8 @@ class Movement(Resource):
         
         return Movement(movements)
     
+    def append(self, byte):
+        self.movements.append(byte)
     
     def getMovements(self):
         return self.movements

@@ -54,8 +54,10 @@ class CodeCommand():
     
     
   def addParam(self, paramtype, defaultvalue=None):
-    '''Adds a parameter to the command. Note that values without a default
-    are the values that should be set by the user.'''
+    '''
+    Adds a parameter to the command. Note that values without a default
+    are the values that should be set by the user.
+    '''
     
     #Pokescript does some additional footers which are not required!
     if paramtype == ParamType.eos:
@@ -67,12 +69,25 @@ class CodeCommand():
     if defaultvalue == None or isinstance(defaultvalue, SELECT):
       self.neededparams+=1
       defaultvalue = None
-    
+  
+  def getParam(self, i):
+      return self.params[i]
+  
   def checkParamscount(self, argscount):
     if argscount != self.neededparams:
       raise Exception("Wrong number of arguments used: got %d, expected %d."%(argscount, self.neededparams))
 
-  def bytesignature(self): raise NotImplemented()
+  def compile(self, *args):
+    '''Compiles the command according to a list of arguments.'''
+    raise NotImplementedError()
+
+  def bytesignature(self):
+    '''
+    Returns the byte signature for the given CodeCommand, argument slots
+    are left empty.
+    '''
+    raise NotImplementedError()
+
       
 class Alias(CodeCommand):
   '''An alias is a shortcut definition for several commands and arguments.
@@ -143,16 +158,12 @@ class Alias(CodeCommand):
       sig += valuestoappend
     return sig  
   
-  
-  def desugar(self, line):
-    params = self.stripParams(line)
-    return self.desugar_helper(params)
+  def compile(self, *args):
+    #print("+++++ Compiling Alias "+repr(self.getParam(0)))
+    compiled = array('B')
     
- 
-  def desugar_helper(self, args):
     argstaken = 0
     paramstaken = 0
-    lines = []
     params = self.params
     
     while paramstaken < len(params):
@@ -163,7 +174,7 @@ class Alias(CodeCommand):
       pvalue = p[1]
       if ptype == ParamType.command:  #param type
         command = self.commands[pvalue.lower()]
-        cline = pvalue.lower() + " "
+        commandargs = []
         for i in range(0, command.neededparams):
           value = params[paramstaken][1]
           paramstaken += 1
@@ -177,20 +188,17 @@ class Alias(CodeCommand):
           else: #make sure value is a string
             value = str(value)
           
-          cline += value  
-          cline += " "
-          
-        lines.append(cline)
+          commandargs.append(value)
+        
+        #print(">>>> "+repr(commandargs))
+        compiled.extend(command.compile(*commandargs))
 
       else:
-        cline = "#BINARY "
         x = ParamType.rewrite(ptype, pvalue)
         for y in x:
-          cline += "%d "%y
+          compiled.append(y)
         
-        lines.append(cline)
-        
-    return lines
+    return compiled
 
       
 class Command(CodeCommand):
@@ -232,12 +240,13 @@ class Command(CodeCommand):
       
     return sig
     
-  def compile(self, inneroffset, *args):
-    self.checkParamscount(len(args))
     
+  def compile(self, *args):
+    #print("Compile "+repr(self.code)+" with args "+repr(args))
+    self.checkParamscount(len(args))
+       
     usedargs = 0
     
-    pointers = []
     bytes = array('B')
     bytes.append(self.code)
     
@@ -254,21 +263,19 @@ class Command(CodeCommand):
       else:
         value = param[1]
 
-      if ParamType.ispointer(param[0]):
-        pointer = value
-        if pointer[0] != "$": raise Exception("Only Pointers to $ are supported yet!")
-        value = 0 #we can not determine the pointer yet, write something: write 0!
-        pointers.append((pointer[1:].lower(), inneroffset+len(bytes)))
-      else:
-        try: value = toint(value)
-        except: #value may not be an integer, but may be a (defined) constant!
+      try:
+        value = toint(value)
+      except: #value may not be an integer, but may be a (defined) constant!
+        try:
           value = value.lower()
           if value in self.constants:
             value = self.constants[value]
           else:
-            raise Exception("The given parameter could not be converted to integer and is also not defined as a constant.\n"+repr(value))
+            raise Exception()
+        except:
+          raise Exception("The given parameter could not be converted to integer and is also not defined as a constant: "+repr(value))
         
       bytes.fromstring(ParamType.rewrite(param[0], value))
     
-    return bytes, pointers
+    return bytes
     
