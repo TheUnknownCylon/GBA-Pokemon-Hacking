@@ -1,4 +1,116 @@
- 
+
+
+class PointerObserver():
+    '''
+    Interface for classes that want to observe pointer changes.
+    By calling register(), the object is registered for pointer changes updates,
+    after such a change, the pointerChanged callback is called.
+    '''
+    
+    def register(self, rm):
+        '''
+        Registers itself to the resource manager that the class
+        want to get notifications of pointer changes.
+        '''
+        rm.register(self)
+        
+    
+    def pointerChanged(self, rm, oldpointer, newpointer):
+        '''Callback from resource manger rm: a pointer has changed.'''
+        raise NotImplementedError()
+    
+    
+    def pointerRemoved(self, rm, pointer):
+        '''A pointer was removed from the ROM, and becomes an invalid resource.'''
+        raise NotImplementedError()
+    
+        
+
+class ResourceManager():
+    '''Manager of ROM resources.'''
+    
+    def __init__(self, rom):
+        self.rom = rom
+        self.pointerwatchers = []
+        
+        #Keep resources in a list of resources, and a list of pointers
+        self.resources = {}   #key: resource, value: pointer (None=no pointer)
+        self.pointers = {}    #key: pointer,  value: resource (note: contians only ROM-stored resources)
+    
+    
+    def register(self, pointerobserver):
+        '''
+        Register an PointerObserver object for pointer change callbacks.
+        Registee should be of type PointerObserver.
+        '''
+        self.pointerwatchers.append(pointerobserver)
+    
+    
+    def get(self, resource, pointer):
+        '''
+        Returns an initialized resource, read from the rom.
+        Resource is the resource class that should be read.
+        Pointer is the location in the ROM where the pointer is stored.
+        '''
+        if not pointer in self.pointers:
+            r = resource.read(rom, pointer)
+            self.pointers[pointer] = r
+            self.resources[r] = pointer
+            
+        elif not isinstance(self.pointers[pointer], resource):
+            raise Exception("Pointer already loaded, but of different resource type.")
+        
+        return self.pointers[pointer]
+    
+    
+    def store(self, resource, allow_replacement=True):
+        '''
+        Stores a resource in the ROM.
+        If the resource was not already stored, the resource is written into a
+        new location in the ROM.
+        If the resource was already stored the resource will be updated.
+        If allow_replacement is False, the resource is *always* written at the
+        old pointer location, possibly overwriting other data.
+        If a pointer location changes, all pointerwachters are informed.
+        
+        Returns the new pointer location.
+        '''
+        oldpointer = None
+        if resource not in self.resources:
+            newpointer = resource.write(self.rom, 0x08000000)
+        
+        else:
+            oldpointer = self.resources[resource]
+            newpointer = resource.update(self.rom, oldpointer, allow_replacement)
+            del self.pointers[oldpointer]
+        
+        self.pointers[newpointer] = resource
+        self.resources[resource]  = newpointer
+        
+        #Inform others only after the resoure manager indices are up to date.
+        if oldpointer and oldpointer != newpointer:
+            print("! Pointer 0x%X has been changed 0x%X"%(oldpointer, newpointer))
+            for watcher in self.pointerwachters:
+                watcher.pointerChanged(self, oldpointer, newpointer)
+        
+        return newpointer
+    
+    
+    def delete(self, resource):
+        '''Removes a resource from the ROM and informs pointerwachters.'''
+        if resource not in self.resources:
+            return
+        
+        pointer = self.resources[resource]
+        del self.resources[resource]
+        del self.pointers[pointer]
+        resource.delete(self.rom, pointer)
+        
+        print("! Pointer 0x%X is removed from the ROM.")
+        for watcher in self.pointerwatchers:
+            watcher.pointerRemoved(self, pointer)
+        
+
 class Resource():
     '''
     Abstract class that represents a resource in a given ROM.
@@ -9,6 +121,8 @@ class Resource():
     for that, these dependencies should be added to implementations of
     subclasses.
     '''
+    
+    name = "resource"
     
     @classmethod
     def read(self, rom, pointer):
@@ -29,6 +143,7 @@ class Resource():
         
         
     
+    
     ### End of unimplemented methods ##
     
     
@@ -38,8 +153,8 @@ class Resource():
         Removes a resource of the implemented resource type from the ROM,
         frees the memory in the rom and returns the removed object.
         '''
-        old = self.read(rom, pointer)
-        rom.trunc(pointer, old.blength)
+        old = self.read(rom, pointer)    
+        rom.trunc(pointer, old.blength())
         return old
 
 
@@ -47,7 +162,7 @@ class Resource():
         '''
         Returns the length of the resource in bytes.
         '''
-        len(self.bytestring())
+        return len(self.bytestring())
         
     
     def write(self, rom, pointer=None, force=False):
@@ -76,7 +191,7 @@ class Resource():
         if not force == True:
             writepointer = rom.findSpace(pointer, blength)
         
-        rom.write(pointer, bytes)            
+        rom.writeArray(writepointer, bytes)
 
         return writepointer
             
@@ -89,9 +204,10 @@ class Resource():
         one, the unused bytes are freed.
         '''
         old = self.delete(rom, pointer)
-        if old.blength() <= self.blength():
-            self.write(rom, pointer, force=True)
+        
+        if self.blength() <= old.blength():
+            return self.write(rom, pointer, force=True)
         else:
-            self.write(rom, pointer, force)
-            
-   
+            return self.write(rom, pointer, force)
+         
+         

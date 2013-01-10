@@ -1,5 +1,6 @@
 
 from gbahack.gbabin.rawfile import RawFile
+from gbahack.resource import ResourceManager
 
 import json
 import os
@@ -16,6 +17,8 @@ class ROM(RawFile):
       self.metadata = metadata
     else:
       self.loadMetaData()
+      
+    self.resourcemanger = ResourceManager(self)
     
   def loadMetaData(self):
     self.metadata = {}
@@ -36,7 +39,9 @@ class ROM(RawFile):
       raise NoMetaDataException()
     finally: f.close()
       
-
+  def getRM(self):
+    '''Returns the resource manager attatched to the ROM.'''
+    return self.resourcemanger
 
   def getName(self):
     if "name" in self.metadata:

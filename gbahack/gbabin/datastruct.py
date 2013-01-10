@@ -55,7 +55,8 @@ class RomDataType():
     if t == cls.pointer: return block.addPointer(v)
     if t == cls.int:     return block.addInt(v)
     
-  
+
+#TODO: Upgrade DataStruct to a Resource object???
 class DataStruct():
   fields = []  #Tuples of (RomDataType.type, "fieldname") pairs.
 

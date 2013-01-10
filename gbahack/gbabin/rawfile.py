@@ -1,5 +1,6 @@
 import sys
 import struct
+from gbahack.gbabin.bblock import BBlock
 
 python3 = sys.version_info >= (3,0)
 
@@ -123,7 +124,7 @@ class RawFile():
   
   def write(self, pointer, data):
     '''Writes a bblock object to the ROM'''
-    self.writeArray(data.toArray())
+    self.writeArray(pointer, data.toArray())
     
   def writeBlocks(self, bblockarray):
     '''Writes a dict of bblocks (accompanied by a pointer as index) to the ROM.'''
