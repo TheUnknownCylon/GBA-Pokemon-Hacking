@@ -14,11 +14,16 @@ Example:
       (RT.pointer, "scriptpointer")
     ]
 
-  sign = PokeMapEventSignpost.loadFromRom(rom, pointertosignpost)
+  --directly from rom--
+  sign = PokeMapEventSignpost.read(rom, pointertosignpost)
   print("X-position: %d" % sign.posx )
   
-    
+  --or via the ROMs Resource Manager (prefered)--
+  sign = rom.getRM().get(PokeMapEventSignpost, pointertosignpost)
+  print("X-position: %d" % sign.posx )
+
 '''
+from gbahack import Resource
 from gbahack.gbabin import BBlock
 
 class RomDataType():
@@ -56,23 +61,42 @@ class RomDataType():
     if t == cls.int:     return block.addInt(v)
     
 
-#TODO: Upgrade DataStruct to a Resource object???
-class DataStruct():
+class DataStruct(Resource):
+  '''
+  Represents a ROM data structure.
+  The main inspiration of this is the C datastruct. Instead of implementing
+  a full python default struct, the structure should be represented in the
+  fields list. Since the DataStruct implments the abstract Resource class,
+  objects can easily be read from, written to, and updated in a ROM.
+  '''
+  
+  name = 'datastruct'
   fields = []  #Tuples of (RomDataType.type, "fieldname") pairs.
 
   @classmethod
-  def loadFromRom(cls, rom, p):
+  def read(cls, rom, pointer):
     '''Construction method, can be used if object is initialized from exsisting data.'''
     s = cls()
-    s.loadValues(rom, p)
+    s._loadValues(rom, pointer)
     return s
+  
+  def bytestring(self):
+    '''Returns a binary array, containing all values set for this datablock.'''
+    block = BBlock()
+    for field in self.fields:
+      RomDataType.appendToBlock(block, field[0], self.__getattribute__(field[1]))
+    return block.toArray()
+
+
+  ### End of extend methods
+  
   
   def validate(self):
     '''Possible extention point. The object can validate itself based on
     expected values.'''
     pass
   
-  def loadValues(self, rom, p):
+  def _loadValues(self, rom, p):
     '''(re)Load all values from the given ROM into the object.'''
     for field in self.fields:
       p, v = RomDataType.read(rom, p, field[0])
@@ -82,17 +106,14 @@ class DataStruct():
     '''Returns a read field-value from the fields-array.'''
     return self.__getattribute__(key)
   
-  def toArray(self):
-    '''Returns a binary array, containing all values set for this datablock.'''
-    block = BBlock()
-    for field in self.fields:
-      RomDataType.appendToBlock(block, field[0], self.__getattribute__(field[1]))
-    return block.toArray()
-    
-  
+
   @classmethod
   def size(cls):
-    '''Returns the size of the structure.'''
+    '''
+    Returns the byte-size of the structure.
+    This value is equal to the blength() method result, but this method also
+    works on non-initialized objects.
+    '''
     size = 0
     for field in cls.fields:
       size += RomDataType.size(field[0])

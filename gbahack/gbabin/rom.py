@@ -48,4 +48,4 @@ class ROM(RawFile):
       return metadata.name
     else:
       return "Unknown"
-    
+

@@ -23,8 +23,9 @@ class OverWorldSprites():
 class Sprite():
   def __init__(self, rom, pointer, palettetable):
     self.rom     = rom
-    self.header1 = SpriteHeader1.loadFromRom(rom, pointer)
-    self.header2 = SpriteHeader2.loadFromRom(rom, self.header1.pointer_spriteheader)
+    rm           = rom.getRM()
+    self.header1 = rm.get(SpriteHeader1, pointer)
+    self.header2 = rm.get(SpriteHeader2, self.header1.pointer_spriteheader)
     self.palette = palettetable.getPalette(self.header1.paletteid)
 
     #Pre-calculate the size of a frame.

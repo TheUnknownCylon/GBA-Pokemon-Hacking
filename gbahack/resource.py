@@ -46,18 +46,18 @@ class ResourceManager():
         self.pointerwatchers.append(pointerobserver)
     
     
-    def get(self, resource, pointer):
+    def get(self, resourceclass, pointer):
         '''
         Returns an initialized resource, read from the rom.
-        Resource is the resource class that should be read.
+        Resourceclass is the resource class that should be read.
         Pointer is the location in the ROM where the pointer is stored.
         '''
         if not pointer in self.pointers:
-            r = resource.read(rom, pointer)
+            r = resourceclass.read(self.rom, pointer)
             self.pointers[pointer] = r
             self.resources[r] = pointer
             
-        elif not isinstance(self.pointers[pointer], resource):
+        elif not isinstance(self.pointers[pointer], resourceclass):
             raise Exception("Pointer already loaded, but of different resource type.")
         
         return self.pointers[pointer]
@@ -125,7 +125,7 @@ class Resource():
     name = "resource"
     
     @classmethod
-    def read(self, rom, pointer):
+    def read(cls, rom, pointer):
         '''
         Loads the resource from a rom, starting at a given pointer.
         Returns a new initialized Resource object.
@@ -137,7 +137,7 @@ class Resource():
         '''
         Returns the bytestring representation of the resource.
         This is how the resource should be written to the ROM (i.e. the compiled
-        resource object)
+        resource object). Returns an array.array('B') object.
         '''
         raise NotImplementedError()
         

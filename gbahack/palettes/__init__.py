@@ -9,7 +9,7 @@ class PaletteTable():
   
   NOTE: Currently only 16 colour palettes are supported.'''
   def __init__(self, rom, pointer):
-    self.rom = rom
+    self.rm = rom.getRM()
     self.pointer = pointer
     self.palettes = {}
     self.loadPalettes()
@@ -18,7 +18,7 @@ class PaletteTable():
     self.palettes = {}
     p = self.pointer
     while True:
-      paletteinfo = PaletteEntry.loadFromRom(self.rom, p)
+      paletteinfo = self.rm.get(PaletteEntry, p)
       if(paletteinfo.palettepointer == 0x00): break
       self.palettes[paletteinfo.paletteid] = paletteinfo.palettepointer      
       p += PaletteEntry.size()
@@ -26,7 +26,7 @@ class PaletteTable():
   def getPalette(self, paletteid):
     '''Loads and returns a palette from the ROM.'''
     palletpointer = self.palettes[paletteid]
-    return Palette16.loadFromRom(self.rom, palletpointer)
+    return self.rm.get(Palette16, palletpointer)
     
     
 class PaletteEntry(DataStruct):

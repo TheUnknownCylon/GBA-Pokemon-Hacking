@@ -37,7 +37,7 @@ class PokeString(Resource):
     
     
     @classmethod
-    def read(self, rom, pointer):
+    def read(cls, rom, pointer):
         #print("Decompile string %X\n"%pointer)
 
         p = pointer
