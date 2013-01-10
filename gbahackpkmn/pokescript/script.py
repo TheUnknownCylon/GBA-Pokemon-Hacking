@@ -90,7 +90,7 @@ class ScriptGroup():
     
     
     def setPointer(self, varname, pointer):
-        '''Sets a pointer for a given varname.'''
+        '''Sets or updates a pointer for a given varname.'''
         (resource, _) = self._resources[varname]
         self._resources[varname] = (resource, pointer)
     

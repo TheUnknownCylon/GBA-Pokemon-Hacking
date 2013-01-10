@@ -56,6 +56,8 @@ class ScriptBurner():
                 #A pointer was set, try to update the resource
                 newpointer = resource.update(rom, oldpointer)
                 newpointers[name] = newpointer
+                
+            scriptgroup.setPointer(name, newpointer)
 
         #Second pass
         print("---> pass 2")
@@ -65,7 +67,7 @@ class ScriptBurner():
             except: pass
             
             #Do not update, but write at new location
-            newpointer = resource.write(rom, newpointers[name], force=True)
+            resource.write(rom, newpointers[name], force=True)
         
         
         return newpointers
