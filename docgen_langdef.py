@@ -105,7 +105,7 @@ sublangs = {
 }
 
 for sublang in sublangs.keys():
-    f = open(os.path.join('docs', 'pokescript', "%s.mk"%sublang), 'w')
+    f = open(os.path.join('docs', 'pokescript', "%s.md"%sublang), 'w')
     generate(sublang, sublangs[sublang], f)
     f.close()
     print("Generated doc %s"%f.name)
