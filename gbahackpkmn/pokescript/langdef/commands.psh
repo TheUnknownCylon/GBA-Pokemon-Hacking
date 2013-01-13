@@ -70,7 +70,6 @@ Author: Dabomstew
 '
 '  All values must be in hex
 
-#lock
 addcmmd nop0 #00 'Does nothing
 addcmmd nop  #01 'Does Nothing
 addcmmd end  #02 'Ends Script Execution
@@ -105,6 +104,7 @@ addparm 3 'Point to call
 
 addcmmd jumpstd #08 'Jump to a built in function
 addparm 0 'Function numder to jump to
+addparm 4 'Plain jumpstd ends the script
 
 addcmmd boxset #09  'Call a built in function
 addparm 0 'Function to call. 1- text no close. 2- yes/no box, 3-text clost on keypress
@@ -243,9 +243,9 @@ addcmmd RESETVARS #2E
 addcmmd playsfx #2F
 addparm 1 'entry in music/sounds table
 
-'addcmmd[rs][e] cry #30 'Play back a pokemon cry
-'addparm 0 'bank no
-'addparm 1 'Pokemon Species
+addcmmd[rs][e] cry #30 'Play back a pokemon cry
+addparm 0 'bank no
+addparm 1 'Pokemon Species
 
 addcmmd[frlg] checksound #30
 addparm 0             'bank no
@@ -256,8 +256,8 @@ addparm 1             'Song # to play
 
 addcmmd waitfanfare #32 'Wait for the fanfare to finish
 
-'addcmmd[rs][e] playsound #33 'switch background music
-'addparm 1  'Song number to play
+addcmmd[rs][e] playsound #33 'switch background music
+addparm 1  'Song number to play
 
 addcmmd[frlg] playsound #33 'switch background music
 addparm 1  'Song number to play
@@ -282,11 +282,33 @@ addparm 0              '??? Speed ??? Required?
 'addcmmd WARP_MUTED #3A
 'addcmmd WARP_WALKING  #3B
 'addcmmd WARP_DOWNHOLE #3C
-'addcmmd WARP_TELEPORT #3D
-'addcmmd WARP_3        #3E
-'addcmmd WARP_ELEVATOR #3F
-'addcmmd WARP_4        #40
-'addcmmd WARP_5        #41
+
+addcmmd WARP_TELEPORT #3D
+addparm 0
+addparm 0
+addparm 0
+
+addcmmd WARP_3 #3E
+addparm 0  '?
+addparm 0  '?
+addparm 0  '?
+addparm 0  '?
+addparm 0  '?
+
+addcmmd WARP_ELEVATOR #3F
+addparm 0
+addparm 0
+addparm 0
+
+addcmmd WARP_4        #40
+addparm 0
+addparm 0
+addparm 0
+
+addcmmd WARP_5        #41
+addparm 0
+addparm 0
+addparm 0
 
 addcmmd GETPLAYERXY #42
 addparm 1
@@ -548,14 +570,14 @@ addparm 2 'Pointer to the item list
 addcmmd[frlg] fakejumpstd #88 
 addparm 0 'type ??
 
-'addcmmd[rs][e] pokemarkt3 #88
-'addparm 3 'Pointer to the item list
+addcmmd[rs][e] pokemarkt3 #88
+addparm 3 'Pointer to the item list
 
 addcmmd[frlg] fakecallstd #89
 addparm 0 'type ??
 
-'addcmmd[rs][e] pokemarkt3 #89
-'addparm 1 '??
+addcmmd[rs][e] pokemarkt3 #89
+addparm 1 '??
 
 addcmmd cmd8A #8A
 addparm 0
@@ -647,8 +669,8 @@ addparm 1 'Tile attributes
 
 addcmmd resetweather #A3
 
-'addcmmd[rs][e] setweather #A4 'Prepare to fade the weather into the type specified,1
-'addparm 0 'New weather value
+addcmmd[rs][e] setweather #A4 'Prepare to fade the weather into the type specified,1
+addparm 0 'New weather value
 
 addcmmd[frlg] setweather #A4 'Prepare to fade the weather into the type specified,1
 addparm 1 'New weather value
@@ -1376,11 +1398,6 @@ alias   compare pointer $1 pointer $2 'Compares bytes at pointer locations
 addparm 7 comparefarbytetofarbyte
 addparm 3 'Pointer to a byte value to compare with
 addparm 3 'Pointer to a byte value to compare with
-#unlock
-
-
-
-
 
 
 

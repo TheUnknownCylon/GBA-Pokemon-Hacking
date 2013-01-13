@@ -26,7 +26,8 @@ def loadGroup(rom, routinepointer):
         
         if pointer in decompiled:    #skip if already decompiled.
             continue
-            
+        
+        print(">> DECOMPILING RESOURCE 0x%X"%pointer)
         resource = decompiler.decompile(pointer, dtype)
         decompiled[pointer] = resource
         sgroup.register(resource, pointer)
@@ -35,7 +36,9 @@ def loadGroup(rom, routinepointer):
         # queue those others.
         if isinstance(resource, Routine):
             for refpointer, reftype in resource.linkedPointers():
-                decompilequeue.append((refpointer, reftype))
+                if refpointer < 0x08000000:
+                    print("+++ %X"%refpointer)
+                    decompilequeue.append((refpointer, reftype))
 
     #At this point, all resources are loaded.
     # Replace, where possible, all pointerrefs to their corresponding

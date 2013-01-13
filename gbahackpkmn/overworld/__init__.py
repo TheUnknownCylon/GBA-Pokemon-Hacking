@@ -16,8 +16,6 @@ class OverWorldSprites():
   
   def getPersonSprite(self, personid):
     _, spritepointer = self.rom.readPointer(self.spritepersontablepointer + personid*4)
-    import pprint
-    pprint.pprint(spritepointer)
     return Sprite(self.rom, spritepointer, self.palettetable)
 
 class Sprite():

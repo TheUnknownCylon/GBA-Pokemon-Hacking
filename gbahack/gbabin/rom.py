@@ -30,7 +30,7 @@ class ROM(RawFile):
     elif os.path.isfile(os.path.splitext(self.filename)[0]+".metadata"):
       metafile = os.path.splitext(self.filename)[0]+".metadata"
     else:
-      NoMetaDataException("No metadata file was found for this ROM!")
+      raise NoMetaDataException("No metadata file was found for this ROM!")
 
     f = open(metafile, 'r')
     try: self.metadata = json.loads(f.read())

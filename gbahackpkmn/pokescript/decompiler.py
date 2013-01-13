@@ -54,8 +54,6 @@ class Decompiler():
     def decompileRoutine(self, pointer):
         '''Decompiles a routine at a given pointer.'''
         routine = Routine.read(self.rom, pointer)
-        #for pointer, decompiletype in refs.items():
-        #    self.queue(pointer, decompiletype)
         return routine    
     
     
@@ -74,7 +72,7 @@ class CommandDecompiler():
         Decompile a command at a given pointer.
         Returns 3 values: new pointer, ASTNode, reference-pointers.
         '''
-    
+        print("DECOMPILE 0x%X"%pointer)
         #Try to find a matching alias, if there is no matching
         # alias we try to find a mathcing command
         for command in self.langdef.aliases + list(self.langdef.commands.values()):
@@ -88,9 +86,10 @@ class CommandDecompiler():
                     if byte == '':
                         argbytes.append(v)
         
-                #print("Selected command to parse: "+' '.join(command.signature))
+                print("\nSelected command to parse: "+' '.join(command.signature))
                 #read the entire command bytes, and this all matches!
                 try:
+                    #print(argbytes)
                     astnode, refs = self.parsecommandargs(command, argbytes)
                 except Exception as e:
                     raise Exception("Failed to parse rewrite command and its args to a"
@@ -114,6 +113,7 @@ class CommandDecompiler():
         The argbytes contains a BYTE-array of all values. These are read
         from it and appended to the command.
         '''
+        print(">>> ", argbytes)
         args = []
         
         p = 0
@@ -135,9 +135,12 @@ class CommandDecompiler():
                     value = ASTPointerRef(pointer, _ptype_to_decompiletype(paramtype))  #TODO paramtype,
                     p += 4
             
-                elif ParamType == ParamType.int:
+                elif paramtype == ParamType.int:
                     value = struct.unpack("<I", argbytes[p:p+4])[0]
                     p += 4
+                    
+                else:
+                    print("Unknown ParamType: "+repr(paramtype))
    
                 args.append(value)
       

@@ -38,7 +38,7 @@ class PokeMapEvents():
         '''Returns a PokeMap Script resource.'''
         if scriptid > self.header.numscripts:
             raise Exception("Script index too high, there are only %d scripts on this map."%self.header.numscripts)
-        pointer = self.header.pointerScripts + eid * PokeMapEventScript.size()
+        pointer = self.header.pointerScripts + scriptid * PokeMapEventScript.size()
         return self.rm.get(PokeMapEventScript, pointer)
     
     

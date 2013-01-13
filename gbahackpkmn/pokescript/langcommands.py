@@ -51,9 +51,19 @@ class CodeCommand():
     self.params = []
     self.neededparams = 0
     self.endofscript = False
+    self.description = ""
+    self.argdescriptions = []
     
+  def setDescription(self, description):
+    self.description = description
+  
+  def getDescription(self):
+    return self.description
+
+  def getArgDescription(self, i):
+    return self.argdescriptions[i]
     
-  def addParam(self, paramtype, defaultvalue=None):
+  def addParam(self, paramtype, defaultvalue=None, description=None):
     '''
     Adds a parameter to the command. Note that values without a default
     are the values that should be set by the user.
@@ -65,6 +75,7 @@ class CodeCommand():
       return
       
     self.params.append((paramtype, defaultvalue))
+    self.argdescriptions.append(description)
     
     if defaultvalue == None or isinstance(defaultvalue, SELECT):
       self.neededparams+=1
@@ -72,6 +83,9 @@ class CodeCommand():
   
   def getParam(self, i):
       return self.params[i]
+  
+  def getNumberOfParams(self):
+    return self.neededparams
   
   def checkParamscount(self, argscount):
     if argscount != self.neededparams:
@@ -211,8 +225,8 @@ class Command(CodeCommand):
     self.constants = constants
     self.signature = [self.name]
     
-  def addParam(self, paramtype, defaultvalue=None):
-    super().addParam(paramtype, defaultvalue)
+  def addParam(self, paramtype, defaultvalue=None, description=None):
+    super().addParam(paramtype, defaultvalue, description)
     if defaultvalue == None and paramtype != ParamType.eos:
       self.signature.append("$%d"%len(self.signature))
 

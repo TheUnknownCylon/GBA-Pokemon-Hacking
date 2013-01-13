@@ -14,7 +14,6 @@ from array import array
 from gbahack import Resource
 from gbahack.tools.numbers import toint
 
-
 class PokeString(Resource):
     '''
     Class that represents a String resource in the ROM.
@@ -119,7 +118,7 @@ class PokeString(Resource):
 textchars = {}
 texthash = {}
 
-dirname = os.path.dirname(sys.modules[__name__].__file__)
+dirname = os.path.join(os.path.dirname(sys.argv[0]), "gbahackpkmn", "strings")
 for line in open(dirname + "/textchars", 'r', encoding="iso-8859-15"):
     if line:
         (char, val) = line.split("\t")

@@ -16,12 +16,15 @@
 #  -  #include <file>          includes file
 #  -  #define <name> <values>  define a key with given values
 #  -  #(different)             ignored
-#  -  addcmmd <command name> <command code> ' [description]
+#  -  addcmmd[gameslist] <command name> <command code> ' [description]
+#           where gamelist can be one or multiple of the following: [frlg][e][rs]
 #  -  alias <command alias> ' [description]
 #  -  addparm <size> [data] ' [description]
 
+
 import os
 import sys
+import re
 
 from array import array
 from gbahack.tools.numbers import toint
@@ -29,16 +32,20 @@ from gbahackpkmn.pokescript.langcommands import *
 from gbahackpkmn.strings import PokeString
 
 class ScriptLang():
-  '''This class represents the language in a structured way. All defines can be
+  '''
+  This class represents the language in a structured way. All defines can be
   found here. Also all commands and aliases are in this class. These values are
-  read from the language definition files.'''
-  def __init__(self, startfile=None):
+  read from the language definition files.
+  '''
+  def __init__(self, startfile=None, sublang=None):
+    self.sublang = sublang
+    
     self.commands = {}
     self.aliases  = []
     self.defines  = {}
 
     if startfile==None:
-      startfile = os.path.dirname(sys.modules[__name__].__file__) + "/langdef/includes.psh"
+      startfile = os.path.join(os.path.dirname(sys.argv[0]), "gbahackpkmn", "pokescript", "langdef", "includes.psh")
     self.handleInclude(startfile)
     
     
@@ -80,10 +87,20 @@ class ScriptLang():
         commandname = instructions[1].lower()
         commandcode = toint(instructions[2])
         lastcommand = Command(commandname, commandcode, self.defines)
-        self.commands[commandname] = lastcommand
+        lastcommand.setDescription(stripDescription(line))
+        
+        #Only store commands of interest for future reference, but keep
+        # lastcommand to append its args to (otherwise they are appended to
+        # the wrong arg)
+        sublangs = re.findall(r"\[([^\]]*)\]", instruction[len("addcmmd"):])
+        if len(sublangs)==0 or self.sublang in sublangs:
+             self.commands[commandname] = lastcommand
+             
       elif instruction == "alias":
         lastcommand = Alias(' '.join(instructions[1:]), self.commands)
+        lastcommand.setDescription(stripDescription(line))
         self.aliases.append(lastcommand)
+        
       elif instruction == "addparm":
         defaultvalue = None
         instructiontype = int(instructions[1])
@@ -102,8 +119,8 @@ class ScriptLang():
               defaultvalue = instructions[2] 
             else:
               raise Exception("Unknown default value for param: "+repr(instructions[2]))
-            
-        lastcommand.addParam(instructiontype, defaultvalue)
+        
+        lastcommand.addParam(instructiontype, defaultvalue, stripDescription(line))
     return lastcommand
   
   def handleInclude(self, filename):
@@ -131,3 +148,16 @@ class ScriptLang():
   def encodeText(self, text):
     return PokeString(text).bytestring()
   
+
+  def getCommands(self):
+    return self.commands
+
+  def getAliases(self):
+    return self.aliases
+
+def stripDescription(line):
+  descriptionstart = line.find("'")
+  if descriptionstart != -1:
+    return line[descriptionstart+1:]
+  else:
+    return None

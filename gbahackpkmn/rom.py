@@ -11,7 +11,17 @@ class PokemonRom(ROM):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.langdef = ScriptLang()
+        
+        #Set the correct scriptlang based on info from the metadata.
+        # scriptlangdef sets the root file for loading the PokeScript definitons.
+        # scriptsublang can used to only set a subset of the language.
+        scriptlangdef = None
+        sublang = None
+        if "scriptlangdef" in self.metadata:
+            scriptlangdef = self.metadata["scriptlangdef"]
+        if "scriptsublang" in self.metadata:
+            sublang = self.metadata["scriptsublang"]
+        self.langdef = ScriptLang(scriptlangdef, sublang)
         
         
     def getScriptLang(self):
