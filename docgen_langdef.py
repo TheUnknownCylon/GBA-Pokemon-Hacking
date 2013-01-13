@@ -61,37 +61,37 @@ def generate(sublang, gamenames, f):
         #Main command and usage
         command = commands[command_name]
         t  = "### %s (0x%X)\n"%(command_name, command.code)
-        t += "__Description__: %s\n"%(command.getDescription() or "_No description_")
+        t += "__Description__: %s  \n"%(command.getDescription() or "_No description_")
         t += "__Usage__: `%s "%command_name
         
         #Arguments section
-        argsdesc = "__Argments__:\n"
+        argsdesc = "__Argments__:  \n"
         for i in range(0, command.getNumberOfParams()):
             ptype, _ = command.getParam(i)
             
             t += '<arg%d> '%i
             argsdesc += "    `%s` `<arg%d>`: "%(ptype_to_text(ptype), i)
-            argsdesc += "%s\n"%(command.getArgDescription(i) or "_No description_")
-        t += "`\n"
+            argsdesc += "%s  \n"%(command.getArgDescription(i) or "_No description_")
+        t += "`  \n"
         if command.getNumberOfParams() > 0:
-            t += "%s\n"%argsdesc
+            t += "%s  \n"%argsdesc
         t += "\n\n"
         f.write(t)
         
     f.write("## Aliasses in detail\n\n")
     for alias in aliases:
         t = "### Alias `%s`\n"%alias_to_text(alias)
-        t += "__Usage__: `%s`\n"%alias_to_text(alias)
-        t += "__Description__: %s\n"%(alias.getDescription() or "_No description_")
+        t += "__Usage__: `%s`  \n"%alias_to_text(alias)
+        t += "__Description__: %s  \n"%(alias.getDescription() or "_No description_")
         
-        argsdesc = "__Argments__:\n"
+        argsdesc = "__Argments__:  \n"
         
         i = 0
         for paramindex in range(0, len(alias.params)):
             ptype, default = alias.getParam(paramindex)
             if default == None:
                 argsdesc += "    `%s` `<arg%d>`: "%(ptype_to_text(ptype), i)
-                argsdesc += "%s\n"%(alias.getArgDescription(paramindex) or "_No description_")
+                argsdesc += "%s  \n"%(alias.getArgDescription(paramindex) or "_No description_")
                 i += 1
         
         t += "%s\n"%argsdesc
