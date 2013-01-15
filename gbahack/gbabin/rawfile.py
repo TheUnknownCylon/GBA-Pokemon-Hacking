@@ -1,8 +1,7 @@
 import sys
 import struct
+from array import array
 from gbahack.gbabin.bblock import BBlock
-
-python3 = sys.version_info >= (3,0)
 
 class RawFile():
  
@@ -26,14 +25,12 @@ class RawFile():
   def skip(self, offset, length):
     return offset + length
   
+
   '''Reads a byte at the given offset.
   A new pointer location and the read value are returned.'''
   def readByte(self, offset):
-    if python3:
-      return offset+1, self.f[offset]
-    else: #python 2 does return a string, instead of int, rewrite to int
-      s = self.f[offset]
-      return offset+1, struct.unpack('<B', s)[0] 
+    return offset+1, self.f[offset]
+
   
   '''Reads a short at the given offset.
   A new pointer location and the read value are returned.'''
@@ -85,7 +82,16 @@ class RawFile():
         return False
     return True
     
-  
+  def find(self, bytes, start):
+    '''
+    Finds a given bytestring, starts looking from pointer start.
+    The provided bytestring should implement the buffer interface, and thus
+    can be an array.array('B') instance.
+    Returns the pointer for the found place in the ROM. If no pointer was found,
+    -1 is returned.
+    '''
+    return self.f.find(bytes, start)
+    
   
   def findSpace(self, pointer, length, safe=True):
     '''Returns a pointer to a place in the ROM where is enough free space.
@@ -93,19 +99,12 @@ class RawFile():
     Using the safe == True will make sure that one 0xFF is left as free space,
     so the end of the previous command may not be overwritten.
     '''
-    #TODO: now its just a quick implementation, it should work
-    #      but a faster implementations are possible :)
-    p = pointer
-
     if safe:
-      while True:
-        if self.hasSpace(p, length+1): return p+1
-        else: p+= 4
-        
-    if not safe:
-      while True:
-        if self.hasSpace(p, length): return p
-        else: p+= 4      
+      p = self.find(array('B', [0x00]*(length+1)), pointer)
+      if p != -1: p += 1
+    else:
+      p = self.find(array('B', [0x00]*length), pointer)
+    return p
       
       
   def trunc(self, pointer, length):
