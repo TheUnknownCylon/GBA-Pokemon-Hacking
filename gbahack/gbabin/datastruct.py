@@ -26,12 +26,22 @@ Example:
 from gbahack import Resource
 from gbahack.gbabin import BBlock
 
+class ByteString():
+    def __init__(self, length):
+        self._length = length
+        
+    def length(self):
+        return self._length
+        
+       
+
 class RomDataType():
     '''Class of rom datatypes. Can be used to read values from rom.'''
     byte = 0x00
     short = 0x01
     int  = 0x02
     pointer = 0x03
+    bytestr = ByteString
     
     @classmethod
     def size(cls, t):
@@ -39,16 +49,20 @@ class RomDataType():
         if t == cls.short:   return 2
         if t == cls.pointer: return 4
         if t == cls.int:     return 4
+        if isinstance(t, cls.bytestr):
+            return t.length()
         raise Exception("Wrong type!")
     
     @classmethod
-    def read(cls, rom, p, t):
-        '''Read: rom: rom te read, p: pointer to read, t: type to read
+    def read(cls, bytesreader, p, t):
+        '''Read: bytesreader: bytesreader te read, p: pointer to read, t: type to read
         Returns pointer, value tuple.'''
-        if t == cls.byte:    return rom.readByte(p)
-        if t == cls.short:   return rom.readShort(p)
-        if t == cls.pointer: return rom.readPointer(p)
-        if t == cls.int:     return rom.readInt(p)
+        if t == cls.byte:    return bytesreader.readByte(p)
+        if t == cls.short:   return bytesreader.readShort(p)
+        if t == cls.pointer: return bytesreader.readPointer(p)
+        if t == cls.int:     return bytesreader.readInt(p)
+        if isinstance(t, cls.bytestr):
+            return bytesreader.readBytes(p, t.length())
         raise Exception("Wrong type!")
   
     @classmethod
@@ -59,6 +73,9 @@ class RomDataType():
         if t == cls.short:   return block.addShort(v)
         if t == cls.pointer: return block.addPointer(v)
         if t == cls.int:     return block.addInt(v)
+        if isinstance(t, cls.bytestr):
+            for i in range (0, t.length()):
+                block.addByte(0)
 
 
 class DataStruct(Resource):
@@ -74,10 +91,10 @@ class DataStruct(Resource):
     fields = []  #Tuples of (RomDataType.type, "fieldname") pairs.
 
     @classmethod
-    def read(cls, rom, pointer):
+    def read(cls, bytesreader, pointer):
         '''Construction method, can be used if object is initialized from exsisting data.'''
         s = cls()
-        s._loadValues(rom, pointer)
+        s._loadValues(bytesreader, pointer)
         return s
   
     def bytestring(self):
@@ -96,10 +113,11 @@ class DataStruct(Resource):
         expected values.'''
         pass
   
-    def _loadValues(self, rom, p):
+    def _loadValues(self, bytesreader, p):
         '''(re)Load all values from the given ROM into the object.'''
+        self._offset = p
         for field in self.fields:
-            p, v = RomDataType.read(rom, p, field[0])
+            p, v = RomDataType.read(bytesreader, p, field[0])
             self.__setattr__(field[1], v)
   
     def get(self, key):

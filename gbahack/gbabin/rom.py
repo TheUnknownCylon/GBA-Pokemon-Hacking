@@ -1,11 +1,60 @@
 
-from gbahack.gbabin.rawfile import RawFile
+from gbahack.gbabin.bytes import ByteArrayReader
 from gbahack.resource import ResourceManager
 
 import json
 import os
+from array import array
 
-class NoMetaDataException(Exception): pass
+class NoMetaDataException(Exception):
+    pass
+
+class RawFile(ByteArrayReader):
+    def __init__(self, file):
+        self.file = file
+        self.f = None
+        self._resetfile()
+    
+    
+    def __getitem__(self, v):
+        return self.f[v]
+    
+    
+    def _resetfile(self):
+        self.bytes = open(self.file, 'rb').read()  #read, adjust, in binary
+    
+    
+    def path(self):
+        '''Returns the path of the loaded file'''
+        return self.file
+  
+    
+    def trunc(self, offset, length, truncbyte=0xFF):
+        '''Clears length bytes at a given offset in the ROM.
+        Optional trunc byte can be set.'''
+        c = array('B', [truncbyte] * length)
+        self.writeArray(offset, c)
+    
+    
+    def writeArray(self, offset, array):
+        mf = open(self.file, 'r+b')
+        mf.seek(offset)
+        mf.write(array)
+        mf.close()
+        self._resetfile()    
+  
+  
+    def write(self, offset, data):
+        '''Writes a bblock object to the ROM'''
+        self.writeArray(offset, data.toArray())
+    
+    
+    def writeBlocks(self, bblockarray):
+        '''Writes a dict of bblocks (accompanied by a offset as index) to the ROM.'''
+        for offset in bblockarray:
+            self.write(offset, bblockarray[offset])
+       
+  
 
 class ROM(RawFile):
     def __init__(self, filename, metadata=None):

@@ -77,7 +77,7 @@ class ResourceManager():
         '''
         oldpointer = None
         if resource not in self.resources:
-            newpointer = resource.write(self.rom, 0x08000000)
+            newpointer = resource.write(self.rom, 0x08000000)  #TODO: Hardcoded :(
         
         else:
             oldpointer = self.resources[resource]
@@ -106,7 +106,7 @@ class ResourceManager():
         del self.pointers[pointer]
         resource.delete(self.rom, pointer)
         
-        print("! Pointer 0x%X is removed from the ROM.")
+        print("! Pointer 0x%X is removed from the ROM."%pointer)
         for watcher in self.pointerwatchers:
             watcher.pointerRemoved(self, pointer)
         
