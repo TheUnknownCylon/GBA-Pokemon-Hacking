@@ -8,15 +8,37 @@ or to a text representation for human readability.
 '''
 
 from array import array
+    
+class ASTCollector():
+    '''
+    AST Node traversal, collector subclass.
+    Each node in an AST is given to the collect method. This method should
+    be overwritten. The method could be used to check any AST node to a certain
+    condition, and e.g. add it to a list. In this way, one can collect warnings,
+    errors, etc. according to a collector rule.
+    
+    When a AST node has been parsed without any exception (by the overwritten
+    collect method), the childnodes of the AST node are traversed and also given
+    to the collector.
+    '''
+    
+    def collect(self, astnode):
+        '''Called for each child node in the AST once.'''
+        raise NotImplementedError()
 
 
 class NoRewriteChange(Exception):
     '''Exception which indicates that an ASTRewriter has no changes for the node'''
     pass
 
+
 class ASTRewriter():
-    def rewrite(self, ASTNode):
+    '''Base class for rewriting AST Nodes, e.g. pointer -> varname conversion.'''
+    
+    def rewrite(self, astnode):
+        '''Should call rewrite to all AST nodes itself.'''
         raise NoRewriteChange()
+
 
 
 class ASTNode():
@@ -51,12 +73,28 @@ class ASTNode():
                 l.append(ptuple)
         return l
 
+    
     def rewriteASTs(self, rewriter):
         '''
         Replaces child ASTs with an old AST node by a new one.
         Rewriter is a rewriter instance class.
         '''
         raise NotImplementedError()
+    
+    
+    def collectFromASTs(self, collectors):
+        '''
+        Method that should not be overwritten (final).
+        Applies the collector for the current node, and request all child nodes
+        to do the same. Executed in DFS, and no recursion checks (your AST should
+        be free of cycles!!)
+        '''
+        for collector in collectors:
+            collector.collect(self)
+        
+        for child in self.childs():
+            child.collectFromASTs(collectors)
+            
 
     def childs(self):
         '''Returns a flattended list of all child AST nodes (all depths).'''
@@ -112,12 +150,15 @@ class ASTResourceString(ASTNode):
         self.string = pokestring
 
 
-    def text(self):
+    def text(self, pretext="= ", showheader=True):
         strtext = self.string.getText()
-        strtext = strtext.replace("\\n", "\\n\n= ")
-        strtext = strtext.replace("\p", "\p\n= ")
-        strtext = strtext.replace("\l", "\l\n= ")
-        return "#text "+self.name + "\n= "+strtext
+        strtext = strtext.replace("\\n", "\\n\n%s"%pretext)
+        strtext = strtext.replace("\p", "\p\n%s"%pretext)
+        strtext = strtext.replace("\l", "\l\n%s"%pretext)
+        if showheader:
+            return "#text "+self.name + "\n"+pretext+strtext
+        else:
+            return pretext+strtext
     
     
     def encode(self, pointerlist):

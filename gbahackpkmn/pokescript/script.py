@@ -22,7 +22,7 @@ def loadGroup(rom, routinepointer):
     decompilequeue.append((routinepointer, DecompileTypes.POKESCRIPT))
         
     while len(decompilequeue) > 0:
-        pointer, dtype = decompilequeue.pop()
+        pointer, dtype = decompilequeue.pop(0)
         
         if pointer in decompiled:    #skip if already decompiled.
             continue

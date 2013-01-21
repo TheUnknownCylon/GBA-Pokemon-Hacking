@@ -48,7 +48,9 @@ class ScriptLang():
       startfile = os.path.join(os.path.dirname(sys.argv[0]), "gbahackpkmn", "pokescript", "langdef", "includes.psh")
     self.handleInclude(startfile)
     
-    
+  def getSubLang(self):
+      '''Returns the sublang the ROM uses.'''
+      return self.sublang
     
   def parse(self, filename):
     lastcommand = None
