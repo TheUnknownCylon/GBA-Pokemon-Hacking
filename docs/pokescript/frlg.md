@@ -62,11 +62,11 @@ An alias is a shortcort for common used constructions of command sequences. In P
 * `trainerbattle <arg0> <arg1> <arg2> <arg3> `
 * `trainerbattle <arg0> <arg1> <arg2> <arg3> jump <arg4> `
 * `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `
-* `trainerbattle <arg0> <arg1> <arg2> `
-* `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `
+* `trainerbattle3 <arg0> <arg1> <arg2> `
+* `trainerbattle4 <arg0> <arg1> <arg2> <arg3> <arg4> `
 * `trainerbattle5 <arg0> <arg1> <arg2> <arg3> `
-* `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `
-* `trainerbattle2 <arg0> <arg1> <arg2> <arg3> `
+* `trainerbattle7 <arg0> <arg1> <arg2> <arg3> <arg4> `
+* `trainerbattle9 <arg0> <arg1> <arg2> <arg3> `
 * `compare var <arg0> var <arg1> `
 * `compare var <arg0> byte <arg1> `
 * `compare var <arg0> word <arg1> `
@@ -2086,7 +2086,7 @@ __Argments__:
 
 ### Alias `trainerbattle <arg0> <arg1> <arg2> <arg3> `
 __Usage__: `trainerbattle <arg0> <arg1> <arg2> <arg3> `  
-__Description__: _No description_  
+__Description__: Standard trainer battle  
 __Argments__:  
     `word` `<arg0>`: battle to start  
     `word` `<arg1>`: mask  
@@ -2095,64 +2095,64 @@ __Argments__:
 
 ### Alias `trainerbattle <arg0> <arg1> <arg2> <arg3> jump <arg4> `
 __Usage__: `trainerbattle <arg0> <arg1> <arg2> <arg3> jump <arg4> `  
-__Description__: _No description_  
+__Description__: Trainer battle with jump pointer (kind 0x01)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
     `word` `<arg1>`: mask  
     `Pointer to String` `<arg2>`: pointer to text winning  
     `Pointer to String` `<arg3>`: pointer to text losing  
-    `pointer` `<arg4>`: pointer to text losing  
+    `pointer` `<arg4>`: jump to  
 
 ### Alias `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `
 __Usage__: `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `  
-__Description__: _No description_  
+__Description__: Special trainer battle (kind 0x02)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
     `word` `<arg1>`: mask  
     `Pointer to String` `<arg2>`: pointer to text winning  
     `Pointer to String` `<arg3>`: pointer to text losing  
-    `pointer` `<arg4>`: pointer to text losing  
+    `pointer` `<arg4>`: pointer  
 
-### Alias `trainerbattle <arg0> <arg1> <arg2> `
-__Usage__: `trainerbattle <arg0> <arg1> <arg2> `  
-__Description__: _No description_  
+### Alias `trainerbattle3 <arg0> <arg1> <arg2> `
+__Usage__: `trainerbattle3 <arg0> <arg1> <arg2> `  
+__Description__: Special trainer battle (kind 0x03)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
     `word` `<arg1>`: mask  
     `Pointer to String` `<arg2>`: pointer to text winning  
 
-### Alias `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `
-__Usage__: `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `  
-__Description__: _No description_  
+### Alias `trainerbattle4 <arg0> <arg1> <arg2> <arg3> <arg4> `
+__Usage__: `trainerbattle4 <arg0> <arg1> <arg2> <arg3> <arg4> `  
+__Description__: Special trainer battle (kind 0x04)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
     `word` `<arg1>`: mask  
     `Pointer to String` `<arg2>`: pointer to text winning  
     `Pointer to String` `<arg3>`: pointer to text losing  
-    `pointer` `<arg4>`: pointer to text losing  
+    `pointer` `<arg4>`: pointer  
 
 ### Alias `trainerbattle5 <arg0> <arg1> <arg2> <arg3> `
 __Usage__: `trainerbattle5 <arg0> <arg1> <arg2> <arg3> `  
-__Description__: _No description_  
+__Description__: Special trainer battle (kind 0x05)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
     `word` `<arg1>`: mask  
     `Pointer to String` `<arg2>`: pointer to text winning  
     `Pointer to String` `<arg3>`: pointer to text losing  
 
-### Alias `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `
-__Usage__: `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `  
-__Description__: _No description_  
+### Alias `trainerbattle7 <arg0> <arg1> <arg2> <arg3> <arg4> `
+__Usage__: `trainerbattle7 <arg0> <arg1> <arg2> <arg3> <arg4> `  
+__Description__: Special trainer battle (kind 0x07)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
     `word` `<arg1>`: mask  
     `Pointer to String` `<arg2>`: pointer to text winning  
     `Pointer to String` `<arg3>`: pointer to text losing  
-    `pointer` `<arg4>`: pointer to text losing  
+    `pointer` `<arg4>`: pointer  
 
-### Alias `trainerbattle2 <arg0> <arg1> <arg2> <arg3> `
-__Usage__: `trainerbattle2 <arg0> <arg1> <arg2> <arg3> `  
-__Description__: _No description_  
+### Alias `trainerbattle9 <arg0> <arg1> <arg2> <arg3> `
+__Usage__: `trainerbattle9 <arg0> <arg1> <arg2> <arg3> `  
+__Description__: Special trainer battle (kind 0x09)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
     `word` `<arg1>`: mask  

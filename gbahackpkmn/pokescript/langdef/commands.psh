@@ -1254,7 +1254,7 @@ addparm 3
 
 
 ' trainerbattle 0x00
-alias trainerbattle $1 $2 $3 $4
+alias trainerbattle $1 $2 $3 $4 'Standard trainer battle
 addparm 0 0x5c   'addcmmd trainerbattle #5c
 addparm 0 0x00   'kind of battle 0:normal
 addparm 1        'battle to start
@@ -1263,27 +1263,27 @@ addparm 8        'pointer to text winning
 addparm 8        'pointer to text losing
 
 ' trainerbattle 0x01
-alias trainerbattle $1 $2 $3 $4 jump $5
+alias trainerbattle $1 $2 $3 $4 jump $5 'Trainer battle with jump pointer (kind 0x01)
 addparm 0 0x5c   'addcmmd trainerbattle #5c
 addparm 0 0x01   'kind of battle 1
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
 addparm 8        'pointer to text losing
-addparm 3        'pointer to text losing
+addparm 3        'jump to
 
 ' trainerbattle 0x02
-alias trainerbattle2 $1 $2 $3 $4 $5
+alias trainerbattle2 $1 $2 $3 $4 $5 'Special trainer battle (kind 0x02)
 addparm 0 0x5c   'addcmmd trainerbattle #5c
 addparm 0 0x02   'kind of battle 2
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
 addparm 8        'pointer to text losing
-addparm 3        'pointer to text losing
+addparm 3        'pointer
 
 ' trainerbattle3 0x03
-alias trainerbattle $1 $2 $3
+alias trainerbattle3 $1 $2 $3 'Special trainer battle (kind 0x03)
 addparm 0 0x5c   'addcmmd trainerbattle #5c
 addparm 0 0x03   'kind of battle 3
 addparm 1        'battle to start
@@ -1291,36 +1291,36 @@ addparm 1        'mask
 addparm 8        'pointer to text winning
 
 ' trainerbattle4 0x04
-alias trainerbattle2 $1 $2 $3 $4 $5
+alias trainerbattle4 $1 $2 $3 $4 $5 'Special trainer battle (kind 0x04)
 addparm 0 0x5c   'addcmmd trainerbattle #5c
 addparm 0 0x04   'kind of battle 4: Double (?)
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
 addparm 8        'pointer to text losing
-addparm 3        'pointer to text losing
+addparm 3        'pointer
 
 ' trainerbattle 0x05
-alias trainerbattle5 $1 $2 $3 $4
+alias trainerbattle5 $1 $2 $3 $4 'Special trainer battle (kind 0x05)
 addparm 0 0x5c   'addcmmd trainerbattle #5c
-addparm 0 0x05   'kind of battle 0
+addparm 0 0x05   'kind of battle 5
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
 addparm 8        'pointer to text losing
 
 ' trainerbattle4 0x07
-alias trainerbattle2 $1 $2 $3 $4 $5
+alias trainerbattle7 $1 $2 $3 $4 $5 'Special trainer battle (kind 0x07)
 addparm 0 0x5c   'addcmmd trainerbattle #5c
 addparm 0 0x07   'kind of battle 0
 addparm 1        'battle to start
 addparm 1        'mask
 addparm 8        'pointer to text winning
 addparm 8        'pointer to text losing
-addparm 3        'pointer to text losing
+addparm 3        'pointer
 
 ' trainerbattle4 0x09
-alias trainerbattle2 $1 $2 $3 $4
+alias trainerbattle9 $1 $2 $3 $4 'Special trainer battle (kind 0x09)
 addparm 0 0x5c   'addcmmd trainerbattle #5c
 addparm 0 0x09   'kind of battle 0
 addparm 1        'battle to start
