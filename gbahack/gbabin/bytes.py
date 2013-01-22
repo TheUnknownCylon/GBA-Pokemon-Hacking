@@ -1,8 +1,5 @@
-import sys
 import struct
 from array import array
-from gbahack.gbabin.bblock import BBlock
-
 
 class ByteArrayReader():
     '''
