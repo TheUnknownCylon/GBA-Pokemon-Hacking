@@ -3,6 +3,11 @@
 from gbahack import ROM
 from gbahackpkmn.pokescript import ScriptLang
 
+from gbahackpkmn.pokemon import PokemonData
+from gbahackpkmn.moves import MovesData
+from gbahackpkmn.items import ItemsData
+from gbahackpkmn.trainers import Trainers
+
 class PokemonRom(ROM):
     '''
     Pokemon ROM.
@@ -11,6 +16,11 @@ class PokemonRom(ROM):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        
+        #Load names from the ROM
+        self.pokemondata = PokemonData(self)
+        self.movesdata = MovesData(self)
+        self.itemsdata = ItemsData(self)
         
         #Set the correct scriptlang based on info from the metadata.
         # scriptlangdef sets the root file for loading the PokeScript definitons.
@@ -26,3 +36,4 @@ class PokemonRom(ROM):
         
     def getScriptLang(self):
         return self.langdef
+    
