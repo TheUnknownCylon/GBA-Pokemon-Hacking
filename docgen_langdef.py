@@ -65,16 +65,17 @@ def generate(sublang, gamenames, f):
         t += "__Usage__: `%s "%command_name
         
         #Arguments section
-        argsdesc = "__Argments__:  \n"
-        for i in range(0, command.getNumberOfParams()):
-            ptype, _ = command.getParam(i)
-            
-            t += '<arg%d> '%i
-            argsdesc += "    `%s` `<arg%d>`: "%(ptype_to_text(ptype), i)
-            argsdesc += "%s  \n"%(command.getArgDescription(i) or "_No description_")
+        argsdesc = ""
+        i = 0
+        for param in command.getParams():           
+            if param.defaultvalue == None:
+                t += '<arg%d> '%i
+                argsdesc += "    `%s` `<arg%d>`: "%(ptype_to_text(param.ptype), i)
+                argsdesc += "%s  \n"%(param.description or "_No description_")
+                i += 1
         t += "`  \n"
-        if command.getNumberOfParams() > 0:
-            t += "%s  \n"%argsdesc
+        if argsdesc:
+            t += "__Argments__:  \n%s  \n"%argsdesc
         t += "\n\n"
         f.write(t)
         
@@ -87,26 +88,26 @@ def generate(sublang, gamenames, f):
         argsdesc = "__Argments__:  \n"
         
         i = 0
-        for paramindex in range(0, len(alias.params)):
-            ptype, default = alias.getParam(paramindex)
-            if default == None:
-                argsdesc += "    `%s` `<arg%d>`: "%(ptype_to_text(ptype), i)
-                argsdesc += "%s  \n"%(alias.getArgDescription(paramindex) or "_No description_")
+        for param in alias.getParams():
+            if param.defaultvalue == None:
+                argsdesc += "    `%s` `<arg%d>`: "%(ptype_to_text(param.ptype), i)
+                argsdesc += "%s  \n"%(param.description or "_No description_")
                 i += 1
         
         t += "%s\n"%argsdesc
         f.write(t)
         
-    
-sublangs = {
-    'rs':'Ruby and Sapphire',
-    'e':'Emerald',
-    'frlg':'FireRed and LeafGreen'
-}
 
-for sublang in sublangs.keys():
-    f = open(os.path.join('docs', 'pokescript', "%s.md"%sublang), 'w')
-    generate(sublang, sublangs[sublang], f)
-    f.close()
-    print("Generated doc %s"%f.name)
-    
+if __name__ == "__main__":
+    sublangs = {
+        'rs':'Ruby and Sapphire',
+        'e':'Emerald',
+        'frlg':'FireRed and LeafGreen'
+    }
+
+    for sublang in sublangs.keys():
+        f = open(os.path.join('docs', 'pokescript', "%s.md"%sublang), 'w')
+        generate(sublang, sublangs[sublang], f)
+        f.close()
+        print("Generated doc %s"%f.name)
+        

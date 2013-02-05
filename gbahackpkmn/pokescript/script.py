@@ -164,8 +164,8 @@ class ScriptGroup():
         rewriter = PointerToVarnameRewriter(pointerlist)
         for astnode in self.getASTNodes():
             astnode.rewriteASTs(rewriter)
-            
-            
+
+
 class PointerToVarnameRewriter(ASTRewriter):
     def __init__(self, pointervarnamelists):
         self.l = pointervarnamelists

@@ -118,10 +118,9 @@ class CommandDecompiler():
         
         p = 0
         for param in command.params:
-            paramtype = param[0]
-            paramdefault = param[1]
+            paramtype = param.ptype
 
-            if paramdefault == None and paramtype != ParamType.eos:
+            if param.defaultvalue == None and paramtype != ParamType.eos:
                 if paramtype == ParamType.byte:
                     value = argbytes[p]
                     p+=1
@@ -142,6 +141,14 @@ class CommandDecompiler():
                 else:
                     print("Unknown ParamType: "+repr(paramtype))
    
+                #Chech wheter it is possible to update the value to a nice string representation
+                if param.definevaluestype != None:
+                    defines = self.langdef.getDefines(param.definevaluestype)
+                    try:
+                        value = ASTDefinedValue(defines[value], value)
+                    except:
+                        pass
                 args.append(value)
+                
       
         return ASTCommand(command, args), {} #TODO: Remove last arg

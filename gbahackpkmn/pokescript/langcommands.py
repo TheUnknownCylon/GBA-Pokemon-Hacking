@@ -2,6 +2,18 @@ import struct
 from array import array
 from gbahack.tools.numbers import toint
 
+class Param:
+    '''
+    Simple parameter-class, holds all info for a parameter,
+    such as type, description, default type and defined values class.
+    '''
+    def __init__(self, ptype=None, defaultvalue=None, description=None, definevaluestype=None):
+        self.ptype = ptype
+        self.description = description
+        self.defaultvalue = defaultvalue
+        self.definevaluestype = definevaluestype
+        
+
 class ParamType:
     '''Represents all allowed parameter types'''
     byte    = 0x00
@@ -45,25 +57,32 @@ class SELECT():
     def get(self, i):
         return self.options[i]
 
-        
+
 class CodeCommand():
+    '''
+    Abstract representing commands (statements) that can be used in the PokeScript
+    language. Each command can have one or multiple parameters, that needs to
+    be set in the script. Also a description for the command and their arguments
+    can be retrieved via get-methods.    
+    '''
+    
     def __init__(self):
         self.params = []
         self.neededparams = 0
         self.endofscript = False
         self.description = ""
-        self.argdescriptions = []
-        
+    
+    
     def setDescription(self, description):
         self.description = description
     
+    
     def getDescription(self):
+        '''Returns a description for the given command.'''
         return self.description
-
-    def getArgDescription(self, i):
-        return self.argdescriptions[i]
+    
         
-    def addParam(self, paramtype, defaultvalue=None, description=None):
+    def addParam(self, paramtype, defaultvalue=None, definevaluestype=None, description=None):
         '''
         Adds a parameter to the command. Note that values without a default
         are the values that should be set by the user.
@@ -74,27 +93,37 @@ class CodeCommand():
             self.endofscript = True
             return
             
-        self.params.append((paramtype, defaultvalue))
-        self.argdescriptions.append(description)
+        self.params.append(Param(paramtype, defaultvalue, description, definevaluestype))
         
         if defaultvalue == None or isinstance(defaultvalue, SELECT):
             self.neededparams+=1
             defaultvalue = None
     
-    def getParam(self, i):
-            return self.params[i]
+
+    def getParams(self):
+        '''Returns tuple of parameters required for this command.
+        Note that Parameters with default one are the only ones that should
+        be actually provided in a statement (the default ones are used by the
+        compiler for aliasses).'''
+        return self.params
     
-    def getNumberOfParams(self):
-        return self.neededparams
+
+    def getParam(self, i):
+        '''Returns the i-th parameter as (PType, default value) tuple.
+        Note: these are params used by the compiler, and not user input params.'''
+        return self.params[i]
+    
     
     def checkParamscount(self, argscount):
         if argscount != self.neededparams:
             raise Exception("Wrong number of arguments used: got %d, expected %d."%(argscount, self.neededparams))
 
+    
     def compile(self, *args):
         '''Compiles the command according to a list of arguments.'''
         raise NotImplementedError()
-
+    
+    
     def bytesignature(self):
         '''
         Returns the byte signature for the given CodeCommand, argument slots
@@ -114,10 +143,12 @@ class Alias(CodeCommand):
         self.commands = commands #pointer to list of all commands, needed for desugaring
         self._bytesig = None
         
+        
     def matches(self, line):
         try: self.stripParams(line)
         except: return False
         return True
+        
         
     def stripParams(self, matchstr):
         params = []
@@ -136,7 +167,7 @@ class Alias(CodeCommand):
         if self._bytesig == None:
             self._bytesig = self._generate_signature()
         return self._bytesig
-        
+    
         
     def _generate_signature(self):
         sig = []
@@ -149,8 +180,8 @@ class Alias(CodeCommand):
                 skip -= 1
                 continue
             
-            paramtype    = param[0]
-            paramdefault = param[1]
+            paramtype    = param.ptype
+            paramdefault = param.defaultvalue
             
             if paramdefault == None:
                 valuestoappend = [''] * len(ParamType.rewrite(paramtype, 0))
@@ -160,7 +191,7 @@ class Alias(CodeCommand):
                 
                 commandefaultargs = []
                 for parami in range(0, command.neededparams):
-                    parami_default = self.params[currentparamindex + parami][1]
+                    parami_default = self.params[currentparamindex + parami].defaultvalue
                     if parami_default == None: commandefaultargs.append(None)
                     else: commandefaultargs.append(parami_default)
                 
@@ -171,6 +202,7 @@ class Alias(CodeCommand):
                 
             sig += valuestoappend
         return sig
+    
     
     def compile(self, *args):
         #print("+++++ Compiling Alias "+repr(self.getParam(0)))
@@ -184,13 +216,13 @@ class Alias(CodeCommand):
             p = params[paramstaken]
             paramstaken+=1
 
-            ptype = p[0]
-            pvalue = p[1]
+            ptype = p.ptype
+            pvalue = p.defaultvalue
             if ptype == ParamType.command: #param type
                 command = self.commands[pvalue.lower()]
                 commandargs = []
                 for i in range(0, command.neededparams):
-                    value = params[paramstaken][1]
+                    value = params[paramstaken].defaultvalue
                     paramstaken += 1
 
                     if value == None:
@@ -208,8 +240,13 @@ class Alias(CodeCommand):
                 compiled.extend(command.compile(*commandargs))
 
             else:
-                x = ParamType.rewrite(ptype, pvalue)
-                for y in x:
+                if pvalue == None:
+                    value = args[argstaken]
+                    argstaken += 1
+                else:
+                    value = pvalue
+
+                for y in ParamType.rewrite(ptype, value):
                     compiled.append(y)
                 
         return compiled
@@ -224,20 +261,22 @@ class Command(CodeCommand):
         self.code = code
         self.constants = constants
         self.signature = [self.name]
-        
-    def addParam(self, paramtype, defaultvalue=None, description=None):
-        super().addParam(paramtype, defaultvalue, description)
+    
+    
+    def addParam(self, paramtype, defaultvalue=None, definevaluestype=None, description=None):
+        super().addParam(paramtype, defaultvalue, definevaluestype, description)
         if defaultvalue == None and paramtype != ParamType.eos:
             self.signature.append("$%d"%len(self.signature))
 
+    
     def bytesignature(self, *args):
         '''Returns the commands byte signature. It is possible to
         set expected values, by providing an *args array with default values'''
         sig = [self.code]
         argstaken = 0
         for param in self.params:
-            paramtype = param[0]
-            paramdefault = param[1]
+            paramtype = param.ptype
+            paramdefault = param.defaultvalue
             
             if paramdefault == None and argstaken < len(args):
                 paramdefault = args[argstaken]
@@ -264,18 +303,18 @@ class Command(CodeCommand):
         bytes = array('B')
         bytes.append(self.code)
         
-        for param in self.params: #param[0]: paramtype, param[1]: param default value
+        for param in self.params:
             value = None
-            if param[1] == None:
+            if param.defaultvalue == None:
                 value = args[usedargs]
                 usedargs += 1
                 
-            elif isinstance(param[1], SELECT):
-                value = param[1].get(args[usedargs])
+            elif isinstance(param.defaultvalue, SELECT):
+                value = param.defaultvalue.get(args[usedargs])
                 usedargs += 1
                 
             else:
-                value = param[1]
+                value = param.defaultvalue
 
             try:
                 value = toint(value)
@@ -289,7 +328,7 @@ class Command(CodeCommand):
                 except:
                     raise Exception("The given parameter could not be converted to integer and is also not defined as a constant: "+repr(value))
                 
-            bytes.fromstring(ParamType.rewrite(param[0], value))
+            bytes.fromstring(ParamType.rewrite(param.ptype, value))
         
         return bytes
         

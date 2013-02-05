@@ -4,18 +4,23 @@ This document lists all the commands and aliases for the default PokeScript Emer
 __Note:__ This document is automatically generated based on the script langdefinitions.
 
 ## List of commands
-`addfurniture` `additem` `addpokemon` `addvar` `applymovement` `applymovement2` `battle` `boxset` `boxtypenormal` `boxtypesign` `braille` `buymart` `call` `callasm` `callasm2` `callstd` `checkanimation` `checkflag` `checkfurniture` `checkgender` `checkifroomforfurniture` `checkitem` `checkitempc` `checkitemspaceinbag` `checkitemtype` `checkmoney` `checkmove` `checkobedience` `checktrainer` `choosecontestpokemon` `clearbox` `clearflag` `closedoor` `closedoorpermanent` `closeonkeypress` `cmd2c` `cmd2d` `cmd8a` `cmd96` `cmda6` `cmdb1` `cmdb2` `cmdc3` `cmdd3` `cmdfb` `cmdfe` `cmhandler` `compare` `comparefarbytetobyte` `comparefarbytetofarbyte` `comparefarbytetovar` `comparehiddenvar` `comparepointer` `comparevars` `comparevartobyte` `comparevartofarbyte` `copybyte` `copyscriptbanks` `copyvar` `copyvarifnotzero` `countpokemon` `createtempsprite` `cry` `darkenroom` `disabletrainer` `doorflush` `doweather` `egghandler` `enabletriner` `end` `endtrainerbattle` `endtrainerbattle2` `executeram` `faceplayer` `fadedefault` `fadein` `fadeout` `fadescreen` `fadescreen_delay` `fadesong` `fanfare` `fardisappear` `farreappear` `furnituredisplay` `getcoins` `getplayerxy` `givecoins` `givemoney` `gmhandler` `gosub` `goto` `hashpoke` `hidebox` `hidecoinbox` `hidemoneybox` `hidepokepic` `if` `if1` `if2` `if3` `if4` `increasespritelevel` `itemnamedisplay` `itemtopc` `jump` `jumpstd` `killscript` `lastbattle` `lasttrainerbattle` `lightroom` `loadbytefrompointer` `loadpointer` `lock` `lockall` `movedisplay` `moveofscreen` `movesprite` `movesprite2` `msgbox2` `msgbox3` `multi` `multichoice2` `multichoise3` `namedisplay` `namedisplayfirst` `nop` `nop0` `opendoor` `opendoorpermanent` `partynamedisplay` `pause` `pausemove` `paymoney` `picture` `playanimation` `playsfx` `playsong` `playsound` `pokemarkt3` `pokemart` `pokenav` `rand` `release` `releaseplayer` `removeitem` `removesprite` `removespriteat` `resetspritelevel` `resetvars` `resetweather` `return` `setbyte` `setcatchlocation` `setflag` `sethealingplace` `setmapfooter` `setmaptile` `setobedience` `setpokemonpp` `setvar` `setweather` `setworldmapflag` `showbox` `showcoinbox` `showmoneybox` `showpokepic` `showsprite` `showspriteat` `showyesno` `special` `special2` `spritebehave` `spriteface` `startcontest` `startwireles` `storeboxname` `storeitems` `storepartyslotforanimation` `storetext` `subvar` `takecoins` `takefurniture` `tempsriteface` `textcolor` `tmhandler` `updatecoinbox` `updatemoneybox` `vardisplay` `waitbutton` `waitcry` `waitfanfare` `waitmsgbox2` `waitspecial` `warp6` `warp_3` `warp_4` `warp_5` `warp_elevator` `warp_teleport` `warpteleport2` `wlhandler` `writebytetooffset` 
+`addfurniture` `additem` `additemtopc` `addpokemon` `addvar` `applymovement` `applymovement2` `boxset` `boxtypenormal` `boxtypesign` `braille` `buymart` `call` `callasm` `callasm2` `callstd` `checkanimation` `checkflag` `checkfurniture` `checkgender` `checkifroomforfurniture` `checkitem` `checkitempc` `checkitemspaceinbag` `checkitemtype` `checkmoney` `checkmove` `checkobedience` `checktrainer` `choosecontestpokemon` `clearbox` `clearflag` `closedoor` `closedoorpermanent` `closeonkeypress` `cmd2c` `cmd2d` `cmd8a` `cmd96` `cmda6` `cmdb1` `cmdb2` `cmdc3` `cmdd3` `cmdfb` `cmdfe` `compare` `comparefarbytetobyte` `comparefarbytetofarbyte` `comparefarbytetovar` `comparehiddenvar` `comparepointer` `comparevars` `comparevartobyte` `comparevartofarbyte` `copybyte` `copyscriptbanks` `copyvar` `copyvarifnotzero` `countpokemon` `createtempsprite` `cry` `darkenroom` `disabletrainer` `doorflush` `doweather` `egghandler` `enabletriner` `end` `endtrainerbattle` `endtrainerbattle2` `executeram` `faceplayer` `fadedefault` `fadein` `fadeout` `fadescreen` `fadescreen_slow` `fadesong` `fanfare` `fardisappear` `farreappear` `furnituredisplay` `getcoins` `getplayerxy` `givecoins` `givemoney` `hashpoke` `hidebox` `hidecoinbox` `hidemoneybox` `hidepokepic` `if` `if_call` `if_callstd` `if_jump` `if_jumpstd` `increasespritelevel` `itemnamedisplay` `jump` `jumpstd` `killscript` `lastbattle` `lasttrainerbattle` `lightroom` `loadbytefrompointer` `loadpointer` `lock` `lockall` `movedisplay` `moveofscreen` `movesprite` `movesprite2` `msgbox2` `msgbox3` `multi` `multichoice2` `multichoise3` `namedisplay` `namedisplayfirst` `nop` `nop0` `opendoor` `opendoorpermanent` `partynamedisplay` `pause` `pausemove` `picture` `playanimation` `playsfx` `playsong` `playsound` `pokemarkt3` `pokemart` `pokenav` `rand` `release` `releaseplayer` `removeitem` `removesprite` `removespriteat` `resetspritelevel` `resetvars` `resetweather` `return` `setbyte` `setcatchlocation` `setflag` `sethealingplace` `setmapfooter` `setmaptile` `setobedience` `setpokemonpp` `setvar` `setweather` `setworldmapflag` `showbox` `showcoinbox` `showmoneybox` `showpokepic` `showsprite` `showspriteat` `showyesno` `special` `special2` `spritebehave` `spriteface` `startcontest` `startwireles` `storeboxname` `storeitems` `storepartyslotforanimation` `storetext` `subvar` `takecoins` `takefurniture` `takemoney` `tempsriteface` `textcolor` `updatecoinbox` `updatemoneybox` `vardisplay` `waitbutton` `waitcry` `waitfanfare` `waitmsgbox2` `waitspecial` `warp6` `warp_3` `warp_4` `warp_5` `warp_elevator` `warp_teleport` `warpteleport2` `wildbattle` `wlhandler` `writebytetooffset` 
 
 ## List of aliasses
 An alias is a shortcort for common used constructions of command sequences. In PokeScript aliases can be used, as well as normal commands.* `givepokemon <arg0> <arg1> <arg2> `
 * `namepokemon `
 * `healpokemon `
 * `selectpokemon `
-* `wildbattle <arg0> <arg1> <arg2> `
+* `startwildbattle `
+* `startwildbattle1 `
+* `startwildbattle2 `
+* `startwildbattle3 `
 * `giveitem <arg0> <arg1> `
 * `finditem <arg0> <arg1> `
-* `msgbox <arg0> `
 * `message <arg0> `
+* `facemessage <arg0> `
+* `normalmessage <arg0> `
+* `msgbox <arg0> `
 * `frmart <arg0> `
 * `givemoney <arg0> `
 * `takemoney <arg0> `
@@ -39,34 +44,25 @@ An alias is a shortcort for common used constructions of command sequences. In P
 * `showmsgstatic <arg0> `
 * `question <arg0> `
 * `simpletakecoins <arg0> `
-* `if <arg0> goto <arg1> `
 * `if <arg0> jump <arg1> `
 * `if <arg0> call <arg1> `
-* `if <arg0> gosub <arg1> `
 * `if <arg0> jumpstd <arg1> `
 * `if <arg0> callstd <arg1> `
 * `if <arg0> boxset <arg1> `
-* `tif <arg0> `
-* `fif <arg0> `
-* `ifvar <arg0> equal <arg1> goto <arg2> `
 * `ifvar <arg0> equal <arg1> jump <arg2> `
-* `ifvar <arg0> equal <arg1> gosub <arg2> `
 * `ifvar <arg0> equal <arg1> call <arg2> `
 * `ifflag <arg0> jump <arg1> `
-* `ifflag <arg0> goto <arg1> `
-* `ifflag <arg0> gosub <arg1> `
 * `ifflag <arg0> call <arg1> `
-* `ifboy goto <arg0> `
+* `ifboy jump <arg0> `
 * `ifpartyfull jump <arg0> `
-* `ifpartyfull goto <arg0> `
-* `trainerbattle <arg0> <arg1> <arg2> <arg3> `
-* `trainerbattle <arg0> <arg1> <arg2> <arg3> jump <arg4> `
-* `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `
-* `trainerbattle3 <arg0> <arg1> <arg2> `
-* `trainerbattle4 <arg0> <arg1> <arg2> <arg3> <arg4> `
-* `trainerbattle5 <arg0> <arg1> <arg2> <arg3> `
-* `trainerbattle7 <arg0> <arg1> <arg2> <arg3> <arg4> `
-* `trainerbattle9 <arg0> <arg1> <arg2> <arg3> `
+* `trainerbattle <arg0> <arg1> <arg2> `
+* `trainerbattle <arg0> <arg1> <arg2> jump <arg3> `
+* `trainerbattle2 <arg0> <arg1> <arg2> <arg3> `
+* `trainerbattle3 <arg0> <arg1> `
+* `trainerbattle4 <arg0> <arg1> <arg2> <arg3> `
+* `trainerbattle5 <arg0> <arg1> <arg2> `
+* `trainerbattle7 <arg0> <arg1> <arg2> <arg3> `
+* `trainerbattle9 <arg0> <arg1> <arg2> `
 * `compare var <arg0> var <arg1> `
 * `compare var <arg0> byte <arg1> `
 * `compare var <arg0> word <arg1> `
@@ -93,11 +89,20 @@ __Argments__:
 
 
 ### additem (0x44)
-__Description__: _No description_  
+__Description__: Adds one item x times to your bag. (If itemcount_in_bag + itemcount_to_add > 999, nothing will happen).  
 __Usage__: `additem <arg0> <arg1> `  
 __Argments__:  
-    `word` `<arg0>`:  Item  
-    `word` `<arg1>`:  Number of items  
+    `word` `<arg0>`: Item to add.  
+    `word` `<arg1>`: Number of the items to be added  
+  
+
+
+### additemtopc (0x49)
+__Description__: Puts a number of an items to your PC (does not remove them from your bag!).  
+__Usage__: `additemtopc <arg0> <arg1> `  
+__Argments__:  
+    `word` `<arg0>`: Item to move.  
+    `word` `<arg1>`: Quantity.  
   
 
 
@@ -140,18 +145,8 @@ __Argments__:
   
 
 
-### battle (0xB6)
-__Description__:  Commence a wild battle  
-__Usage__: `battle <arg0> <arg1> <arg2> `  
-__Argments__:  
-    `word` `<arg0>`:  pokemon race  
-    `byte` `<arg1>`:  pokemon level  
-    `word` `<arg2>`:  Item  
-  
-
-
 ### boxset (0x9)
-__Description__: Call a built in function  
+__Description__: Call a built in function. Return to it by calling "return".  
 __Usage__: `boxset <arg0> `  
 __Argments__:  
     `byte` `<arg0>`: Function to call. 1- text no close. 2- yes/no box, 3-text clost on keypress  
@@ -180,12 +175,12 @@ __Argments__:
 __Description__: Opens the shop system with buy only (RSE exclusive, acts as normal mart in FRLG)  
 __Usage__: `buymart <arg0> `  
 __Argments__:  
-    `int` `<arg0>`: Pointer to the item list  
+    `pointer` `<arg0>`: Pointer to the item/price list  
   
 
 
 ### call (0x4)
-__Description__: Jump to another pointin script. Can be returned to  
+__Description__: Jump to another point in script. Can be returned to.  
 __Usage__: `call <arg0> `  
 __Argments__:  
     `pointer` `<arg0>`: Point to jump to  
@@ -209,7 +204,7 @@ __Argments__:
 
 
 ### callstd (0x9)
-__Description__: Call a built in function  
+__Description__: Call a built in function. Return to it by calling "return".  
 __Usage__: `callstd <arg0> `  
 __Argments__:  
     `byte` `<arg0>`: Function to call. 1- text no close. 2- yes/no box, 3-text clost on keypress  
@@ -225,7 +220,7 @@ __Argments__:
 
 
 ### checkflag (0x2B)
-__Description__: Check the value of a flag and pu result in LASTRESULT  
+__Description__: Check the value of a flag and puts result in LASTRESULT  
 __Usage__: `checkflag <arg0> `  
 __Argments__:  
     `word` `<arg0>`: Flag index  
@@ -236,12 +231,12 @@ __Argments__:
 __Description__: _No description_  
 __Usage__: `checkfurniture <arg0> `  
 __Argments__:  
-    `word` `<arg0>`: _No description_  
+    `word` `<arg0>`: ?  
   
 
 
 ### checkgender (0xA0)
-__Description__: Checks if player is boy or girl and places in LASTRESULT (0x800d)  
+__Description__: Stores the players gender in var LASTRESULT (var 0x800d: 0=boy, 1=girl).  
 __Usage__: `checkgender `  
 
 
@@ -249,51 +244,51 @@ __Usage__: `checkgender `
 __Description__: _No description_  
 __Usage__: `checkifroomforfurniture <arg0> `  
 __Argments__:  
-    `word` `<arg0>`: _No description_  
+    `word` `<arg0>`: ?  
   
 
 
 ### checkitem (0x47)
-__Description__: Check if the player has an item  
+__Description__: Check if the player has an item. The result is stored in LASTRESULT.  
 __Usage__: `checkitem <arg0> <arg1> `  
 __Argments__:  
-    `word` `<arg0>`: Item to check for  
-    `word` `<arg1>`: quantity  
+    `word` `<arg0>`: Item to check for.  
+    `word` `<arg1>`: quantity (has the player at least this number of same items?).  
   
 
 
 ### checkitempc (0x4A)
-__Description__: _No description_  
+__Description__: Checks if the player has an item stored in its PC. The result is stored in LASTRESULT.  
 __Usage__: `checkitempc <arg0> <arg1> `  
 __Argments__:  
-    `word` `<arg0>`: Item to check  
-    `word` `<arg1>`: Quantity  
+    `word` `<arg0>`: Item to check for.  
+    `word` `<arg1>`: quantity (has the player at least this number of same items?).  
   
 
 
 ### checkitemspaceinbag (0x46)
-__Description__: _No description_  
+__Description__: Checks wheter there is space in the bag for the given item. The result is stored in LASTRESULT, 1 or TRUE if there is enough space.  
 __Usage__: `checkitemspaceinbag <arg0> <arg1> `  
 __Argments__:  
-    `word` `<arg0>`: Item to check for  
-    `word` `<arg1>`: ???  
+    `word` `<arg0>`: Item to check for.  
+    `word` `<arg1>`: Quantity (is there at least space for this number of space left?).  
   
 
 
 ### checkitemtype (0x48)
-__Description__: _No description_  
+__Description__: Stores the item type for the given item in LASTRESULT.  
 __Usage__: `checkitemtype <arg0> `  
 __Argments__:  
-    `word` `<arg0>`:  Item to check for  
+    `word` `<arg0>`: Item to check for.  
   
 
 
 ### checkmoney (0x92)
-__Description__: _No description_  
+__Description__: Checks whether the player has this amount of money, result is stored in LASTRESULT.  
 __Usage__: `checkmoney <arg0> <arg1> `  
 __Argments__:  
     `int` `<arg0>`: Amount  
-    `byte` `<arg1>`: ?  
+    `byte` `<arg1>`: ? (0 as default works fine)  
   
 
 
@@ -409,7 +404,7 @@ __Argments__:
 
 
 ### cmdb1 (0xB1)
-__Description__: _No description_  
+__Description__: Unknown command  
 __Usage__: `cmdb1 <arg0> <arg1> <arg2> <arg3> `  
 __Argments__:  
     `byte` `<arg0>`: _No description_  
@@ -420,7 +415,7 @@ __Argments__:
 
 
 ### cmdb2 (0xB2)
-__Description__: _No description_  
+__Description__: Unknown command  
 __Usage__: `cmdb2 `  
 
 
@@ -456,21 +451,12 @@ __Argments__:
   
 
 
-### cmhandler (0x92)
-__Description__: _No description_  
-__Usage__: `cmhandler <arg0> <arg1> `  
-__Argments__:  
-    `int` `<arg0>`: _No description_  
-    `byte` `<arg1>`: _No description_  
-  
-
-
 ### compare (0x21)
-__Description__: Compare variable A to a value  
+__Description__: Compare variable to a value  
 __Usage__: `compare <arg0> <arg1> `  
 __Argments__:  
-    `word` `<arg0>`: Variable A  
-    `word` `<arg1>`: Value to compare A to  
+    `word` `<arg0>`: Variable  
+    `word` `<arg1>`: Value to compare to  
   
 
 
@@ -496,8 +482,8 @@ __Argments__:
 __Description__: Compares a byte at some location to a variable  
 __Usage__: `comparefarbytetovar <arg0> <arg1> `  
 __Argments__:  
-    `int` `<arg0>`: Pointer to a byte value to compare B to  
-    `word` `<arg1>`: Variable B  
+    `int` `<arg0>`: Pointer to a byte value to compare the var to  
+    `word` `<arg1>`: Variable  
   
 
 
@@ -524,7 +510,7 @@ __Description__: Compare to variables
 __Usage__: `comparevars <arg0> <arg1> `  
 __Argments__:  
     `word` `<arg0>`: Variable A  
-    `word` `<arg1>`: Variable 2  
+    `word` `<arg1>`: Variable B  
   
 
 
@@ -532,7 +518,7 @@ __Argments__:
 __Description__: Compares a variable to a byte  
 __Usage__: `comparevartobyte <arg0> <arg1> `  
 __Argments__:  
-    `word` `<arg0>`: Variable A  
+    `word` `<arg0>`: Variable  
     `byte` `<arg1>`: Byte Value  
   
 
@@ -541,8 +527,8 @@ __Argments__:
 __Description__: Compare a variable with a byte at some location  
 __Usage__: `comparevartofarbyte <arg0> <arg1> `  
 __Argments__:  
-    `word` `<arg0>`: Variable A  
-    `int` `<arg1>`: Pointer to a byte value to compare A to  
+    `word` `<arg0>`: Variable  
+    `int` `<arg1>`: Pointer to a byte value to compare the var to  
   
 
 
@@ -610,10 +596,10 @@ __Argments__:
 
 
 ### darkenroom (0x99)
-__Description__: _No description_  
+__Description__: ?  
 __Usage__: `darkenroom <arg0> `  
 __Argments__:  
-    `word` `<arg0>`: Size  
+    `word` `<arg0>`: ? Size  
   
 
 
@@ -698,19 +684,19 @@ __Argments__:
 
 
 ### fadescreen (0x97)
-__Description__: Fades the screan in or out  
+__Description__: Fades the screen in or out.  
 __Usage__: `fadescreen <arg0> `  
 __Argments__:  
-    `byte` `<arg0>`: 0 fade in, 1 fade out  
+    `byte` `<arg0>`: Fade method (in or out)  
   
 
 
-### fadescreen_delay (0x98)
-__Description__: _No description_  
-__Usage__: `fadescreen_delay <arg0> <arg1> `  
+### fadescreen_slow (0x98)
+__Description__: Slowly fades the screen in or out.  
+__Usage__: `fadescreen_slow <arg0> <arg1> `  
 __Argments__:  
-    `byte` `<arg0>`: 0 fade in, 1 fade out  
-    `byte` `<arg1>`: Delay  
+    `byte` `<arg0>`: Fade method (in or out)  
+    `byte` `<arg1>`: Speed of fade animations (in frames?)  
   
 
 
@@ -760,10 +746,10 @@ __Argments__:
 
 
 ### getcoins (0xB3)
-__Description__: _No description_  
+__Description__: Put the players number coins in a variable.  
 __Usage__: `getcoins <arg0> `  
 __Argments__:  
-    `word` `<arg0>`: variable to store current coin amount in  
+    `word` `<arg0>`: variable to store current coin amount in.  
   
 
 
@@ -777,44 +763,19 @@ __Argments__:
 
 
 ### givecoins (0xB4)
-__Description__: _No description_  
+__Description__: Give the player a number of coins.  
 __Usage__: `givecoins <arg0> `  
 __Argments__:  
-    `word` `<arg0>`: amount of coins to give to player  
+    `word` `<arg0>`: Amount of coins to give to player.  
   
 
 
 ### givemoney (0x90)
-__Description__: _No description_  
+__Description__: Gives the player an amount of money  
 __Usage__: `givemoney <arg0> <arg1> `  
 __Argments__:  
     `int` `<arg0>`: Amount  
-    `byte` `<arg1>`: ?  
-  
-
-
-### gmhandler (0x90)
-__Description__: _No description_  
-__Usage__: `gmhandler <arg0> <arg1> `  
-__Argments__:  
-    `int` `<arg0>`: _No description_  
-    `byte` `<arg1>`: _No description_  
-  
-
-
-### gosub (0x4)
-__Description__: Jump to another pointin script. Can be returned to  
-__Usage__: `gosub <arg0> `  
-__Argments__:  
-    `pointer` `<arg0>`: Point to jump to  
-  
-
-
-### goto (0x5)
-__Description__: Continue execution from another point  
-__Usage__: `goto <arg0> `  
-__Argments__:  
-    `pointer` `<arg0>`: Point to continue from  
+    `byte` `<arg1>`: ? (0 as default works fine)  
   
 
 
@@ -848,11 +809,11 @@ __Argments__:
 
 
 ### hidemoneybox (0x94)
-__Description__: _No description_  
+__Description__: Hides the moneybox, placed at Position X, Y.  
 __Usage__: `hidemoneybox <arg0> <arg1> `  
 __Argments__:  
-    `byte` `<arg0>`: X  
-    `byte` `<arg1>`: Y  
+    `byte` `<arg0>`: ? (0 as default works fine)  
+    `byte` `<arg1>`: ? (0 as default works fine)  
   
 
 
@@ -862,47 +823,47 @@ __Usage__: `hidepokepic `
 
 
 ### if (0x6)
-__Description__: _No description_  
+__Description__: Boolean compare value in var LASTRESULT, if evaluates to true, jumps to the given routine. Should not be returned to.  
 __Usage__: `if <arg0> <arg1> `  
 __Argments__:  
-    `byte` `<arg0>`: _No description_  
-    `pointer` `<arg1>`: _No description_  
+    `byte` `<arg0>`: 0 false, 1 true  
+    `pointer` `<arg1>`: Offset to jump to  
   
 
 
-### if1 (0x6)
-__Description__: compare and jump  
-__Usage__: `if1 <arg0> <arg1> `  
+### if_call (0x7)
+__Description__: Boolean compare value in var LASTRESULT, if evaluates to true, calls the given routine. Return to it by calling "return".  
+__Usage__: `if_call <arg0> <arg1> `  
 __Argments__:  
     `byte` `<arg0>`: 0 false, 1 true  
-    `pointer` `<arg1>`: Point to jump to  
+    `pointer` `<arg1>`: Offset of script to call  
   
 
 
-### if2 (0x7)
-__Description__: Calling version of if  
-__Usage__: `if2 <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: 0 false, 1 true  
-    `pointer` `<arg1>`: Point to call  
-  
-
-
-### if3 (0xA)
-__Description__: jumpstd version of if  
-__Usage__: `if3 <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: 0 false, 1 true  
-    `byte` `<arg1>`: function number to jump to  
-  
-
-
-### if4 (0xB)
-__Description__: callstd version of if  
-__Usage__: `if4 <arg0> <arg1> `  
+### if_callstd (0xB)
+__Description__: Callstd version of if. Return to it by calling "return".  
+__Usage__: `if_callstd <arg0> <arg1> `  
 __Argments__:  
     `byte` `<arg0>`: 0 false, 1 true  
     `byte` `<arg1>`: function to call  
+  
+
+
+### if_jump (0x6)
+__Description__: Boolean compare value in var LASTRESULT, if evaluates to true, jumps to the given routine. Should not be returned to.  
+__Usage__: `if_jump <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: 0 false, 1 true  
+    `pointer` `<arg1>`: Offset to jump to  
+  
+
+
+### if_jumpstd (0xA)
+__Description__: Jumpstd version of if. Should not be returned to.  
+__Usage__: `if_jumpstd <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: 0 false, 1 true  
+    `byte` `<arg1>`: function number to jump to  
   
 
 
@@ -921,22 +882,13 @@ __Argments__:
 __Description__: _No description_  
 __Usage__: `itemnamedisplay <arg0> <arg1> `  
 __Argments__:  
-    `byte` `<arg0>`: slot, blah blah blah  
+    `byte` `<arg0>`: slot  
     `word` `<arg1>`: item id - check to see if this uses < or not  
   
 
 
-### itemtopc (0x49)
-__Description__: _No description_  
-__Usage__: `itemtopc <arg0> <arg1> `  
-__Argments__:  
-    `word` `<arg0>`: Item to move  
-    `word` `<arg1>`: Quantity  
-  
-
-
 ### jump (0x5)
-__Description__: Continue execution from another point  
+__Description__: Continue execution from another point.  
 __Usage__: `jump <arg0> `  
 __Argments__:  
     `pointer` `<arg0>`: Point to continue from  
@@ -944,7 +896,7 @@ __Argments__:
 
 
 ### jumpstd (0x8)
-__Description__: Jump to a built in function  
+__Description__: Jump to a built in function, should not be returned to.  
 __Usage__: `jumpstd <arg0> `  
 __Argments__:  
     `byte` `<arg0>`: Function numder to jump to  
@@ -967,10 +919,10 @@ __Usage__: `lasttrainerbattle `
 
 
 ### lightroom (0x9A)
-__Description__: _No description_  
+__Description__: ?  
 __Usage__: `lightroom <arg0> `  
 __Argments__:  
-    `byte` `<arg0>`: Size  
+    `byte` `<arg0>`: ? Size  
   
 
 
@@ -1139,7 +1091,7 @@ __Description__: TODO: StorePartyPokemon?
 __Usage__: `partynamedisplay <arg0> <arg1> `  
 __Argments__:  
     `byte` `<arg0>`: slot as in namedisplay  
-    `word` `<arg1>`: var, default LASTRESULT  
+    `word` `<arg1>`: var, hint LASTRESULT  
   
 
 
@@ -1156,15 +1108,6 @@ __Description__: Wait for an event to finish
 __Usage__: `pausemove <arg0> `  
 __Argments__:  
     `word` `<arg0>`: Zero for applymovement  
-  
-
-
-### paymoney (0x91)
-__Description__: _No description_  
-__Usage__: `paymoney <arg0> <arg1> `  
-__Argments__:  
-    `int` `<arg0>`: Amount  
-    `byte` `<arg1>`: ?  
   
 
 
@@ -1221,7 +1164,7 @@ __Argments__:
 __Description__: Opens the pokemart shop system  
 __Usage__: `pokemart <arg0> `  
 __Argments__:  
-    `int` `<arg0>`: Pointer to the item/price list  
+    `pointer` `<arg0>`: Pointer to the item/price list  
   
 
 
@@ -1234,10 +1177,10 @@ __Argments__:
 
 
 ### rand (0x8F)
-__Description__: _No description_  
+__Description__: Generate a random number, store the result in LASTRESULT.  
 __Usage__: `rand <arg0> `  
 __Argments__:  
-    `word` `<arg0>`: amount to random up to. will generate random number -> 800d from 0 to (amount-1)  
+    `word` `<arg0>`: Maximum random number.  
   
 
 
@@ -1252,11 +1195,11 @@ __Usage__: `releaseplayer `
 
 
 ### removeitem (0x45)
-__Description__:  Remove Item  
+__Description__: Remove one item x times from your bag. (If itemcount_in_bag - itemcount_to_remove < 0, nothing will happen).  
 __Usage__: `removeitem <arg0> <arg1> `  
 __Argments__:  
-    `word` `<arg0>`: Item to check for  
-    `word` `<arg1>`: Number of Items  
+    `word` `<arg0>`: Item to remove.  
+    `word` `<arg1>`: Number of the items to be removed  
   
 
 
@@ -1294,7 +1237,7 @@ __Usage__: `resetvars `
 
 
 ### resetweather (0xA3)
-__Description__: _No description_  
+__Description__: Resets the weather animation to the original weather.  
 __Usage__: `resetweather `  
 
 
@@ -1367,8 +1310,8 @@ __Argments__:
 __Description__: _No description_  
 __Usage__: `setpokemonpp <arg0> <arg1> <arg2> `  
 __Argments__:  
-    `byte` `<arg0>`: slot  
-    `byte` `<arg1>`: attackslot  
+    `byte` `<arg0>`: pkmn slot  
+    `byte` `<arg1>`: move slot  
     `word` `<arg2>`: pp  
   
 
@@ -1383,10 +1326,10 @@ __Argments__:
 
 
 ### setweather (0xA4)
-__Description__: Prepare to fade the weather into the type specified,1  
+__Description__: Prepare to fade the weather into the type specified.  
 __Usage__: `setweather <arg0> `  
 __Argments__:  
-    `byte` `<arg0>`: New weather value  
+    `byte` `<arg0>`: Weather type to change to.  
   
 
 
@@ -1419,12 +1362,12 @@ __Argments__:
 
 
 ### showmoneybox (0x93)
-__Description__: _No description_  
+__Description__: Shows a moneybox, placed at position X, Y.  
 __Usage__: `showmoneybox <arg0> <arg1> <arg2> `  
 __Argments__:  
     `byte` `<arg0>`: X  
     `byte` `<arg1>`: Y  
-    `byte` `<arg2>`: ?  
+    `byte` `<arg2>`: ? (0 as default works fine)  
   
 
 
@@ -1557,10 +1500,10 @@ __Argments__:
 
 
 ### takecoins (0xB5)
-__Description__: _No description_  
+__Description__: Substracks a number of coins, value to substract is stored in a variable.  
 __Usage__: `takecoins <arg0> `  
 __Argments__:  
-    `word` `<arg0>`: variable in which the amount of coins to take away is stored  
+    `word` `<arg0>`: Variable in which the amount of coins to take away is stored.  
   
 
 
@@ -1569,6 +1512,15 @@ __Description__: _No description_
 __Usage__: `takefurniture <arg0> `  
 __Argments__:  
     `word` `<arg0>`: Type  
+  
+
+
+### takemoney (0x91)
+__Description__: Take an amount of money from the player  
+__Usage__: `takemoney <arg0> <arg1> `  
+__Argments__:  
+    `int` `<arg0>`: Amount  
+    `byte` `<arg1>`: ? (0 as default works fine)  
   
 
 
@@ -1589,15 +1541,6 @@ __Argments__:
   
 
 
-### tmhandler (0x91)
-__Description__: _No description_  
-__Usage__: `tmhandler <arg0> <arg1> `  
-__Argments__:  
-    `int` `<arg0>`: _No description_  
-    `byte` `<arg1>`: _No description_  
-  
-
-
 ### updatecoinbox (0xC2)
 __Description__: _No description_  
 __Usage__: `updatecoinbox <arg0> <arg1> `  
@@ -1608,12 +1551,12 @@ __Argments__:
 
 
 ### updatemoneybox (0x95)
-__Description__: _No description_  
+__Description__: Updates the moneybox, placed at Position X, Y.  
 __Usage__: `updatemoneybox <arg0> <arg1> <arg2> `  
 __Argments__:  
-    `byte` `<arg0>`: X  
-    `byte` `<arg1>`: Y  
-    `byte` `<arg2>`: ?  
+    `byte` `<arg0>`: ? (0 as default works fine)  
+    `byte` `<arg1>`: ? (0 as default works fine)  
+    `byte` `<arg2>`: ? (0 as default works fine)  
   
 
 
@@ -1621,7 +1564,7 @@ __Argments__:
 __Description__: _No description_  
 __Usage__: `vardisplay <arg0> <arg1> `  
 __Argments__:  
-    `byte` `<arg0>`: position no, 0 or 1, 2  
+    `byte` `<arg0>`: position 0, 1, or 2  
     `word` `<arg1>`: variable  
   
 
@@ -1727,6 +1670,16 @@ __Argments__:
   
 
 
+### wildbattle (0xB6)
+__Description__: Prepare a wild pokemon battle. Should call one of the `startwildbattle` commands after it to actually start the battle.  
+__Usage__: `wildbattle <arg0> <arg1> <arg2> `  
+__Argments__:  
+    `word` `<arg0>`: Pokemon species.  
+    `byte` `<arg1>`: Pokemon level.  
+    `word` `<arg2>`: Item the wild pokemon holds.  
+  
+
+
 ### wlhandler (0x39)
 __Description__: _No description_  
 __Usage__: `wlhandler <arg0> <arg1> <arg2> <arg3> <arg4> `  
@@ -1765,46 +1718,71 @@ __Argments__:
 
 ### Alias `healpokemon `
 __Usage__: `healpokemon `  
-__Description__: grabmove; gosub 0x1a6c26  
+__Description__: Heal all pokemon, include fadescreen animation.  
 __Argments__:  
 
 ### Alias `selectpokemon `
 __Usage__: `selectpokemon `  
-__Description__:  Display "Select pokemon" dialog  
+__Description__: Display "Select pokemon" dialog  
 __Argments__:  
 
-### Alias `wildbattle <arg0> <arg1> <arg2> `
-__Usage__: `wildbattle <arg0> <arg1> <arg2> `  
-__Description__: Commence Wild Battle  
+### Alias `startwildbattle `
+__Usage__: `startwildbattle `  
+__Description__: Starts a wild battle. Should call wildbattle first.  
 __Argments__:  
-    `word` `<arg0>`:  pokemon race  
-    `byte` `<arg1>`:  pokemon lavel  
+
+### Alias `startwildbattle1 `
+__Usage__: `startwildbattle1 `  
+__Description__: Starts a wild pokemon battle, alternate song 1.  
+__Argments__:  
+
+### Alias `startwildbattle2 `
+__Usage__: `startwildbattle2 `  
+__Description__: Starts a wild pokemon battle, alternate song 2.  
+__Argments__:  
+
+### Alias `startwildbattle3 `
+__Usage__: `startwildbattle3 `  
+__Description__: Starts a wild pokemon battle, alternate song 3.  
+__Argments__:  
 
 ### Alias `giveitem <arg0> <arg1> `
 __Usage__: `giveitem <arg0> <arg1> `  
-__Description__:  Give item to player  
+__Description__: Give item to player. (Alters vars 0x8000 and 0x8001).  
 __Argments__:  
-    `word` `<arg0>`: $Val ' $Val  
-    `word` `<arg1>`: $Val  
+    `word` `<arg0>`: Item to give  
+    `word` `<arg1>`: Number of items  
 
 ### Alias `finditem <arg0> <arg1> `
 __Usage__: `finditem <arg0> <arg1> `  
-__Description__:  Give item to player  
+__Description__: Player finds an item. (Alters vars 0x8000 and 0x8001).  
 __Argments__:  
-    `word` `<arg0>`: $Val ' $Val  
-    `word` `<arg1>`: $Val  
-
-### Alias `msgbox <arg0> `
-__Usage__: `msgbox <arg0> `  
-__Description__:  loadpointer for use in text  
-__Argments__:  
-    `Pointer to String` `<arg0>`:  text offset  
+    `word` `<arg0>`: Item to be found  
+    `word` `<arg1>`: Number of Items  
 
 ### Alias `message <arg0> `
 __Usage__: `message <arg0> `  
-__Description__:  loadpointer for use in text  
+__Description__: Loads a message into memory, and shows it (automatically calls boxset)  
 __Argments__:  
     `Pointer to String` `<arg0>`:  text offset  
+
+### Alias `facemessage <arg0> `
+__Usage__: `facemessage <arg0> `  
+__Description__: Loads a message into memory, and shows it, talker faces to player.  
+__Argments__:  
+    `Pointer to String` `<arg0>`:  text offset  
+
+### Alias `normalmessage <arg0> `
+__Usage__: `normalmessage <arg0> `  
+__Description__: Loads a message into memory, and shows it, talker faces to player.  
+__Argments__:  
+    `Pointer to String` `<arg0>`:  text offset  
+
+### Alias `msgbox <arg0> `
+__Usage__: `msgbox <arg0> `  
+__Description__: Loads a message into memory, which can be shown with boxset (example: msgbox $t1, boxset MSG_NOCLOSE)  
+__Argments__:  
+    `Pointer to String` `<arg0>`: text offset  
 
 ### Alias `frmart <arg0> `
 __Usage__: `frmart <arg0> `  
@@ -1814,62 +1792,62 @@ __Argments__:
 
 ### Alias `givemoney <arg0> `
 __Usage__: `givemoney <arg0> `  
-__Description__: _No description_  
+__Description__: Gives the given amount of money to the player.  
 __Argments__:  
-    `int` `<arg0>`: Money amt  
+    `int` `<arg0>`: Money amt 'Amount to give  
 
 ### Alias `takemoney <arg0> `
 __Usage__: `takemoney <arg0> `  
-__Description__: _No description_  
+__Description__: Removes the given amount of the players money wall.  
 __Argments__:  
-    `int` `<arg0>`: Money amt  
+    `int` `<arg0>`: Amount to take  
 
 ### Alias `checkmoney <arg0> `
 __Usage__: `checkmoney <arg0> `  
-__Description__: _No description_  
+__Description__: Checks whether user has a certain amount of money. Bool value is stored in LASTRESULT.  
 __Argments__:  
-    `int` `<arg0>`: Money amt  
+    `int` `<arg0>`: Money amt 'Amount to check for (player has at least this amount)  
 
 ### Alias `showmoneybox `
 __Usage__: `showmoneybox `  
-__Description__: show the current money in a box a la safari zone etc  
+__Description__: Show the current money in a box  
 __Argments__:  
 
 ### Alias `hidemoneybox `
 __Usage__: `hidemoneybox `  
-__Description__: kill the money box shown by #93  
+__Description__: Hides the moneybox  
 __Argments__:  
 
 ### Alias `updatemoneybox `
 __Usage__: `updatemoneybox `  
-__Description__: _No description_  
+__Description__: Updates the moneybox  
 __Argments__:  
 
 ### Alias `getrunningshoes `
 __Usage__: `getrunningshoes `  
-__Description__: _No description_  
+__Description__: Gives the running shoes to the player  
 __Argments__:  
 
 ### Alias `getpokemonmenu `
 __Usage__: `getpokemonmenu `  
-__Description__: _No description_  
+__Description__: Enables the Pokemon menu  
 __Argments__:  
 
 ### Alias `getpokedex `
 __Usage__: `getpokedex `  
-__Description__: _No description_  
+__Description__: Enables the Pokedex menu  
 __Argments__:  
 
 ### Alias `getnationaldex `
 __Usage__: `getnationaldex `  
-__Description__: _No description_  
+__Description__: Enables the national dex.  
 __Argments__:  
 
 ### Alias `starterpokemon <arg0> `
 __Usage__: `starterpokemon <arg0> `  
 __Description__: _No description_  
 __Argments__:  
-    `word` `<arg0>`: Pokemon species to give  
+    `word` `<arg0>`: Var of pokemon to give  
 
 ### Alias `vanish <arg0> `
 __Usage__: `vanish <arg0> `  
@@ -1940,219 +1918,149 @@ __Description__: _No description_
 __Argments__:  
     `word` `<arg0>`: coins to take  
 
-### Alias `if <arg0> goto <arg1> `
-__Usage__: `if <arg0> goto <arg1> `  
-__Description__:  if1  
-__Argments__:  
-    `byte` `<arg0>`:  $Val  
-    `pointer` `<arg1>`:  $Val  
-
 ### Alias `if <arg0> jump <arg1> `
 __Usage__: `if <arg0> jump <arg1> `  
-__Description__:  if1  
+__Description__: if_jump  
 __Argments__:  
     `byte` `<arg0>`: $Val  
     `pointer` `<arg1>`: $Val  
 
 ### Alias `if <arg0> call <arg1> `
 __Usage__: `if <arg0> call <arg1> `  
-__Description__:  if2  
-__Argments__:  
-    `byte` `<arg0>`: $Val  
-    `pointer` `<arg1>`: $Val  
-
-### Alias `if <arg0> gosub <arg1> `
-__Usage__: `if <arg0> gosub <arg1> `  
-__Description__:  if2  
+__Description__: if_call  
 __Argments__:  
     `byte` `<arg0>`: $Val  
     `pointer` `<arg1>`: $Val  
 
 ### Alias `if <arg0> jumpstd <arg1> `
 __Usage__: `if <arg0> jumpstd <arg1> `  
-__Description__: if3  
+__Description__: if_jumpstd  
 __Argments__:  
     `byte` `<arg0>`: $Val  
     `byte` `<arg1>`: $Val2  
 
 ### Alias `if <arg0> callstd <arg1> `
 __Usage__: `if <arg0> callstd <arg1> `  
-__Description__: if4  
+__Description__: if_callstd  
 __Argments__:  
     `byte` `<arg0>`: $Val  
     `byte` `<arg1>`: $Val2  
 
 ### Alias `if <arg0> boxset <arg1> `
 __Usage__: `if <arg0> boxset <arg1> `  
-__Description__: if4  
+__Description__: if_callstd  
 __Argments__:  
     `byte` `<arg0>`: $Val  
     `byte` `<arg1>`: $Val2  
 
-### Alias `tif <arg0> `
-__Usage__: `tif <arg0> `  
-__Description__: _No description_  
-__Argments__:  
-    `pointer` `<arg0>`: _No description_  
-
-### Alias `fif <arg0> `
-__Usage__: `fif <arg0> `  
-__Description__: _No description_  
-__Argments__:  
-    `pointer` `<arg0>`: _No description_  
-
-### Alias `ifvar <arg0> equal <arg1> goto <arg2> `
-__Usage__: `ifvar <arg0> equal <arg1> goto <arg2> `  
-__Description__: _No description_  
-__Argments__:  
-    `word` `<arg0>`: variable  
-    `word` `<arg1>`: word  
-    `pointer` `<arg2>`: _No description_  
-
 ### Alias `ifvar <arg0> equal <arg1> jump <arg2> `
 __Usage__: `ifvar <arg0> equal <arg1> jump <arg2> `  
-__Description__: _No description_  
+__Description__: If the value in var is equal to some other value, call the script at the given offset.  
 __Argments__:  
     `word` `<arg0>`: variable  
-    `word` `<arg1>`: word  
-    `pointer` `<arg2>`: _No description_  
-
-### Alias `ifvar <arg0> equal <arg1> gosub <arg2> `
-__Usage__: `ifvar <arg0> equal <arg1> gosub <arg2> `  
-__Description__: _No description_  
-__Argments__:  
-    `word` `<arg0>`: variable  
-    `word` `<arg1>`: word  
-    `pointer` `<arg2>`: _No description_  
+    `word` `<arg1>`:  value to test for  
+    `pointer` `<arg2>`: pointer to jump to  
 
 ### Alias `ifvar <arg0> equal <arg1> call <arg2> `
 __Usage__: `ifvar <arg0> equal <arg1> call <arg2> `  
-__Description__: _No description_  
+__Description__: If the value in var is equal to some other value, call the script at the given offset.  
 __Argments__:  
     `word` `<arg0>`: variable  
-    `word` `<arg1>`: word  
-    `pointer` `<arg2>`: _No description_  
+    `word` `<arg1>`:  value to test for  
+    `pointer` `<arg2>`: pointer to call to  
 
 ### Alias `ifflag <arg0> jump <arg1> `
 __Usage__: `ifflag <arg0> jump <arg1> `  
-__Description__: _No description_  
+__Description__: If a flag is set to True, jump to the script at the given offset.  
 __Argments__:  
     `word` `<arg0>`: flag  
-    `pointer` `<arg1>`: _No description_  
-
-### Alias `ifflag <arg0> goto <arg1> `
-__Usage__: `ifflag <arg0> goto <arg1> `  
-__Description__: _No description_  
-__Argments__:  
-    `word` `<arg0>`: flag  
-    `pointer` `<arg1>`: _No description_  
-
-### Alias `ifflag <arg0> gosub <arg1> `
-__Usage__: `ifflag <arg0> gosub <arg1> `  
-__Description__: _No description_  
-__Argments__:  
-    `word` `<arg0>`: flag  
-    `pointer` `<arg1>`: _No description_  
+    `pointer` `<arg1>`: pointer to jump to  
 
 ### Alias `ifflag <arg0> call <arg1> `
 __Usage__: `ifflag <arg0> call <arg1> `  
-__Description__: _No description_  
+__Description__: If a flag is set to True, call the script at the given offset.  
 __Argments__:  
     `word` `<arg0>`: flag  
-    `pointer` `<arg1>`: _No description_  
+    `pointer` `<arg1>`: pointer to call to  
 
-### Alias `ifboy goto <arg0> `
-__Usage__: `ifboy goto <arg0> `  
-__Description__: _No description_  
+### Alias `ifboy jump <arg0> `
+__Usage__: `ifboy jump <arg0> `  
+__Description__: If the player is a boy, jump to script at the given offset  
 __Argments__:  
-    `pointer` `<arg0>`: _No description_  
+    `pointer` `<arg0>`: pointer to jump to  
 
 ### Alias `ifpartyfull jump <arg0> `
 __Usage__: `ifpartyfull jump <arg0> `  
-__Description__: _No description_  
+__Description__: If the players party is full, jump to the script at the given offset.  
 __Argments__:  
-    `pointer` `<arg0>`: _No description_  
+    `pointer` `<arg0>`: pointer to jump to  
 
-### Alias `ifpartyfull goto <arg0> `
-__Usage__: `ifpartyfull goto <arg0> `  
-__Description__: _No description_  
-__Argments__:  
-    `pointer` `<arg0>`: _No description_  
-
-### Alias `trainerbattle <arg0> <arg1> <arg2> <arg3> `
-__Usage__: `trainerbattle <arg0> <arg1> <arg2> <arg3> `  
+### Alias `trainerbattle <arg0> <arg1> <arg2> `
+__Usage__: `trainerbattle <arg0> <arg1> <arg2> `  
 __Description__: Standard trainer battle  
 __Argments__:  
     `word` `<arg0>`: battle to start  
-    `word` `<arg1>`: mask  
-    `Pointer to String` `<arg2>`: pointer to text winning  
-    `Pointer to String` `<arg3>`: pointer to text losing  
+    `Pointer to String` `<arg1>`: pointer to text winning  
+    `Pointer to String` `<arg2>`: pointer to text losing  
 
-### Alias `trainerbattle <arg0> <arg1> <arg2> <arg3> jump <arg4> `
-__Usage__: `trainerbattle <arg0> <arg1> <arg2> <arg3> jump <arg4> `  
+### Alias `trainerbattle <arg0> <arg1> <arg2> jump <arg3> `
+__Usage__: `trainerbattle <arg0> <arg1> <arg2> jump <arg3> `  
 __Description__: Trainer battle with jump pointer (kind 0x01)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
-    `word` `<arg1>`: mask  
-    `Pointer to String` `<arg2>`: pointer to text winning  
-    `Pointer to String` `<arg3>`: pointer to text losing  
-    `pointer` `<arg4>`: jump to  
+    `Pointer to String` `<arg1>`: pointer to text winning  
+    `Pointer to String` `<arg2>`: pointer to text losing  
+    `pointer` `<arg3>`: jump to  
 
-### Alias `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `
-__Usage__: `trainerbattle2 <arg0> <arg1> <arg2> <arg3> <arg4> `  
+### Alias `trainerbattle2 <arg0> <arg1> <arg2> <arg3> `
+__Usage__: `trainerbattle2 <arg0> <arg1> <arg2> <arg3> `  
 __Description__: Special trainer battle (kind 0x02)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
-    `word` `<arg1>`: mask  
-    `Pointer to String` `<arg2>`: pointer to text winning  
-    `Pointer to String` `<arg3>`: pointer to text losing  
-    `pointer` `<arg4>`: pointer  
+    `Pointer to String` `<arg1>`: pointer to text winning  
+    `Pointer to String` `<arg2>`: pointer to text losing  
+    `pointer` `<arg3>`: pointer  
 
-### Alias `trainerbattle3 <arg0> <arg1> <arg2> `
-__Usage__: `trainerbattle3 <arg0> <arg1> <arg2> `  
+### Alias `trainerbattle3 <arg0> <arg1> `
+__Usage__: `trainerbattle3 <arg0> <arg1> `  
 __Description__: Special trainer battle (kind 0x03)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
-    `word` `<arg1>`: mask  
-    `Pointer to String` `<arg2>`: pointer to text winning  
+    `Pointer to String` `<arg1>`: pointer to text winning  
 
-### Alias `trainerbattle4 <arg0> <arg1> <arg2> <arg3> <arg4> `
-__Usage__: `trainerbattle4 <arg0> <arg1> <arg2> <arg3> <arg4> `  
+### Alias `trainerbattle4 <arg0> <arg1> <arg2> <arg3> `
+__Usage__: `trainerbattle4 <arg0> <arg1> <arg2> <arg3> `  
 __Description__: Special trainer battle (kind 0x04)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
-    `word` `<arg1>`: mask  
-    `Pointer to String` `<arg2>`: pointer to text winning  
-    `Pointer to String` `<arg3>`: pointer to text losing  
-    `pointer` `<arg4>`: pointer  
+    `Pointer to String` `<arg1>`: pointer to text winning  
+    `Pointer to String` `<arg2>`: pointer to text losing  
+    `pointer` `<arg3>`: pointer  
 
-### Alias `trainerbattle5 <arg0> <arg1> <arg2> <arg3> `
-__Usage__: `trainerbattle5 <arg0> <arg1> <arg2> <arg3> `  
+### Alias `trainerbattle5 <arg0> <arg1> <arg2> `
+__Usage__: `trainerbattle5 <arg0> <arg1> <arg2> `  
 __Description__: Special trainer battle (kind 0x05)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
-    `word` `<arg1>`: mask  
-    `Pointer to String` `<arg2>`: pointer to text winning  
-    `Pointer to String` `<arg3>`: pointer to text losing  
+    `Pointer to String` `<arg1>`: pointer to text winning  
+    `Pointer to String` `<arg2>`: pointer to text losing  
 
-### Alias `trainerbattle7 <arg0> <arg1> <arg2> <arg3> <arg4> `
-__Usage__: `trainerbattle7 <arg0> <arg1> <arg2> <arg3> <arg4> `  
+### Alias `trainerbattle7 <arg0> <arg1> <arg2> <arg3> `
+__Usage__: `trainerbattle7 <arg0> <arg1> <arg2> <arg3> `  
 __Description__: Special trainer battle (kind 0x07)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
-    `word` `<arg1>`: mask  
-    `Pointer to String` `<arg2>`: pointer to text winning  
-    `Pointer to String` `<arg3>`: pointer to text losing  
-    `pointer` `<arg4>`: pointer  
+    `Pointer to String` `<arg1>`: pointer to text winning  
+    `Pointer to String` `<arg2>`: pointer to text losing  
+    `pointer` `<arg3>`: pointer  
 
-### Alias `trainerbattle9 <arg0> <arg1> <arg2> <arg3> `
-__Usage__: `trainerbattle9 <arg0> <arg1> <arg2> <arg3> `  
+### Alias `trainerbattle9 <arg0> <arg1> <arg2> `
+__Usage__: `trainerbattle9 <arg0> <arg1> <arg2> `  
 __Description__: Special trainer battle (kind 0x09)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
-    `word` `<arg1>`: mask  
-    `Pointer to String` `<arg2>`: pointer to text winning  
-    `Pointer to String` `<arg3>`: pointer to text losing  
+    `Pointer to String` `<arg1>`: pointer to text winning  
+    `Pointer to String` `<arg2>`: pointer to text losing  
 
 ### Alias `compare var <arg0> var <arg1> `
 __Usage__: `compare var <arg0> var <arg1> `  

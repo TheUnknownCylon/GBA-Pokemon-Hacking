@@ -1,52 +1,44 @@
-#fulllog off
 #include commands.psh
-#include items.psh
-#include stdpoke.psh
 
+#define boxset MSG_FACEPLAYER &H2
 
-#define BOXSET_DONTCLOSE &H4 BOXSET
-#define BOXSET_YESNO 	 &H5 BOXSET
-#define BOXSET_NORMAL 	 &H6 BOXSET
+#define boxset MSG_NOCLOSE    &H4
+#define boxset MSN_YESNO      &H5
+#define boxset MSG_NORMAL     &H6
 
-#define SPRITEMOVE_INDEX 	&H8008 movesprite
-#define SPRITEMOVE_NEWXPOS 	&H8009 movesprite
-#define SPRITEMOVE_NEWYPOS 	&H800A movesprite
+#define movesprite SPRITEMOVE_INDEX   &H8008
+#define movesprite SPRITEMOVE_NEWXPOS &H8009
+#define movesprite SPRITEMOVE_NEWYPOS &H800A
 
-#define APPLYMOVE_PLAYER &HFF applymovement
+#define var LOOKDIR &H800C
+#define var LASTRESULT &H800D
+
+#define applymovement PLAYER  &HFF
  
-#define SPECIAL_CHOOSEPOKEMON 	&H9C SPECIAL
-#define SPECIAL_WALLYCATCH 	&H9D SPECIAL
+#define special CHOOSEPOKEMON &H9C
+#define special WALLYCATCH    &H9D
 
-#define LASTRESULT &H800D
-#define PERSON_TALKINGTO &H800F
-'-----------------------------------------
-'NEW! Menu item enabling flags!
-'For example, to enable the Party screen,
-'setflag MENU_PARTY
+#define flag MENU_PARTY     &H800
+#define flag MENU_POKEDEX   &H801
+#define flag MENU_NAVIGATOR &H802
 
-#define MENU_PARTY 	&H800 	setflag
-#define MENU_POKEDEX 	&H801 	setflag
-#define MENU_NAVIGATOR 	&H802 	setflag
-'-----------------------------------------
+#define bool FALSE 0
+#define bool TRUE  1
+#define bool NO    0
+#define bool YES   1
+#define bool BOY   0
+#define bool GIRL  1
 
-#define B_TRUE 	1
-#define B_FALSE 0 
-#define B_YES 	1 
-#define B_NO 	0
-#define B_GIRL 	1 
-#define B_BOY 	0
-#define B_< 0
-#define B_== 1
-#define B_> 2
-#define B_>> 2
-#define B_<= 3
-#define B_>= 4
-#define B_!= 5
-#define JUMP_BAGISFULL &H1A029B 'Warning - Assumes Autobank is ON and you're using Ruby.
+#define boolexp <  0
+#define boolexp == 1
+#define boolexp >  2
+#define boolexp <= 3
+#define boolexp >= 4
+#define boolexp != 5
 
-#define COL_BLUE 0
-#define COL_RED 1
-#define COL_BLACK 2
-#autobank on
+#define col BLUE   0
+#define col RED    1
+#define col BLACK  2
 
-#fulllog on
+#define fade FADE_IN 0
+#define fade FADE_OUT 1

@@ -168,18 +168,36 @@ class ScriptParser():
         raise Exception("Could not parse line, no rules matched: %s"%line)
     
     
-    @staticmethod
-    def _prepargs(command, args):
+    def _prepargs(self, command, args):
         #Rewrite references to AST Reference nodes
         rawargs = []
         i_args = 0
         for i in range(0, len(command.params)):
             commandparam = command.getParam(i)
             #print(repr(commandparam))
-            if commandparam[1] == None:
+            if commandparam.defaultvalue == None:
                 #print(" -> consume! "+repr(args[i_args]))
-                if ParamType.ispointer(commandparam[0]):
+                if ParamType.ispointer(commandparam.ptype):
                     rawargs.append(ASTRef(args[i_args]))
+                elif commandparam.definevaluestype != None:
+                    defines = self.langdef.getDefines(commandparam.definevaluestype)
+                    #Reversed defines lookup, not as elegant as I hoped it
+                    key = args[i_args].upper()
+                    val = None
+                    try:
+                        #If defines is a list:
+                        try:
+                            val = defines.index(key)
+                        except:
+                            val = next((dval for dval, dkey in defines.items() if dkey == key))
+                        rawargs.append(ASTDefinedValue(key, val))
+                    except:
+                        #There is no define for the value, parse it as is
+                        # but then ofc. it should be an int.
+                        try:
+                            rawargs.append(toint(args[i_args]))
+                        except:
+                            raise Exception("%s is not defined, and could not be converted to an integer!"%args[i_args])
                 else:
                     rawargs.append(toint(args[i_args]))
                 i_args += 1

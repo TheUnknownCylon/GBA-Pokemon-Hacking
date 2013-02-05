@@ -37,7 +37,11 @@ class ScriptLang():
     found here. Also all commands and aliases are in this class. These values are
     read from the language definition files.
     '''
-    def __init__(self, startfile=None, sublang=None):
+    def __init__(self, startfile=None, sublang=None, rom=None):
+        '''
+        Optional argument rom: if rom is set, several defines will be loaded
+        from it, such as pokemon names, item names, etc.
+        '''
         self.sublang = sublang
         
         self.commands = {}
@@ -48,6 +52,31 @@ class ScriptLang():
             startfile = os.path.join(os.path.dirname(sys.argv[0]), "gbahackpkmn", "pokescript", "langdef", "includes.psh")
         self.handleInclude(startfile)
         
+        if rom:
+            self.loadDefinesFromRom(rom)
+    
+    def loadDefinesFromRom(self, gamerom):
+        '''It is possible to load defines from a pokemon game rom.
+        Call this method with the rom as argument.'''
+        # Load all values from ROM, remove spaces (easier parsing later on)
+        self.defines['pkmn'] = [x.replace(' ', '').upper() for x in gamerom.pokemondata.names().getAllDecoded()]
+        self.defines['move'] = [x.replace(' ', '').upper() for x in gamerom.movesdata.names().getAllDecoded()]
+        self.defines['item'] = [x.replace(' ', '').upper() for x in gamerom.itemsdata.namesList()]
+    
+        ##Renice the 0th elements, in-game these values are "?????", but
+        ## in this langdef they will represented as "NONE"
+        self.defines['pkmn'][0] = "NONE"
+        self.defines['move'][0] = "NONE"
+        self.defines['item'][0] = "NONE"
+    
+    def getDefines(self, definestype):
+        try:
+            return self.defines[definestype]
+        except:
+            print("No defines found for: %s"%definestype)
+            return {}
+        
+    
     def getSubLang(self):
             '''Returns the sublang the ROM uses.'''
             return self.sublang
@@ -83,8 +112,15 @@ class ScriptLang():
             
             if instruction == "#include":
                 self.handleInclude(instructions[1])
+                
             elif instruction == "#define":
-                self.defines[instructions[1].lower()] = toint(instructions[2])
+                deftype = instructions[1]
+                defkey  = instructions[2].upper()
+                defval  = toint(instructions[3])
+                if not deftype in self.defines:
+                    self.defines[deftype] = {}
+                self.defines[deftype][defval] = defkey
+                
             elif instruction[0:len("addcmmd")] == "addcmmd":
                 commandname = instructions[1].lower()
                 commandcode = toint(instructions[2])
@@ -105,13 +141,17 @@ class ScriptLang():
                 
             elif instruction == "addparm":
                 defaultvalue = None
-                instructiontype = int(instructions[1])
+                instructiontype = int(instructions[1].split(":")[0])
+                try:
+                    definevaluestype = instructions[1].split(":")[1].strip().lower()
+                except:
+                    definevaluestype = None
 
                 if len(instructions) > 2:
                     try: defaultvalue = toint(instructions[2])
                     except:
                         if instructions[2][0:4] == "bind":
-                            pass        #TODO: Restriction
+                            pass #TODO: Restriction
                         elif instructions[2][0:7] == "select(":
                             select = instructions[2][8:-1].split(",")
                             defaultvalue = SELECT(select)
@@ -123,8 +163,9 @@ class ScriptLang():
                         else:
                             raise Exception("Unknown default value for param: "+repr(instructions[2]))
                 
-                lastcommand.addParam(instructiontype, defaultvalue, stripDescription(line))
+                lastcommand.addParam(instructiontype, defaultvalue, definevaluestype=definevaluestype, description=stripDescription(line))
         return lastcommand
+    
     
     def handleInclude(self, filename):
         '''Include a separate file with commands. Note that file includes are relative to the
@@ -136,7 +177,6 @@ class ScriptLang():
         try: self.parse(os.path.basename(filename))
         except Exception as e: raise
         finally: os.chdir(mypath)
-
         
     
     def getCommand(self, code):
@@ -157,6 +197,7 @@ class ScriptLang():
 
     def getAliases(self):
         return self.aliases
+
 
 def stripDescription(line):
     descriptionstart = line.find("'")

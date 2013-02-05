@@ -8,7 +8,8 @@ or to a text representation for human readability.
 '''
 
 from array import array
-    
+from gbahackpkmn.pokescript.langcommands import ParamType
+
 class ASTCollector():
     '''
     AST Node traversal, collector subclass.
@@ -225,6 +226,20 @@ class ASTCommand(ASTNode):
         return ' '.join(commandsig)
     
     
+    def validateArgs(self):
+        '''Validate all arguments given by the user, and tests them.'''
+        errors = []
+        i = 0
+        for param in self.code.getParams():
+            if param.defaultvalue == None and not isinstance(self.args[i], ASTNode):
+                try:
+                    ParamType.rewrite(param.ptype,  self.args[i])
+                except:
+                    errors.append("Value error: 0x%s (argument %d)"%(self.args[i], i))
+                i += 1
+        return errors
+    
+    
     def encode(self, pointerlist):
         bytes = array('B')
         command = self.code
@@ -257,6 +272,19 @@ class ASTCommand(ASTNode):
                     pass
 
 
+class ASTDefinedValue(ASTNode):
+    def __init__(self, defkey, defvalue):
+        '''defkey is the represented varname in de list of defines,
+        defvalue represents the byte value for the object.'''
+        self.defkey = defkey
+        self.defvalue = defvalue
+        
+    def text(self):
+        return self.defkey
+    
+    def encode(self, pointerlist):
+        return self.defvalue
+        
 
 class ASTPointerRef(ASTNode):
     def __init__(self, pointer, pointertype):
