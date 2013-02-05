@@ -1,0 +1,36 @@
+{
+  "name": "FireRed",
+  
+  "songtable": 4862668,
+  "maptable": 3483304,
+
+  "overworld_palettes" : 3821912,
+  "overworld_sprites"  : 3816368,
+  "overworld_spritepersonmap": 3800496,
+  
+  "pokemon_numberofsprites": 440,
+  "table_pokemon_sprites": 2314412,
+  "table_pokemon_sprites_back": 2319692,
+  "table_pokemon_palettes": 2323212,
+  "table_pokemon_palettes_shiny": 2326732,
+  
+  "scriptlangdef": null,
+  "scriptsublang": "frlg",
+
+  
+  "numpoke":  412,
+  "pokenamestable": 2383584,
+  
+  "nummoves": 355,
+  "movenamestable": 2388116,
+  
+  "numitems": 375,
+  "itemstable": 4042792,
+  
+  "numtrainerclasses": 106,
+  "trainerclasstable": 2352472,
+  
+  "trainerstable": 2353864,
+  "table_trainer_sprites": 2332028,
+  "table_trainer_palettes": 2333212
+}

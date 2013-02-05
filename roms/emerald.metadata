@@ -1,0 +1,36 @@
+{
+  "name": "Emerald",
+  
+  "songtable": 0,
+  "maptable": 4744568,
+
+  "overworld_palettes" : 5290952,
+  "overworld_sprites"  : 5282132,
+  "overworld_spritepersonmap": 5264928,
+  
+  "pokemon_numberofsprites": 440,
+  "table_pokemon_sprites": 3187084,
+  "table_pokemon_sprites_back": 3156152,
+  "table_pokemon_palettes": 3159672,
+  "table_pokemon_palettes_shiny": 3163192,
+  
+  "scriptdef": null,
+  "scriptsublang": "e", 
+  
+  
+  "numpoke":  412,
+  "pokenamestable": 3245512,
+  
+  "nummoves": 355,
+  "movenamestable": 3250044,
+  
+  "numitems": 377,
+  "itemstable": 5781920,
+  
+  "numtrainerclasses": 65,
+  "trainerclasstable": 3210452,
+  
+  "trainerstable": 3211312,
+  "table_trainer_sprites":  3167828,
+  "table_trainer_palettes": 3168572
+}
