@@ -18,6 +18,7 @@ class PokemonRom(ROM):
         super().__init__(*args, **kwargs)
         
         #Load names from the ROM
+        self.trainers = Trainers(self)
         self.pokemondata = PokemonData(self)
         self.movesdata = MovesData(self)
         self.itemsdata = ItemsData(self)
@@ -31,7 +32,7 @@ class PokemonRom(ROM):
             scriptlangdef = self.metadata["scriptlangdef"]
         if "scriptsublang" in self.metadata:
             sublang = self.metadata["scriptsublang"]
-        self.langdef = ScriptLang(scriptlangdef, sublang)
+        self.langdef = ScriptLang(scriptlangdef, sublang, self)
         
         
     def getScriptLang(self):
