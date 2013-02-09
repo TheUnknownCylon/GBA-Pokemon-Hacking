@@ -44,6 +44,7 @@ class MainView(QWidget):
     def setResoursesList(self, rlist):
         self.left.setResoursesList(rlist)
     
+    
 class EditorControlWidget(QWidget):
     def __init__(self, callback):
         super().__init__()
@@ -72,12 +73,8 @@ class EditorControlWidget(QWidget):
         
         for i in range(self.layout.count()):
             self.layout.itemAt(i).widget().setParent(None)
+            
         self.layout.addWidget(widget)
-        
-        #self.splitview.widget(0).setParent(None)
-        #self.splitview.insertWidget(0, widget)
-        #self.splitview.setCollapsible(0, False)
-        pass
         
     
 class ScriptEditorWidget(QWidget):
@@ -134,6 +131,7 @@ class leftwidget(QWidget):
         self.setMinimumSize(QSize(210, 200))
         self.setMaximumSize(QSize(210, 16777215))
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        self.lockresource = False
 
         numbervalidator = QIntValidator(0, 999)
     
@@ -262,11 +260,14 @@ class leftwidget(QWidget):
         
     
     def setResoursesList(self, resourcelist):
+        self.lockresource = True
         self.resourceselector.clear()
+        self.lockresource = False
         
         item = QListWidgetItem("Script Editor")
         item.setData(Qt.UserRole, ("scripteditor", None))
         self.resourceselector.addItem(item)
+        self.resourceselector.setCurrentItem(item)
         
         for resourcetype, value in resourcelist:
             if resourcetype == "trainerbattle":
@@ -276,6 +277,8 @@ class leftwidget(QWidget):
                 
     
     def resourceselected(self):
+        if self.lockresource == True:
+            return
         index = self.resourceselector.currentRow()
         data = self.resourceselector.item(index).data(Qt.UserRole)
         print(data)

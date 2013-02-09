@@ -50,15 +50,11 @@ class Controller():
         return self.overworld
     
     def showcommandslist(self):
-        #sublang = ""
         webbrowser.open(docuri(self.rom.getScriptLang().getSubLang()))
-        
 
     def mapchange(self, bankid, mapid):
         self.currentMap = self.mapmgr.getMap(bankid, mapid)
         self.mainview.setScriptList(self.currentMap.events)
-    
-    
     
     def mapeventselected(self, mapEvent):
         self.currentMapEvent = mapEvent
