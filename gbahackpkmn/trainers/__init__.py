@@ -10,6 +10,8 @@ from gbahack.sprites import readCompressedSprite, toPNG
 from gbahack.tools.lzss import decompress_bytes
 from gbahack.palettes import Palette16
 
+from gbahack.gbabin import BBlock
+
 class Trainers():
     def __init__(self, rom):
         self.rom = rom
@@ -28,7 +30,7 @@ class Trainers():
     def getTrainer(self, index):
         '''Returns a Trainer resource from ROM.'''
         traineroffset = self.trainerstable + index * Trainer.size()
-        return self.rom.getRM().get(Trainer, traineroffset)
+        return traineroffset, self.rom.getRM().get(Trainer, traineroffset)
 
 
 
@@ -45,14 +47,7 @@ class TrainerPokemon(Resource):
         self.move2   = None
         self.move3   = None
         self.move4   = None
-        
-    @classmethod
-    def read(cls, rom, offset):
-        poke = cls()
-        p = poke.readPkmndata(rom, offset)
-        p = poke.readItem(rom, offset)
-        return poke
-        
+
     def readPkmndata(self, rom, offset):
         p = offset
         p, self.ailevel = rom.readByte(p)
@@ -63,23 +58,10 @@ class TrainerPokemon(Resource):
         return p
     
     def readItem(self, rom, offset):
-        p, self.item    = rom.readShort(offset)
+        p, self.item = rom.readShort(offset)
         if self.item == 0: self.item = None
         return p
-    
-    @staticmethod
-    def size():
-        return 8
-
-
-class TrainerPokemonWithMoveset(TrainerPokemon):
-    @classmethod
-    def read(cls, rom, offset):
-        poke = cls()
-        p = poke.readPkmndata(rom, offset)
-        p = poke.readMoves(rom, p)
-        return poke
-        
+     
     def readMoves(self, rom, offset):
         p, self.move1 = rom.readShort(offset)
         p, self.move2 = rom.readShort(p)
@@ -92,11 +74,68 @@ class TrainerPokemonWithMoveset(TrainerPokemon):
         if self.move4 == 0: self.move4 = None
         return p
     
+    def _bytestring(self, item=False, moves=False):
+        bytes = BBlock()
+        bytes.addByte(self.ailevel)
+        bytes.addByte(00)
+        bytes.addByte(self.level)
+        bytes.addByte(00)
+        bytes.addShort(self.species)
+        if not item and not moves:
+            bytes.addShort(0)
+        elif item and not moves:
+            bytes.addShort(self.item or 0)
+        else:
+            if item:
+                bytes.addShort(self.item or 0)
+            bytes.addShort(self.move1 or 0)
+            bytes.addShort(self.move2 or 0)
+            bytes.addShort(self.move3 or 0)
+            bytes.addShort(self.move3 or 0)
+            if not item:
+                bytes.addShort(0)
+        return bytes.toArray()
+
+
+class TrainerPokemonWithItem(TrainerPokemon):
+    @classmethod
+    def read(cls, rom, offset):
+        poke = cls()
+        p = poke.readPkmndata(rom, offset)
+        p = poke.readItem(rom, p)
+        return poke
+    
+    @staticmethod
+    def size():
+        return 8
+
+    @staticmethod
+    def getBattlePokemonClass():
+        return 2
+    
+    def bytestring(self):
+        return self._bytestring(item=True, moves=False)
+    
+
+class TrainerPokemonWithMoveset(TrainerPokemon):
+    @classmethod
+    def read(cls, rom, offset):
+        poke = cls()
+        p = poke.readPkmndata(rom, offset)
+        p = poke.readMoves(rom, p)
+        return poke
+    
     @staticmethod
     def size():
         return 16
 
-
+    @staticmethod
+    def getBattlePokemonClass():
+        return 1
+    
+    def bytestring(self):
+        return self._bytestring(item=False, moves=True)
+    
 
 class TrainerPokemonWithItemMoveset(TrainerPokemonWithMoveset):
     @classmethod
@@ -107,6 +146,13 @@ class TrainerPokemonWithItemMoveset(TrainerPokemonWithMoveset):
         p = poke.readMoves(rom, p)
         return poke
 
+    @staticmethod
+    def getBattlePokemonClass():
+        return 3
+    
+    def bytestring(self):
+        return self._bytestring(item=True, moves=True)
+    
 
 class Trainer(DataStruct):
     '''Data structure defining a Pokemon Trainer.'''
@@ -122,7 +168,7 @@ class Trainer(DataStruct):
         (RT.byte, "song_genderibtmap"), #Leftmost byte: gener, rest: songid
         (RT.byte, "trainerspriteid"),
         
-        (RT.bytestr(12), "name-bytes"),
+        (RT.bytestr(12, 0xFF), "namebytes"),
         
         (RT.short, "item1"),
         (RT.short, "item2"),
@@ -142,18 +188,23 @@ class Trainer(DataStruct):
         (RT.pointer, "pointertopokemondefs")
         ]
         
-        
+    
+    @staticmethod
+    def getPokemonClassByClassID(battlepokemonclass):
+        pokeclass = TrainerPokemonWithItem
+        if battlepokemonclass == 1:
+            pokeclass = TrainerPokemonWithMoveset
+        if battlepokemonclass == 3:
+            pokeclass = TrainerPokemonWithItemMoveset
+        return pokeclass
+    
+    
     @classmethod
     def read(cls, rom, pointer):
         '''Extends the original read function,
         for this trainer class, also its battle pokemon are loaded.'''
         s = super().read(rom, pointer)
-        
-        s.pokeclass = TrainerPokemon
-        if s.battlepokemonclass == 1:
-            s.pokeclass = TrainerPokemonWithMoveset
-        if s.battlepokemonclass == 3:
-            s.pokeclass = TrainerPokemonWithItemMoveset        
+        s.pokeclass = cls.getPokemonClassByClassID(s.battlepokemonclass)
         
         s.battlepokemon = []
         for i in range(0, s.numberofpokemon):
@@ -162,22 +213,39 @@ class Trainer(DataStruct):
             
         s.trainersprite = TrainerSprite(rom, s.trainerspriteid)
         return s
+    
+    
+    @classmethod
+    def delete(self, rom, pointer):
+        '''Removes the trainer and its battle Pokemon from the ROM.'''
+        oldtrainer = super().delete(rom, pointer)
+        for i in range(0, len(oldtrainer.battlepokemon)):
+            pkmn = oldtrainer.battlepokemon[i]
+            pkmn.delete(rom, oldtrainer.pointertopokemondefs+i*pkmn.size())
+        return oldtrainer
         
         
     def write(self, rom, pointer, force):
         '''Writes the trainer resource to rom, and also the trainers battle pokemon.'''
+        #First write the trainer its pokeys, next write the trainer itself with
+        # a pointer to the trainers pokemon.
+        pkmnsize = self.getPokemonClassByClassID(self.battlepokemonclass).size()
+        pkmnoffset = rom.findSpace(self.pointertopokemondefs or 0x080000, pkmnsize * self.numberofpokemon)
+        
+        for i in range(0, self.numberofpokemon):
+            self.battlepokemon[i].write(rom, pkmnoffset+i*pkmnsize, force=True)        
+        self.pointertopokemondefs = pkmnoffset
         super().write(rom, pointer, force)
-        print("TODO: Also write battle pokeys, and do some pointerwork.")
         
         
     def getName(self):
         '''Returns the trainer name as a PokeString resource.'''
-        return PokeString.frombytes(self.get('name-bytes'))
+        return PokeString.frombytes(self.get('namebytes'))
     
     
     def setName(self, pokestr):
-        raise NotImplemented()
-    
+        self.namebytes = pokestr.bytestring()
+        
     
     def getSong(self):
         '''Returns the battle song for this trainer battle.'''
@@ -218,6 +286,24 @@ class Trainer(DataStruct):
     
     def getSprite(self, f):
         return self.sprite.toPNG()
+    
+    def setBattlePokemon(self, pokemon):
+        '''
+        Sets the players its battle pokemon, all pokemon should be of the same
+        TrainerPokemon subclass, otherwise an exception is raised. The list
+        should contain at least one Pokemon.
+        '''
+        if len(pokemon) < 1:
+            raise Exception("Empty PokemonList! Can not save.")
+        
+        #Set the correct pokemonclass, verify all pokes to match this class.
+        self.battlepokemonclass = pokemon[0].getBattlePokemonClass()
+        for singlepokemon in pokemon:
+            if singlepokemon.getBattlePokemonClass() != self.battlepokemonclass:
+                raise Exception("All Pokemon should be of same BattlePokemon class!")
+        
+        self.battlepokemon = pokemon
+        self.numberofpokemon = len(pokemon)
         
         
 class TrainerSprite():

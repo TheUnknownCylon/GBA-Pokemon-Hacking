@@ -1,6 +1,8 @@
 
 from PyQt4.QtCore import Qt, QSize
-from PyQt4.QtGui import QWidget, QScrollArea, QPixmap, QCheckBox, QLineEdit, QSizePolicy, QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QSpinBox, QLineEdit, QFormLayout
+from PyQt4.QtGui import QWidget, QScrollArea, QPushButton, QPixmap, QCheckBox, QLineEdit, QSizePolicy, QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QSpinBox, QLineEdit, QFormLayout
+
+from gbahackpkmn.trainers import TrainerPokemonWithItem, TrainerPokemonWithItemMoveset
 
 import tempfile
 (_, tmpfilename) = tempfile.mkstemp()
@@ -35,29 +37,55 @@ class TrainerEditor(QWidget):
         innerwidget = QWidget()
 
         #Create a layout for the innerwidget
+        
         layout = QHBoxLayout()
         innerwidget.setLayout(layout)
         
         layout.setSpacing(0)
         layout.setMargin(0)
         layout.setContentsMargins(0,0,0,0)
+
+        trainerinfo = Trainer(self, self.trainersinfo, self.trainer, self.trainerclasses, self.itemslist)
+        self.trainerinfo = trainerinfo
        
         for battlepoke in battlepokemon:
             pokewidget = TrainerPokemon(self, battlepoke, self.pokemondata, self.movelist, self.itemslist, parent=self)
             self.pokemonwidgets.append(pokewidget)
             layout.addWidget(pokewidget, 0)
 
-        trainerinfo = Trainer(self, self.trainersinfo, self.trainer, self.trainerclasses, self.itemslist)
         layout.insertWidget(0, trainerinfo, 0)
         
         padlabel = QLabel(self)
         layout.addWidget(padlabel)
         
         scrollArea.setWidget(innerwidget)
+        savebutton = QPushButton("Save", self)
+        savebutton.clicked.connect(self.save)
         mainlayout.addWidget(scrollArea)
+        mainlayout.addWidget(savebutton)
+
+    def save(self):
+        pokes = []
+        for pokemonw in self.pokemonwidgets:
+            if pokemonw.i_species.currentIndex() != 0:
+                pokes.append(pokemonw.getAsTrainerPokemon(self.movesEnabled()))
         
+        self.callback.save(
+            self.trainerinfo.i_name.text(),
+            True,
+            self.trainerinfo.i_trainerclass.currentIndex(),
+            self.trainerinfo.i_sprite.value(),
+            self.trainerinfo.i_songid.value(),
+            self.trainerinfo.i_item1.currentIndex(),
+            self.trainerinfo.i_item2.currentIndex(),
+            self.trainerinfo.i_item3.currentIndex(),
+            self.trainerinfo.i_item4.currentIndex(),
+            self.trainerinfo.i_doublebattle.isChecked(),
+            pokes
+        )
+
     def movesEnabled(self):
-        return False #TODO TODO TODO!!!
+        return self.trainerinfo.i_choosemoves.isChecked()
         
         
     def setMovesSelectable(self, bool_selectable):
@@ -143,8 +171,17 @@ class Trainer(QWidget):
         i_choosemoves.stateChanged.connect(self.chooseMovesChanged)
         
         #Keep values for future refs
-        self.l_sprite = l_sprite
-        self.i_sprite = i_sprite
+        self.l_sprite       = l_sprite
+        self.i_sprite       = i_sprite
+        self.i_trainerclass = i_trainerclass
+        self.i_name         = i_name
+        self.i_songid       = i_songid
+        self.i_item1        = i_item1
+        self.i_item2        = i_item2
+        self.i_item3        = i_item3
+        self.i_item4        = i_item4
+        self.i_doublebattle = i_doublebattle
+        self.i_choosemoves  = i_choosemoves
         
         self.updateSprite()
         self.chooseMovesChanged(i_choosemoves.checkState())
@@ -239,7 +276,6 @@ class TrainerPokemon(QWidget):
         i_move3.addItems(moveslist)
         i_move4.addItems(moveslist)
 
-
         #set values to match the read pokemon
         i_level.setValue(self.pokemon.level or 0)
         i_ailevel.setValue(self.pokemon.ailevel or 0)
@@ -249,7 +285,6 @@ class TrainerPokemon(QWidget):
         i_move2.setCurrentIndex(self.pokemon.move2 or 0)
         i_move3.setCurrentIndex(self.pokemon.move3 or 0)
         i_move4.setCurrentIndex(self.pokemon.move4 or 0)
-        
         
         #Add all to the layout
         layout.addWidget(l_sprite)
@@ -267,10 +302,8 @@ class TrainerPokemon(QWidget):
         layout.addWidget(i_move3)
         layout.addWidget(i_move4)
 
-        
         #Connect to actions
         i_species.currentIndexChanged.connect(self.speciesChanged)
-        
         
         #Store refs for later use
         self.i_species = i_species
@@ -322,6 +355,7 @@ class TrainerPokemon(QWidget):
             self.i_ailevel.setEnabled(True)
             self.i_item.setEnabled(True)    
     
+    
     def updateSprite(self, pokeid):
         f = open(tmpfilename, 'wb')
         self.pokemondata.getSprite(pokeid).toPNG(f)
@@ -331,3 +365,23 @@ class TrainerPokemon(QWidget):
         self.l_sprite.setPixmap(image)
         
         
+    def getAsTrainerPokemon(self, moves=False):
+        '''Returns a new TrainerPokemon object representing the Pokemon in this
+        view. If moves==True, then the type is TrainerPokemonWithItemMoveset,
+        otherwise the type is TrainerPokemonWithItem.'''
+        if moves:
+            poke = TrainerPokemonWithItemMoveset()
+            poke.move1 = self.i_move1.currentIndex()
+            poke.move2 = self.i_move2.currentIndex()
+            poke.move3 = self.i_move3.currentIndex()
+            poke.move4 = self.i_move4.currentIndex()
+        else:
+            poke = TrainerPokemonWithItem()
+        
+        poke.species = self.i_species.currentIndex()
+        poke.level = self.i_level.value()
+        poke.item = self.i_item.currentIndex()
+        poke.ailevel = self.i_ailevel.value()
+        
+        return poke
+    
