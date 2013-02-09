@@ -104,6 +104,31 @@ The command for a trainerbattle is `trainerbattle <trainer-number> <start-messag
     = I came because I heard there are\n
     = some very rare fossils here.
 
+It is also possible to have a script after the end of a battle. A common use case
+for this is getting an item after a battle, or getting a badge after defeating
+a gym leader. In this case, you have to extend the `trainerbattle` with a jump.
+As an illustration, the previous example is extended below:
+
+    #org $start
+      trainerbattle 0x79 $string_0 $string_1 jump $aftermatch
+      normalmessage $string_2
+    end
+    
+    #org $aftermatch
+      message $fun
+      giveitem potion 1
+      release
+      end
+  
+    #text $string_2
+    = Potions restore 20HP of your Pok\emon.\n
+    = You can use them during a battle too!
+    
+    #text $fun
+    = That was fun!\n
+    = Here, take this as a token of my\l
+    = gratitude.
+    
 
 _Note:_ there are some other trainer battle construction. See for a full list the commands documentation (which can be found in a separate file).
 
@@ -132,7 +157,7 @@ The following commands can also be used to do some item magic:
 * `checkitemtype  <item name>`  (item type is stored in the var `LASTRESULT`)
 * `checkitempc  <item name> <count>` (result is stored in the var `LASTRESULT`)
 
-# Weather
+## Weather
 The following commands can be used to control the weather:
 
 * `setweather <weathertype>` Prepares the weather change, but does not apply it.
