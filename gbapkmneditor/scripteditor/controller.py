@@ -16,6 +16,8 @@ from gbapkmneditor.gui.messages import *
 from gbapkmneditor.scripteditor.views import MainView
 
 
+pokescriptdocuri = "https://github.com/TheUnknownCylon/GBA-Pokemon-Hacking/blob/master/docs/pokescript.md#readme"
+
 def docuri(sublang):
     '''Returns an URI where the pokescript definition can be found for the given SubLang.'''
     return "https://github.com/TheUnknownCylon/GBA-Pokemon-Hacking/blob/master/docs/pokescript/%s.md#readme"%sublang
@@ -51,6 +53,9 @@ class Controller():
     
     def showcommandslist(self):
         webbrowser.open(docuri(self.rom.getScriptLang().getSubLang()))
+
+    def showpokescriptdoc(self):
+        webbrowser.open(pokescriptdocuri)
 
     def mapchange(self, bankid, mapid):
         self.currentMap = self.mapmgr.getMap(bankid, mapid)

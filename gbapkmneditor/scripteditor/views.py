@@ -88,6 +88,8 @@ class ScriptEditorWidget(QWidget):
         self.button_test = toolbar.addAction("Test script")
         self.button_burn = toolbar.addAction("Write script to ROM")
         #self.button_reload = toolbar.addAction("Refresh")
+        self.button_pokescriptdoc = toolbar.addAction("PokeScript doc")
+        self.button_pokescriptdoc.setToolTip("Opens your webbrowser, pointing at a page where some elemnets of PokeScript are explained.")
         self.button_scriptdoc = toolbar.addAction("List of commands.")
         self.button_scriptdoc.setToolTip("Opens a list of available commands in your default browser.")
         toolbar.actionTriggered.connect(self.toolbarAction)
@@ -118,6 +120,8 @@ class ScriptEditorWidget(QWidget):
             self.callback.burnScript()
         elif action == self.button_scriptdoc:
             self.callback.showcommandslist()
+        elif action == self.button_pokescriptdoc:
+            self.callback.showpokescriptdoc()
         else:
             print("Unknown action.")
             
