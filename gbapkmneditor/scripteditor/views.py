@@ -91,8 +91,6 @@ class ScriptEditorWidget(QWidget):
         self.button_test = toolbar.addAction("Test script")
         self.button_burn = toolbar.addAction("Write script to ROM")
         #self.button_reload = toolbar.addAction("Refresh")
-        self.button_runemulator = toolbar.addAction("Start Emu")
-        self.button_runemulator.setToolTip("Run the loaded ROM in an emulator.")
         self.button_scriptdoc = toolbar.addAction("List of commands.")
         self.button_scriptdoc.setToolTip("Opens a list of available commands in your default browser.")
         toolbar.actionTriggered.connect(self.toolbarAction)
@@ -109,7 +107,6 @@ class ScriptEditorWidget(QWidget):
         layout.addWidget(toolbar)
         layout.addWidget(sourceeditor)
         layout.setContentsMargins(0, 0, 0, 0)
-
         
         #Store elements that we need later
         self.sourceeditor = sourceeditor
@@ -124,8 +121,6 @@ class ScriptEditorWidget(QWidget):
             self.callback.burnScript()
         elif action == self.button_scriptdoc:
             self.callback.showcommandslist()
-        elif action == self.button_runemulator:
-            self.callback.startEmulator()
         else:
             print("Unknown action.")
             
@@ -142,6 +137,10 @@ class leftwidget(QWidget):
 
         numbervalidator = QIntValidator(0, 999)
     
+        #Rom info and emulator
+        emulator = QPushButton("Start Emulator", self)
+
+    
         #Map/bank select buttons
         column_left_layout = QVBoxLayout(self)
         column_left_layout.setContentsMargins(0, 0, 0, 0);
@@ -153,7 +152,7 @@ class leftwidget(QWidget):
         bankinput_f = QLineEdit(self)
         bankinput_f.setValidator(numbervalidator)
         button_load = QPushButton(self)
-        button_load.setText("Load Script")
+        button_load.setText("Load scripts")
         
         #Select element on the map view
         select_script = QTreeWidget(self)
@@ -168,6 +167,8 @@ class leftwidget(QWidget):
         resourceselector = QListWidget(self)
         resourceselector.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
         
+        column_left_layout.addWidget(emulator)
+
         column_left_layout.addWidget(bankinput_l)
         column_left_layout.addWidget(bankinput_f)
         column_left_layout.addWidget(mapinput_l)
@@ -176,23 +177,19 @@ class leftwidget(QWidget):
         column_left_layout.addWidget(select_script)
         column_left_layout.addWidget(resources_l)
         column_left_layout.addWidget(resourceselector)
-
-        #splitview = QSplitter(self)
-        #splitview.addWidget(scripteditor)
-        #splitview.addWidget(resourceselector)
-
         
         #Finally connect proper signals
         button_load.clicked.connect(self.maploadclick)
         select_script.itemSelectionChanged.connect(self.itemselected)
         resourceselector.itemSelectionChanged.connect(self.resourceselected)
-        
+        emulator.clicked.connect(self.emulate)
         
         #Keep some elements for local thingy
         self.mapinput = mapinput_f
         self.bankinput = bankinput_f
         self.scriptselect = select_script
         self.resourceselector = resourceselector
+        
     
     def maploadclick(self, *args, **kwargs):
         self.callback.mapchange(
@@ -200,6 +197,8 @@ class leftwidget(QWidget):
             int(self.mapinput.text())
         )
     
+    def emulate(self):
+        self.callback.startEmulator()
     
     def setScriptList(self, eventsmap):
         '''EventsMap: from GbaHackPkmn'''
