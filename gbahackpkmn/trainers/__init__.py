@@ -267,7 +267,8 @@ class Trainer(DataStruct):
     
     def setMale(self, value):
         '''Sets the male value. Set value to False for Female gender.'''
-        if value == True:
+        print("_------_>> "+repr(value))
+        if value == False:
             genderbyte = 0x80
         else:
             genderbyte = 0

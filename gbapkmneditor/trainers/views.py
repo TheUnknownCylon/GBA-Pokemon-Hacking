@@ -72,7 +72,7 @@ class TrainerEditor(QWidget):
         
         self.callback.save(
             self.trainerinfo.i_name.text(),
-            True,
+            self.trainerinfo.i_gender.currentIndex() == 0,
             self.trainerinfo.i_trainerclass.currentIndex(),
             self.trainerinfo.i_sprite.value(),
             self.trainerinfo.i_songid.value(),
@@ -115,6 +115,7 @@ class Trainer(QWidget):
         i_sprite       = QSpinBox(self)
         i_trainerclass = QComboBox(self)
         i_name         = QLineEdit(self)
+        i_gender       = QComboBox(self)
         l_songid       = QLabel("Song:", self)
         i_songid       = QSpinBox(self)
         i_doublebattle = QCheckBox("Double battle", self)
@@ -133,11 +134,12 @@ class Trainer(QWidget):
         l_sprite.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         l_sprite.setMinimumSize(120, 64);
         l_sprite.setAlignment(Qt.AlignCenter)
+        i_gender.addItems(['Male', 'Female'])
         i_item1.addItems(self.itemslist)
         i_item2.addItems(self.itemslist)
         i_item3.addItems(self.itemslist)
         i_item4.addItems(self.itemslist)
-        
+
         
         #Set fields according to the trainer object
         i_sprite.setValue(self.trainer.trainerspriteid)
@@ -146,6 +148,7 @@ class Trainer(QWidget):
         i_trainerclass.setCurrentIndex(self.trainer.trainerclass)
         i_doublebattle.setChecked(self.trainer.doublebattle)
         i_choosemoves.setChecked(self.trainer.customMoves())
+        i_gender.setCurrentIndex(not self.trainer.isMale())
         i_item1.setCurrentIndex(self.trainer.item1)
         i_item2.setCurrentIndex(self.trainer.item2)
         i_item3.setCurrentIndex(self.trainer.item3)
@@ -154,7 +157,9 @@ class Trainer(QWidget):
         #Add all to layout
         layout.addWidget(l_sprite)
         layout.addWidget(i_sprite)
+        layout.addWidget(i_gender)
         layout.addWidget(i_trainerclass)
+        layout.addWidget(i_name)
         layout.addWidget(i_name)
         layout.addWidget(l_songid)
         layout.addWidget(i_songid)
@@ -174,6 +179,7 @@ class Trainer(QWidget):
         self.l_sprite       = l_sprite
         self.i_sprite       = i_sprite
         self.i_trainerclass = i_trainerclass
+        self.i_gender       = i_gender
         self.i_name         = i_name
         self.i_songid       = i_songid
         self.i_item1        = i_item1
