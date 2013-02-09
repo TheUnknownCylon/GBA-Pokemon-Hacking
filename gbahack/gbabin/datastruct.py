@@ -27,12 +27,15 @@ from gbahack import Resource
 from gbahack.gbabin import BBlock
 
 class ByteString():
-    def __init__(self, length):
+    def __init__(self, length, fill=None):
         self._length = length
+        self.fill = fill
         
     def length(self):
         return self._length
-        
+    
+    def getFill(self):
+        return self.fill
        
 
 class RomDataType():
@@ -74,8 +77,15 @@ class RomDataType():
         if t == cls.pointer: return block.addPointer(v)
         if t == cls.int:     return block.addInt(v)
         if isinstance(t, cls.bytestr):
-            for i in range (0, t.length()):
-                block.addByte(0)
+            if len(v) > t.length():
+                raise Exception("ByteString too large!")
+            if len(v) < t.length() and not t.getFill():
+                raise Exception("ByteString too short. No filler was set, so can not append zero-value bytes.")
+            
+            for byte in v:
+                block.addByte(byte)
+            for i in range(0, t.length() - len(v)):
+                block.addByte(t.getFill())
 
 
 class DataStruct(Resource):
