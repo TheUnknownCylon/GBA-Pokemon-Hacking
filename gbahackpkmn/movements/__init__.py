@@ -14,12 +14,13 @@ class Movement(Resource):
     
     name = "movement"
     
-    def __init__(self, movements=array('B')):
+    def __init__(self, movements=None):
         '''
         Initializes the movement resource.
         Argument movement is an array.array('B') object, representing the
         bytecode moves
         '''
+        movements = movements or array('B')
         self.movements = movements
         
         
