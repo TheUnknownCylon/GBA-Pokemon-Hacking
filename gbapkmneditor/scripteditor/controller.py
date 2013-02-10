@@ -139,7 +139,10 @@ class Controller():
             return
         
         try:
-            pointers = self.currentScriptgroup.getPointerlist()
+            try:
+                pointers = self.currentScriptgroup.getPointerlist()
+            except:
+                pointers = {}
             rom = self.rom
             
             #set pointers in new scriptgroup related to old scriptgroup
