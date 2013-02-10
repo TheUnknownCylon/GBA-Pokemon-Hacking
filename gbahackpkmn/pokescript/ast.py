@@ -112,7 +112,6 @@ class ASTRoutine(ASTNode):
         self.subtree = subtree
         self.name = name
         
-        
     def encode(self, pointerlist):
         bytearray = array('B')
         for astnode in self.subtree:
@@ -142,6 +141,12 @@ class ASTRoutine(ASTNode):
     def childs(self):
         return self.subtree
 
+    def hasEnd(self):
+        '''Returns true iff the last command is valid end of script.'''
+        if len(self.subtree) == 0:
+            return False
+        else:
+            return self.subtree[-1].code.endofscript
 
 
 class ASTResourceString(ASTNode):

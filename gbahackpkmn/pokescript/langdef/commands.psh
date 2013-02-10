@@ -82,6 +82,7 @@ addparm 3               'Point to jump to
 
 addcmmd jump #05        'Continue execution from another point. 
 addparm 3               'Point to continue from
+addparm 4
 
 addcmmd if #06          'Boolean compare value in var LASTRESULT, if evaluates to true, jumps to the given routine. Should not be returned to.
 addparm 0:bool          '0 false, 1 true
@@ -407,7 +408,7 @@ addcmmd spriteface #5B
 addparm 1 'Sprite
 addparm 0 'Face
 
-'addcmmd trainerbattle #5C
+'''addcmmd trainerbattle #5C
 '' Trainer Battles are added as aliases, since number of
 '' Parameters differ on different parameters
 
