@@ -556,6 +556,10 @@ addcmmd vardisplay #83
 addparm 0     'position 0, 1, or 2
 addparm 1:var 'variable
 
+addcmmd storecomp #84
+addparm 0
+addparm 1
+
 addcmmd storetext #85 'thanks to "score_under" from PC for this definition
 addparm 0 'slot
 addparm 8 'pointer to text
