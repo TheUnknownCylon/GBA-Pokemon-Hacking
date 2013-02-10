@@ -246,9 +246,7 @@ addcmmd[rs][e] cry #30 'Play back a pokemon cry
 addparm 0      'bank no
 addparm 1:pkmn 'Pokemon Species
 
-addcmmd[frlg] checksound #30
-addparm 0 'bank no
-addparm 1 'Song number
+addcmmd[frlg] checksound #30 'Call before `cry <pkmn> 0`
 
 addcmmd fanfare #31   'Play background music
 addparm 1             'Song # to play
@@ -661,9 +659,9 @@ addparm 1 'Place
 
 addcmmd checkgender #A0 'Stores the players gender in var LASTRESULT (var 0x800d: 0=boy, 1=girl).
 
-addcmmd[frlg] cry #A1
-addparm 1
-addparm 0
+addcmmd[frlg] cry #A1   'Plays a Pokemon cry
+addparm 1:pkmn          'Species sound to hear
+addparm 1               'Seems to be padding. 0 is sufficient
 
 addcmmd setmaptile #A2 'Sets a tile on the map. You must somehow refresh that part, can be done by scrolling out of view and back in or by calling this command from a Level Script
 addparm 1               'X coordinate
@@ -934,7 +932,7 @@ addparm 7 callstd           'Display
 addparm 0 1                 '  "Found, but ITEM in bag."
 
 
-alias message $1        'Loads a message into memory, and shows it (automatically calls boxset)
+alias message $1        'Non-closing message. Loads a message into memory, and shows it (automatically calls boxset)
 addparm 7 loadpointer   '
 addparm 0 mask(#00)     '
 addparm 8               ' text offset
