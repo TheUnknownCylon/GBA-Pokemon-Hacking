@@ -13,6 +13,7 @@ class RawFile(ByteArrayReader):
     def __init__(self, file):
         self.file = file
         self.f = None
+        self.bytes = []
         self._resetfile()
     
     
@@ -53,7 +54,9 @@ class RawFile(ByteArrayReader):
         '''Writes a dict of bblocks (accompanied by a offset as index) to the ROM.'''
         for offset in bblockarray:
             self.write(offset, bblockarray[offset])
-       
+    
+    def size(self):
+        return len(self.bytes)
   
 
 class ROM(RawFile):

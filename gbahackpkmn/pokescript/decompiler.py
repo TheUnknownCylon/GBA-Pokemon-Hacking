@@ -130,7 +130,9 @@ class CommandDecompiler():
                     p+=2
           
                 elif ParamType.ispointer(paramtype):
-                    pointer = struct.unpack("<I", argbytes[p:p+4])[0] - 0x08000000
+                    pointer = struct.unpack("<I", argbytes[p:p+4])[0]
+                    if pointer > 0x08000000:
+                         pointer -= 0x08000000
                     value = ASTPointerRef(pointer, _ptype_to_decompiletype(paramtype))  #TODO paramtype,
                     p += 4
             

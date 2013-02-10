@@ -19,6 +19,7 @@ def loadGroup(rom, routinepointer):
     decompiled = {}        #Group of loaded pointers and their resources
     sgroup = ScriptGroup() #ScriptGroup where all resources are added to
     
+    romlength = rom.size()
     decompilequeue.append((routinepointer, DecompileTypes.POKESCRIPT))
         
     while len(decompilequeue) > 0:
@@ -36,7 +37,7 @@ def loadGroup(rom, routinepointer):
         # queue those others.
         if isinstance(resource, Routine):
             for refpointer, reftype in resource.linkedPointers():
-                if refpointer < 0x08000000:
+                if 0 < refpointer and refpointer < romlength:
                     print("+++ %X"%refpointer)
                     decompilequeue.append((refpointer, reftype))
 
