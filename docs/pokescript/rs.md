@@ -4,10 +4,12 @@ This document lists all the commands and aliases for the default PokeScript Ruby
 __Note:__ This document is automatically generated based on the script langdefinitions.
 
 ## List of commands
-`addfurniture` `additem` `additemtopc` `addpokemon` `addvar` `applymovement` `applymovement2` `boxset` `boxtypenormal` `boxtypesign` `braille` `buymart` `call` `callasm` `callasm2` `callstd` `checkanimation` `checkflag` `checkfurniture` `checkgender` `checkifroomforfurniture` `checkitem` `checkitempc` `checkitemspaceinbag` `checkitemtype` `checkmoney` `checkmove` `checkobedience` `checktrainer` `choosecontestpokemon` `clearbox` `clearflag` `closedoor` `closedoorpermanent` `closeonkeypress` `cmd2c` `cmd2d` `cmd8a` `cmd96` `cmda6` `cmdb1` `cmdb2` `cmdc3` `cmdd3` `cmdfb` `cmdfe` `compare` `comparefarbytetobyte` `comparefarbytetofarbyte` `comparefarbytetovar` `comparehiddenvar` `comparepointer` `comparevars` `comparevartobyte` `comparevartofarbyte` `copybyte` `copyscriptbanks` `copyvar` `copyvarifnotzero` `countpokemon` `createtempsprite` `cry` `darkenroom` `disabletrainer` `doorflush` `doweather` `egghandler` `enabletriner` `end` `endtrainerbattle` `endtrainerbattle2` `executeram` `faceplayer` `fadedefault` `fadein` `fadeout` `fadescreen` `fadescreen_slow` `fadesong` `fanfare` `fardisappear` `farreappear` `furnituredisplay` `getcoins` `getplayerxy` `givecoins` `givemoney` `hashpoke` `hidebox` `hidecoinbox` `hidemoneybox` `hidepokepic` `if` `if_call` `if_callstd` `if_jump` `if_jumpstd` `increasespritelevel` `itemnamedisplay` `jump` `jumpstd` `killscript` `lastbattle` `lasttrainerbattle` `lightroom` `loadbytefrompointer` `loadpointer` `lock` `lockall` `movedisplay` `moveofscreen` `movesprite` `movesprite2` `msgbox2` `msgbox3` `multi` `multichoice2` `multichoise3` `namedisplay` `namedisplayfirst` `nop` `nop0` `opendoor` `opendoorpermanent` `partynamedisplay` `pause` `pausemove` `picture` `playanimation` `playsfx` `playsong` `playsound` `pokemarkt3` `pokemart` `rand` `release` `releaseplayer` `removeitem` `removesprite` `removespriteat` `resetspritelevel` `resetvars` `resetweather` `return` `setbyte` `setcatchlocation` `setflag` `sethealingplace` `setmapfooter` `setmaptile` `setobedience` `setpokemonpp` `setvar` `setweather` `setworldmapflag` `showbox` `showcoinbox` `showmoneybox` `showpokepic` `showsprite` `showspriteat` `showyesno` `special` `special2` `spritebehave` `spriteface` `startcontest` `storeboxname` `storeitems` `storepartyslotforanimation` `storetext` `subvar` `takecoins` `takefurniture` `takemoney` `tempsriteface` `textcolor` `updatecoinbox` `updatemoneybox` `vardisplay` `waitbutton` `waitcry` `waitfanfare` `waitmsgbox2` `waitspecial` `warp6` `warp_3` `warp_4` `warp_5` `warp_elevator` `warp_teleport` `warpteleport2` `wildbattle` `wlhandler` `writebytetooffset` 
+`addfurniture` `additem` `additemtopc` `addpokemon` `addvar` `applymovement` `applymovement2` `boxset` `boxtypenormal` `boxtypesign` `braille` `buymart` `call` `callasm` `callasm2` `callstd` `checkanimation` `checkflag` `checkfurniture` `checkgender` `checkifroomforfurniture` `checkitem` `checkitempc` `checkitemspaceinbag` `checkitemtype` `checkmoney` `checkmove` `checkobedience` `checktrainer` `choosecontestpokemon` `clearbox` `clearflag` `closedoor` `closedoorpermanent` `closeonkeypress` `cmd2c` `cmd2d` `cmd8a` `cmd96` `cmda6` `cmdb1` `cmdb2` `cmdc3` `cmdd3` `cmdfb` `cmdfe` `compare` `comparefarbytetobyte` `comparefarbytetofarbyte` `comparefarbytetovar` `comparehiddenvar` `comparepointer` `comparevars` `comparevartobyte` `comparevartofarbyte` `copybyte` `copyscriptbanks` `copyvar` `copyvarifnotzero` `countpokemon` `createtempsprite` `cry` `darkenroom` `disabletrainer` `doorflush` `doweather` `egghandler` `enabletriner` `end` `endtrainerbattle` `endtrainerbattle2` `executeram` `faceplayer` `fadedefault` `fadein` `fadeout` `fadescreen` `fadescreen_slow` `fadesong` `fanfare` `fardisappear` `farreappear` `furnituredisplay` `getcoins` `getplayerxy` `givecoins` `givemoney` `hashpoke` `hidebox` `hidecoinbox` `hidemoneybox` `hidepokepic` `if` `if_call` `if_callstd` `if_jump` `if_jumpstd` `increasespritelevel` `itemnamedisplay` `jump` `jumpstd` `killscript` `lastbattle` `lasttrainerbattle` `lightroom` `loadbytefrompointer` `loadpointer` `lock` `lockall` `movedisplay` `moveofscreen` `movesprite` `movesprite2` `msgbox2` `msgbox3` `multi` `multichoice2` `multichoise3` `namedisplay` `namedisplayfirst` `nop` `nop0` `opendoor` `opendoorpermanent` `partynamedisplay` `pause` `pausemove` `picture` `playanimation` `playsfx` `playsong` `playsound` `pokemarkt3` `pokemart` `rand` `release` `releaseplayer` `removeitem` `removesprite` `removespriteat` `resetspritelevel` `resetvars` `resetweather` `return` `setbyte` `setcatchlocation` `setflag` `sethealingplace` `setmapfooter` `setmaptile` `setobedience` `setpokemonpp` `setvar` `setweather` `setworldmapflag` `showbox` `showcoinbox` `showmoneybox` `showpokepic` `showsprite` `showspriteat` `showyesno` `special` `special2` `spritebehave` `spriteface` `startcontest` `storeboxname` `storecomp` `storeitems` `storepartyslotforanimation` `storetext` `subvar` `takecoins` `takefurniture` `takemoney` `tempsriteface` `textcolor` `updatecoinbox` `updatemoneybox` `vardisplay` `waitbutton` `waitcry` `waitfanfare` `waitmsgbox2` `waitspecial` `warp6` `warp_3` `warp_4` `warp_5` `warp_elevator` `warp_teleport` `warpteleport2` `wildbattle` `wlhandler` `writebytetooffset` 
 
 ## List of aliasses
-An alias is a shortcort for common used constructions of command sequences. In PokeScript aliases can be used, as well as normal commands.* `givepokemon <arg0> <arg1> <arg2> `
+An alias is a shortcort for common used constructions of command sequences. In PokeScript aliases can be used, as well as normal commands.
+
+* `givepokemon <arg0> <arg1> <arg2> `
 * `namepokemon `
 * `healpokemon `
 * `selectpokemon `
@@ -18,9 +20,8 @@ An alias is a shortcort for common used constructions of command sequences. In P
 * `giveitem <arg0> <arg1> `
 * `finditem <arg0> <arg1> `
 * `message <arg0> `
-* `facemessage <arg0> `
-* `normalmessage <arg0> `
-* `msgbox <arg0> `
+* `message <arg0> <arg1> `
+* `setmessage <arg0> `
 * `frmart <arg0> `
 * `givemoney <arg0> `
 * `takemoney <arg0> `
@@ -49,8 +50,8 @@ An alias is a shortcort for common used constructions of command sequences. In P
 * `if <arg0> jumpstd <arg1> `
 * `if <arg0> callstd <arg1> `
 * `if <arg0> boxset <arg1> `
-* `ifvar <arg0> equal <arg1> jump <arg2> `
-* `ifvar <arg0> equal <arg1> call <arg2> `
+* `ifvar <arg0> <arg1> <arg2> jump <arg3> `
+* `ifvar <arg0> <arg1> <arg2> call <arg3> `
 * `ifflag <arg0> jump <arg1> `
 * `ifflag <arg0> call <arg1> `
 * `ifboy jump <arg0> `
@@ -1449,6 +1450,15 @@ __Argments__:
   
 
 
+### storecomp (0x84)
+__Description__: _No description_  
+__Usage__: `storecomp <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: _No description_  
+    `word` `<arg1>`: _No description_  
+  
+
+
 ### storeitems (0xD4)
 __Description__:  \v\hxx id amount  
 __Usage__: `storeitems <arg0> <arg1> <arg2> `  
@@ -1749,24 +1759,19 @@ __Argments__:
 
 ### Alias `message <arg0> `
 __Usage__: `message <arg0> `  
-__Description__: Loads a message into memory, and shows it (automatically calls boxset)  
+__Description__: Shows a message in a default message box. Message does not close. Make sure you call `release` to get rid of it.  
 __Argments__:  
     `Pointer to String` `<arg0>`:  text offset  
 
-### Alias `facemessage <arg0> `
-__Usage__: `facemessage <arg0> `  
-__Description__: Loads a message into memory, and shows it, talker faces to player.  
+### Alias `message <arg0> <arg1> `
+__Usage__: `message <arg0> <arg1> `  
+__Description__: Shows a message to the player. Different types of messages are possible.  
 __Argments__:  
-    `Pointer to String` `<arg0>`:  text offset  
+    `byte` `<arg0>`: Type of message.  
+    `Pointer to String` `<arg1>`: text offset  
 
-### Alias `normalmessage <arg0> `
-__Usage__: `normalmessage <arg0> `  
-__Description__: Loads a message into memory, and shows it, talker faces to player.  
-__Argments__:  
-    `Pointer to String` `<arg0>`:  text offset  
-
-### Alias `msgbox <arg0> `
-__Usage__: `msgbox <arg0> `  
+### Alias `setmessage <arg0> `
+__Usage__: `setmessage <arg0> `  
 __Description__: Loads a message into memory, which can be shown with boxset (example: msgbox $t1, boxset MSG_NOCLOSE)  
 __Argments__:  
     `Pointer to String` `<arg0>`: text offset  
@@ -1940,21 +1945,23 @@ __Argments__:
     `byte` `<arg0>`: $Val  
     `byte` `<arg1>`: $Val2  
 
-### Alias `ifvar <arg0> equal <arg1> jump <arg2> `
-__Usage__: `ifvar <arg0> equal <arg1> jump <arg2> `  
+### Alias `ifvar <arg0> <arg1> <arg2> jump <arg3> `
+__Usage__: `ifvar <arg0> <arg1> <arg2> jump <arg3> `  
 __Description__: If the value in var is equal to some other value, call the script at the given offset.  
 __Argments__:  
     `word` `<arg0>`: variable  
-    `word` `<arg1>`:  value to test for  
-    `pointer` `<arg2>`: pointer to jump to  
+    `byte` `<arg1>`: Comparison type (`<` `==` `>` `<=` `>=` or `!=`)  
+    `word` `<arg2>`:  value to test for  
+    `pointer` `<arg3>`: pointer to jump to  
 
-### Alias `ifvar <arg0> equal <arg1> call <arg2> `
-__Usage__: `ifvar <arg0> equal <arg1> call <arg2> `  
+### Alias `ifvar <arg0> <arg1> <arg2> call <arg3> `
+__Usage__: `ifvar <arg0> <arg1> <arg2> call <arg3> `  
 __Description__: If the value in var is equal to some other value, call the script at the given offset.  
 __Argments__:  
     `word` `<arg0>`: variable  
-    `word` `<arg1>`:  value to test for  
-    `pointer` `<arg2>`: pointer to call to  
+    `byte` `<arg1>`: Comparison type (`<` `==` `>` `<=` `>=` or `!=`)  
+    `word` `<arg2>`:  value to test for  
+    `pointer` `<arg3>`: pointer to call to  
 
 ### Alias `ifflag <arg0> jump <arg1> `
 __Usage__: `ifflag <arg0> jump <arg1> `  

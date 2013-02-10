@@ -49,7 +49,7 @@ def generate(sublang, gamenames, f):
     
     f.write("## List of aliasses\n")
     f.write("An alias is a shortcort for common used constructions of command sequences. ")
-    f.write("In PokeScript aliases can be used, as well as normal commands.")
+    f.write("In PokeScript aliases can be used, as well as normal commands.\n\n")
     for alias in aliases:
         f.write("* `%s`\n"%alias_to_text(alias))
     f.write("\n\n")
@@ -66,13 +66,12 @@ def generate(sublang, gamenames, f):
         
         #Arguments section
         argsdesc = ""
-        i = 0
-        for param in command.getParams():           
-            if param.defaultvalue == None:
-                t += '<arg%d> '%i
-                argsdesc += "    `%s` `<arg%d>`: "%(ptype_to_text(param.ptype), i)
-                argsdesc += "%s  \n"%(param.description or "_No description_")
-                i += 1
+        params = [x for x in command.getParams() if x.defaultvalue == None]
+        for i in range(0, len(params)):
+            param = params[i]
+            t += '<arg%d> '%i
+            argsdesc += "    `%s` `<arg%d>`: "%(ptype_to_text(param.ptype), i)
+            argsdesc += "%s  \n"%(param.description or "_No description_")
         t += "`  \n"
         if argsdesc:
             t += "__Argments__:  \n%s  \n"%argsdesc
@@ -87,13 +86,12 @@ def generate(sublang, gamenames, f):
         
         argsdesc = "__Argments__:  \n"
         
-        i = 0
-        for param in alias.getParams():
-            if param.defaultvalue == None:
-                argsdesc += "    `%s` `<arg%d>`: "%(ptype_to_text(param.ptype), i)
-                argsdesc += "%s  \n"%(param.description or "_No description_")
-                i += 1
-        
+        params = [x for x in alias.getParams() if x.defaultvalue == None]
+        paramsorder = alias.userargsorder()
+        for i in range(0, len(paramsorder)):
+            argsdesc += "    `%s` `<arg%d>`: "%(ptype_to_text(params[paramsorder[i]-1].ptype), i)
+            argsdesc += "%s  \n"%(params[paramsorder[i]-1].description or "_No description_")
+            
         t += "%s\n"%argsdesc
         f.write(t)
         

@@ -49,14 +49,6 @@ class ParamType:
             return struct.pack("<I", value)
         raise Exception("Could not rewrite value: got wrong argument type: %x."%type)
 
-            
-class SELECT():
-    def __init__(self, options):
-        self.options = options
-        
-    def get(self, i):
-        return self.options[i]
-
 
 class CodeCommand():
     '''
@@ -95,7 +87,7 @@ class CodeCommand():
             
         self.params.append(Param(paramtype, defaultvalue, description, definevaluestype))
         
-        if defaultvalue == None or isinstance(defaultvalue, SELECT):
+        if defaultvalue == None:
             self.neededparams+=1
             defaultvalue = None
     
@@ -145,10 +137,20 @@ class Alias(CodeCommand):
         
         
     def matches(self, line):
-        try: self.stripParams(line)
-        except: return False
+        try:
+            self.stripParams(line)
+        except:
+            return False
         return True
-        
+    
+    def userargsorder(self):
+        '''Returns the order of which user args are required,
+        it is possible to first get $2, and next $1.'''
+        ordered = []
+        for sigarg in self.signature:
+            if sigarg[0] == "$":
+                ordered.append(toint(sigarg[1:]))
+        return ordered
         
     def stripParams(self, matchstr):
         params = []
@@ -159,8 +161,13 @@ class Alias(CodeCommand):
             if self.signature[i][0] == "$":
                 params.append(match[i])
             elif self.signature[i] != match[i]: raise Exception("Not a match!")
+
+        #Shuffle the params according to their occurrence in the signature
+        sorted_params = []
+        for index in self.userargsorder():
+            sorted_params.append(params[index - 1])
         
-        return params
+        return sorted_params
     
     
     def bytesignature(self):
@@ -228,9 +235,7 @@ class Alias(CodeCommand):
                     if value == None:
                         value = args[argstaken]
                         argstaken += 1
-                    elif isinstance(value, SELECT):
-                        value = value.get(toint(args[argstaken]))
-                        argstaken += 1
+
                     else: #make sure value is a string
                         value = str(value)
                     
@@ -282,9 +287,6 @@ class Command(CodeCommand):
                 paramdefault = args[argstaken]
                 argstaken += 1
 
-            if isinstance(paramdefault, SELECT):
-                paramdefault = None
-                
             if paramdefault == None:
                 valuestoappend = [''] * len(ParamType.rewrite(paramtype, 0))
             else:
@@ -307,10 +309,6 @@ class Command(CodeCommand):
             value = None
             if param.defaultvalue == None:
                 value = args[usedargs]
-                usedargs += 1
-                
-            elif isinstance(param.defaultvalue, SELECT):
-                value = param.defaultvalue.get(args[usedargs])
                 usedargs += 1
                 
             else:

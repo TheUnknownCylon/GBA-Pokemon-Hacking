@@ -22,7 +22,7 @@ Another routine example, where the script does not start is given below. (Note t
 In the game, there are a lot of talking people. If you talk to a person, a script is activated. In most cases, people say something interesting or funny to you. What they say is just a result of the script you are running. An example of a script you can use to let a person talk:
 
     #org $start
-      facemessage $my_text
+      message FACE $my_text
       end
 
     #text $my_text
@@ -30,15 +30,17 @@ In the game, there are a lot of talking people. If you talk to a person, a scrip
     = I am a simple text, so...\l
     = HELLO WORLD!
 
-As you can see, the script contains of a simple command ``facemessage`` which tells the game to let the person talking to, face you as a player, and say the text that is stored in `$my_text`.
+As you can see, the script contains of a simple command ``message`` which tells the game to let the person talking to, face you as a player by using ``FACE``, and say the text that is stored in `$my_text`.
 
 
 Other forms of messages are also possible:
 
 * If you do not want to let the person face the player, of when the person talking to the player is already facing the player, the command 
-``message $my_text`` can be used.
+``message $my_text`` can be used. This command will not remove the message from screen. To do so, you should call ``relase`` at the end of your script.
 
-If you do not want to talk immediately, but do some other stuff first, then it is a good idea to use a different PokeScript construction, where first the person you are talking to is locked (frozen) by calling `lock`, and faces the player by calling `faceplayer`, and once finished, a `release` call unlocks the person again:
+* Instead of using `FACE`, you can also use: `OBTAINED`, `FOUND`, `SIGN`, `YESNO`, `LOCK`, `PUT_IN`, or `POKENAV`.
+
+If you do not want to talk immediately, but do some other stuff first, then it is a good idea to use a different PokeScript construction, where first the person you are talking to is locked (frozen) by calling `lock`, and faces the player by calling `faceplayer`, and once finished. At the end of the script, call `release` to clean up.
 
     #org $start
       lock         'Locks the script person (e.g. it stops walking)

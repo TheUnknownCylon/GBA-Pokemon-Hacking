@@ -25,7 +25,6 @@ class Routine():
 
 class RoutineText(Routine):
     def getBytes(self):
-        print("IK KOM HIER :D:D:D:D")
         return self._codes + array('B', [0xff])
     
     def length(self):

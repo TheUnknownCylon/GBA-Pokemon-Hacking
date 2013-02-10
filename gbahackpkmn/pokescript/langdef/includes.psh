@@ -1,11 +1,5 @@
 #include commands.psh
 
-#define boxset MSG_FACEPLAYER &H2
-
-#define boxset MSG_NOCLOSE    &H4
-#define boxset MSN_YESNO      &H5
-#define boxset MSG_NORMAL     &H6
-
 #define movesprite SPRITEMOVE_INDEX   &H8008
 #define movesprite SPRITEMOVE_NEWXPOS &H8009
 #define movesprite SPRITEMOVE_NEWYPOS &H800A
@@ -24,10 +18,8 @@
 
 #define bool FALSE 0
 #define bool TRUE  1
-#define bool NO    0
-#define bool YES   1
-#define bool BOY   0
-#define bool GIRL  1
+#define gender BOY   0
+#define gender GIRL  1
 
 #define boolexp <  0
 #define boolexp == 1
@@ -39,6 +31,18 @@
 #define col BLUE   0
 #define col RED    1
 #define col BLACK  2
+#define col GREY   3
+'Colors [4-15] are also BLACK.
 
 #define fade FADE_IN 0
 #define fade FADE_OUT 1
+
+#define msgtype OBTAINED 0
+#define msgtype FOUND    1
+#define msgtype FACE     2
+#define msgtype SIGN     3
+#define msgtype NONCLOSE 4
+#define msgtype YESNO    5
+#define msgtype LOCK     6
+#define msgtype PUT_IN   9
+#define msgtype POKENAV  10
