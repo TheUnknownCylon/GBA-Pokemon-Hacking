@@ -363,8 +363,8 @@ addparm 9 'Pointer to movement data
 addparm 0 'X
 addparm 0 'Y
 
-addcmmd pausemove #51 'Wait for an event to finish
-addparm 1 'Zero for applymovement
+addcmmd waitmovement #51    'Wait for a movement to finish
+addparm 1                   'Zero for applymovement
 
 'TODO: Missing: #52
 
@@ -950,7 +950,9 @@ addparm 7 loadpointer       '
 addparm 0 mask(#00)         '
 addparm 8                   'text offset
 
-
+alias waitmovement          'Waits for a movement to finish.
+addparm 7 waitmovement      '
+addparm 1 mask(#00)         '
 
 alias frmart $1
 addparm 0 mask(#67)

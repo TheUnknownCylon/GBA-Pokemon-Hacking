@@ -4,7 +4,7 @@ This document lists all the commands and aliases for the default PokeScript Fire
 __Note:__ This document is automatically generated based on the script langdefinitions.
 
 ## List of commands
-`addfurniture` `additem` `additemtopc` `addpokemon` `addvar` `applymovement` `applymovement2` `boxset` `boxtypenormal` `boxtypesign` `braille` `buymart` `call` `callasm` `callasm2` `callstd` `checkanimation` `checkflag` `checkfurniture` `checkgender` `checkifroomforfurniture` `checkitem` `checkitempc` `checkitemspaceinbag` `checkitemtype` `checkmoney` `checkmove` `checkobedience` `checksound` `checktrainer` `choosecontestpokemon` `clearbox` `clearflag` `closedoor` `closedoorpermanent` `closeonkeypress` `cmd2c` `cmd2d` `cmd8a` `cmd96` `cmda6` `cmdb1` `cmdb2` `cmdc3` `cmdd3` `cmdfb` `cmdfe` `compare` `comparefarbytetobyte` `comparefarbytetofarbyte` `comparefarbytetovar` `comparehiddenvar` `comparepointer` `comparevars` `comparevartobyte` `comparevartofarbyte` `copybyte` `copyscriptbanks` `copyvar` `copyvarifnotzero` `countpokemon` `createtempsprite` `cry` `darkenroom` `disabletrainer` `doorflush` `doweather` `egghandler` `enabletriner` `end` `endtrainerbattle` `endtrainerbattle2` `executeram` `faceplayer` `fadedefault` `fadein` `fadeout` `fadescreen` `fadescreen_slow` `fadesong` `fakecallstd` `fakejumpstd` `fanfare` `fardisappear` `farreappear` `furnituredisplay` `getcoins` `getplayerxy` `givecoins` `givemoney` `hashpoke` `hidebox` `hidecoinbox` `hidemoneybox` `hidepokepic` `if` `if_call` `if_callstd` `if_jump` `if_jumpstd` `increasespritelevel` `itemnamedisplay` `jump` `jumpstd` `killscript` `lastbattle` `lasttrainerbattle` `lightroom` `loadbytefrompointer` `loadpointer` `lock` `lockall` `movedisplay` `moveofscreen` `movesprite` `movesprite2` `msgbox2` `msgbox3` `multi` `multichoice2` `multichoise3` `namedisplay` `namedisplayfirst` `nop` `nop0` `opendoor` `opendoorpermanent` `partynamedisplay` `pause` `pausemove` `picture` `playanimation` `playsfx` `playsong` `playsound` `pokemart` `rand` `release` `releaseplayer` `removeitem` `removesprite` `removespriteat` `resetspritelevel` `resetvars` `resetweather` `return` `setbyte` `setcatchlocation` `setflag` `sethealingplace` `setmapfooter` `setmaptile` `setobedience` `setpokemonpp` `setvar` `setweather` `setworldmapflag` `showbox` `showcoinbox` `showmoneybox` `showpokepic` `showsprite` `showspriteat` `showyesno` `special` `special2` `spritebehave` `spriteface` `startcontest` `storeboxname` `storecomp` `storeitems` `storepartyslotforanimation` `storetext` `subvar` `takecoins` `takefurniture` `takemoney` `tempsriteface` `textcolor` `updatecoinbox` `updatemoneybox` `vardisplay` `waitbutton` `waitcry` `waitfanfare` `waitmsgbox2` `waitspecial` `warp6` `warp_3` `warp_4` `warp_5` `warp_elevator` `warp_teleport` `warpteleport2` `wildbattle` `wlhandler` `writebytetooffset` 
+`addfurniture` `additem` `additemtopc` `addpokemon` `addvar` `applymovement` `applymovement2` `boxset` `boxtypenormal` `boxtypesign` `braille` `buymart` `call` `callasm` `callasm2` `callstd` `checkanimation` `checkflag` `checkfurniture` `checkgender` `checkifroomforfurniture` `checkitem` `checkitempc` `checkitemspaceinbag` `checkitemtype` `checkmoney` `checkmove` `checkobedience` `checksound` `checktrainer` `choosecontestpokemon` `clearbox` `clearflag` `closedoor` `closedoorpermanent` `closeonkeypress` `cmd2c` `cmd2d` `cmd8a` `cmd96` `cmda6` `cmdb1` `cmdb2` `cmdc3` `cmdd3` `cmdfb` `cmdfe` `compare` `comparefarbytetobyte` `comparefarbytetofarbyte` `comparefarbytetovar` `comparehiddenvar` `comparepointer` `comparevars` `comparevartobyte` `comparevartofarbyte` `copybyte` `copyscriptbanks` `copyvar` `copyvarifnotzero` `countpokemon` `createtempsprite` `cry` `darkenroom` `disabletrainer` `doorflush` `doweather` `egghandler` `enabletriner` `end` `endtrainerbattle` `endtrainerbattle2` `executeram` `faceplayer` `fadedefault` `fadein` `fadeout` `fadescreen` `fadescreen_slow` `fadesong` `fakecallstd` `fakejumpstd` `fanfare` `fardisappear` `farreappear` `furnituredisplay` `getcoins` `getplayerxy` `givecoins` `givemoney` `hashpoke` `hidebox` `hidecoinbox` `hidemoneybox` `hidepokepic` `if` `if_call` `if_callstd` `if_jump` `if_jumpstd` `increasespritelevel` `itemnamedisplay` `jump` `jumpstd` `killscript` `lastbattle` `lasttrainerbattle` `lightroom` `loadbytefrompointer` `loadpointer` `lock` `lockall` `movedisplay` `moveofscreen` `movesprite` `movesprite2` `msgbox2` `msgbox3` `multi` `multichoice2` `multichoise3` `namedisplay` `namedisplayfirst` `nop` `nop0` `opendoor` `opendoorpermanent` `partynamedisplay` `pause` `picture` `playanimation` `playsfx` `playsong` `playsound` `pokemart` `rand` `release` `releaseplayer` `removeitem` `removesprite` `removespriteat` `resetspritelevel` `resetvars` `resetweather` `return` `setbyte` `setcatchlocation` `setflag` `sethealingplace` `setmapfooter` `setmaptile` `setobedience` `setpokemonpp` `setvar` `setweather` `setworldmapflag` `showbox` `showcoinbox` `showmoneybox` `showpokepic` `showsprite` `showspriteat` `showyesno` `special` `special2` `spritebehave` `spriteface` `startcontest` `storeboxname` `storecomp` `storeitems` `storepartyslotforanimation` `storetext` `subvar` `takecoins` `takefurniture` `takemoney` `tempsriteface` `textcolor` `updatecoinbox` `updatemoneybox` `vardisplay` `waitbutton` `waitcry` `waitfanfare` `waitmovement` `waitmsgbox2` `waitspecial` `warp6` `warp_3` `warp_4` `warp_5` `warp_elevator` `warp_teleport` `warpteleport2` `wildbattle` `wlhandler` `writebytetooffset` 
 
 ## List of aliasses
 An alias is a shortcort for common used constructions of command sequences. In PokeScript aliases can be used, as well as normal commands.
@@ -22,6 +22,7 @@ An alias is a shortcort for common used constructions of command sequences. In P
 * `message <arg0> `
 * `message <arg0> <arg1> `
 * `setmessage <arg0> `
+* `waitmovement `
 * `frmart <arg0> `
 * `givemoney <arg0> `
 * `takemoney <arg0> `
@@ -1125,14 +1126,6 @@ __Argments__:
   
 
 
-### pausemove (0x51)
-__Description__: Wait for an event to finish  
-__Usage__: `pausemove <arg0> `  
-__Argments__:  
-    `word` `<arg0>`: Zero for applymovement  
-  
-
-
 ### picture (0x77)
 __Description__: _No description_  
 __Usage__: `picture <arg0> `  
@@ -1595,6 +1588,14 @@ __Description__: Wait for the fanfare to finish
 __Usage__: `waitfanfare `  
 
 
+### waitmovement (0x51)
+__Description__: Wait for a movement to finish  
+__Usage__: `waitmovement <arg0> `  
+__Argments__:  
+    `word` `<arg0>`: Zero for applymovement  
+  
+
+
 ### waitmsgbox2 (0x66)
 __Description__: _No description_  
 __Usage__: `waitmsgbox2 `  
@@ -1789,6 +1790,11 @@ __Usage__: `setmessage <arg0> `
 __Description__: Loads a message into memory, which can be shown with boxset (example: msgbox $t1, boxset MSG_NOCLOSE)  
 __Argments__:  
     `Pointer to String` `<arg0>`: text offset  
+
+### Alias `waitmovement `
+__Usage__: `waitmovement `  
+__Description__: Waits for a movement to finish.  
+__Argments__:  
 
 ### Alias `frmart <arg0> `
 __Usage__: `frmart <arg0> `  
