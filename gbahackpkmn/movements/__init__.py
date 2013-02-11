@@ -47,5 +47,14 @@ class Movement(Resource):
         return self.movements
     
     def bytestring(self):
-        return self.movements
+        '''
+        Returns the movement sequence as bytestring.
+        If the last movement was not explictly given (with 0xFE), then this byte
+        will be included implictly.
+        '''
+        if self.movements[-1] == 0xFE:
+            return self.movements
+        movements = self.movements[:]
+        movements.append(0xFE)
+        return movements
         
