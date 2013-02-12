@@ -41,7 +41,7 @@ class PokeString(Resource):
                 if byte in texthashinv:
                     text += texthashinv[byte]
                 else:
-                    text += "\v\h%X"%byte
+                    text += "\\v\h%X"%byte
 
             else:
                 try:

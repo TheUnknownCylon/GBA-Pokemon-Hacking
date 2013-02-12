@@ -508,14 +508,16 @@ addparm 0 'Num
 addcmmd braille #78 'TODO: Verify
 addparm 8 'Pointer to text
 
-addcmmd addpokemon #79 'Gives the player a pokemon (Not to be used by player!)
-addparm 1:pkmn 'Pokemon species to give
-addparm 0      'Level of pokemon
-addparm 1:item 'Item # to be held
-'TODO: Maybe we need 0 2 2 here !?!?!
+addcmmd addpokemon #79  'Gives the player a pokemon. LASTRESULT: 0 if stored in party, 1 if stored in box, 2 if not stored (boxes full).
+addparm 1:pkmn          'Pokemon species to give
+addparm 0               'Level of pokemon
+addparm 1:item          'Item # to be held
+addparm 2:              'Spacing, use 0x00
+addparm 2:              'Spacing, use 0x00
+addparm 0:              'Spacing, use 0x00
 
-addcmmd egghandler #7A
-addparm 1 'Poke
+addcmmd addegg #7A      'Gives the player an egg.
+addparm 1:pkmn          'Pokemon species to give as egg.
 
 addcmmd setpokemonpp #7B
 addparm 0 'pkmn slot
@@ -525,60 +527,58 @@ addparm 1 'pp
 addcmmd checkmove #7C
 addparm 1 'move id
 
-addcmmd namedisplay #7D    'TODO: StorePokemon?!?
-addparm 0 'bank of names
-addparm 1 'name number / poke
+addcmmd puttext_pkmn #7D        'Puts a PokemonName in a textstring.
+addparm 0                       'TextString id (0 = [textstring0])
+addparm 1:pkmn                  ' Pokemon name to store
 
-addcmmd namedisplayfirst #7E 'TODO: StoreFirstPokemon?
-addparm 0 'bank of names
+addcmmd puttext_firstpkmn #7E   'Puts first pokemon in party name in a textstring.
+addparm 0                       'Bank id (0 = [textstring0])
 
-addcmmd partynamedisplay #7F 'TODO: StorePartyPokemon?
-addparm 0     'slot as in namedisplay
-addparm 1:var 'var, hint LASTRESULT
+addcmmd puttext_partypkmn #7F   'Puts nickname of party pokemon in a textstring.
+addparm 0                       'Bank id (0 = [textstring0])
+addparm 1:var                   ' Number of pokemon in team (values: 0 - 5)
 
-'TODO: Verify, is :item really an item??
-addcmmd itemnamedisplay #80
-addparm 0      'slot
-addparm 1:item 'item id - check to see if this uses < or not
+addcmmd puttext_item #80        'Puts an itemname in a textbank.
+addparm 0                       'Bank id (0 = [textstring0])
+addparm 1:item                  'item id
 
-addcmmd furnituredisplay #81
-addparm 0
-addparm 1
+addcmmd puttext_furniture #81   'Puts a furniture name in a textstring.
+addparm 0                       'Bank id (0 = [textstring0])
+addparm 1:furniture             'Furniture ID
 
-'TODO: Verify: is :move really a move??
-addcmmd movedisplay #82
-addparm 0      'slot as in namedisplay etc
-addparm 1:move 'move id, not variable
+addcmmd puttext_move #82        'Puts a move name in a textstring.
+addparm 0                       'Bank id (0 = [textstring0])
+addparm 1:move                  'Move ID
 
-addcmmd vardisplay #83
-addparm 0     'position 0, 1, or 2
-addparm 1:var 'variable
+addcmmd puttext_var #83         'Puts a var-value in a textbank.
+addparm 0                       'Bank id (0 = [textstring0])
+addparm 1:var                   'variable
 
-addcmmd storecomp #84
-addparm 0
-addparm 1
+addcmmd puttext_gamestr #84     'Puts an ingame string value in a textstring. These can be badge names, contest names, menu names, etc.
+addparm 0                       'Bank id (0 = [textstring0])
+addparm 1:ingametextstring      'string id to store
 
-addcmmd storetext #85 'thanks to "score_under" from PC for this definition
-addparm 0 'slot
-addparm 8 'pointer to text
+addcmmd puttext_text #85        'Puts a text string from ROM in a textstring
+addparm 0                       'Bank id (0 = [textstring0]
+addparm 8                       'Pointer to text to store in the var
 
-addcmmd pokemart #86 'Opens the pokemart shop system
-addparm 3 'Pointer to the item/price list
+addcmmd pokemart #86            'Opens the pokemart shop system
+addparm 3                       'Pointer to the item/price list
 
-addcmmd buymart #87 'Opens the shop system with buy only (RSE exclusive, acts as normal mart in FRLG)
-addparm 3 'Pointer to the item/price list
+addcmmd buymart #87             'Opens the shop system with buy only (RSE exclusive, acts as normal mart in FRLG)
+addparm 3                       'Pointer to the item/price list
 
-addcmmd[frlg] fakejumpstd #88 
-addparm 0 'type ??
+addcmmd[frlg] fakejumpstd #88   '
+addparm 0                       'type ??
 
-addcmmd[rs][e] pokemarkt3 #88
-addparm 3 'Pointer to the item/price list
+addcmmd[rs][e] pokemarkt3 #88   '
+addparm 3                       'Pointer to the item/price list
 
-addcmmd[frlg] fakecallstd #89
-addparm 0 'type ??
+addcmmd[frlg] fakecallstd #89   '
+addparm 0                       'type ??
 
-addcmmd[rs][e] pokemarkt3 #89
-addparm 1 '??
+addcmmd[rs][e] pokemarkt3 #89   '
+addparm 1                       '??
 
 addcmmd cmd8A #8A
 addparm 0
@@ -775,15 +775,15 @@ addparm 1 'Y
 
 addcmmd waitcry #C5
 
-addcmmd storeboxname #C6  ' \v\hxx boxno
-addparm 0 'xx
-addparm 1 'boxno
+addcmmd puttext_boxname #C6     'Puts the name of a box in a text textstring.
+addparm 0                       'Bank to sthore the boxname in (0 = [textstring0]
+addparm 1                       'Number of the box to store.
 
-addcmmd textcolor #C7
-addparm 0:col '0=blue 1=red 2+=black
+addcmmd textcolor #C7           'Changes the text color in message boxes
+addparm 0:col                   'Color to change to
 
-addcmmd boxtypesign #CA 'changes the msgbox appearance to that of a sign
-addcmmd boxtypenormal #CB 'changes the msgbox appearance to normal, the one where you're talking to someone
+addcmmd boxtypesign #CA         'changes the msgbox appearance to that of a sign
+addcmmd boxtypenormal #CB       'changes the msgbox appearance to normal, the one where you're talking to someone
 
 addcmmd comparehiddenvar #CC
 addparm 0:var 'Variable
@@ -840,43 +840,38 @@ addparm 1
 addparm 1
 
 
-addcmmd hashpoke #7D
-addparm 1
-addparm 0
-
-
 /************\
 | CONSTRUCTS |
 \------------*/
 
-alias givepokemon $1 $2 $3 ' Give pokemon to Player
-addparm 7 copyvar
+alias givepokemon $1 $2 $3  'Give pokemon to Player
+addparm 7 setvar            '
+addparm 1 mask(#800D)       '
+addparm 1:pkmn              'Pokemon species to give
+addparm 7 addpokemon        '
+addparm 1 mask(#800D)       '
+addparm 0                   'Level of pokemon
+addparm 1:item              'Item # to be held
+addparm 2 mask(#00000000)   '
+addparm 2 mask(#00000000)   '
+addparm 0 mask(#00)         '
+addparm 7 setvar
 addparm 1 mask(#8004)
-addparm 1 mask(#800D)
-addparm 7 addpokemon
-addparm 1:pkmn      'Pokemon species to give
-addparm 0           'Level of pokemon
-addparm 1:item      'Item # to be held
-addparm 2 mask(#00000000)
-addparm 2 mask(#00000000)
-addparm 7 hashpoke
-addparm 1 mask(#1901)
-addparm 0 mask(#00)
-addparm 2 mask(#00000000)
-addparm 2 mask(#00000000)
+addparm 1 0
+
+alias selectpokemon         'Display "Select pokemon" dialog
+addparm 7 special           '
+addparm 0 mask(#73)         '
+addparm 7 copyvar           '
+addparm 1 mask(#800a)       '
+addparm 1 mask(#8004)       '
 
 alias namepokemon ' Name a pokemon identified with Selectpokemon or givepokemon
 addparm 7 fadescreen
-addparm 0 0x00
+addparm 0 mask(0x00)
 addparm 7 special
 addparm 1 mask(#009E)
-addparm 0 0x25 'Special
-addparm 2 mask(#04008003)
-addparm 2 mask(#01743180)
-addparm 2 mask(#1A149867)
-addparm 2 mask(#45326608)
-addparm 2 mask(#00018004)
-addparm 0 mask(#6b)
+addparm 7 waitspecial
 
 'TODO: FR Only???
 alias healpokemon           'Heal all pokemon, include fadescreen animation.
@@ -886,13 +881,6 @@ addparm 0 mask(#26)
 addparm 0 mask(#6c)
 addparm 0 mask(#1a)
 addparm 0 mask(#08)
-
-alias selectpokemon         'Display "Select pokemon" dialog
-addparm 7 special           '
-addparm 0 mask(#73)         '
-addparm 7 copyvar           '
-addparm 1 mask(#800a)       '
-addparm 1 mask(#8004)       '
 
 
 alias startwildbattle       'Starts a wild battle. Should call wildbattle first.
@@ -1013,32 +1001,9 @@ alias getnationaldex    'Enables the national dex.
 addparm 7 special       '
 addparm 1 mask(#016F)   '
 
-alias starterpokemon $1
-addparm 7 copyvar
-addparm 1 mask(#8004)
-addparm 1 mask(#800D)
-addparm 7 addpokemon
-addparm 1:var               'Var of pokemon to give
-addparm 0 mask(#05)         'Level of pokemon
-addparm 1 mask(#0000)       'Item held
-addparm 2 mask(#00000000)
-addparm 2 mask(#00000000)
-addparm 7 hashpoke
-addparm 1 mask(#1901)
-addparm 0 mask(#00)
-addparm 2 mask(#00000000)
-addparm 2 mask(#00000000)
-
 alias vanish $1
 addparm 7 removesprite
 addparm 1
-
-alias giveegg $1
-addparm 2 mask(#67007231)
-addparm 2 mask(#0816C2EA)
-addparm 1 mask(#6632)
-addparm 7 egghandler
-addparm 1:pkmn 'pokemon to be given
 
 alias checkpokemon $1
 addparm 7 setvar
@@ -1178,25 +1143,6 @@ addparm 1:flag          'flag
 addparm 7 if_call       'if
 addparm 0 mask(#01)     ' == True
 addparm 3               'pointer to call to
-
-alias ifboy jump $1     'If the player is a boy, jump to script at the given offset
-addparm 7 checkgender   '
-addparm 7 compare       '
-addparm 1 mask(#800D)   '
-addparm 1 mask(#0000)   '
-addparm 7 if_jump       '
-addparm 0 mask(#01)     '
-addparm 3               'pointer to jump to
-
-
-alias ifpartyfull jump $1 'If the players party is full, jump to the script at the given offset.
-addparm 7 countpokemon  '
-addparm 7 compare       '
-addparm 1 mask(#800D)   '
-addparm 1 mask(#0006)   '
-addparm 7 if_jump       '
-addparm 0 mask(#01)     '
-addparm 3               'pointer to jump to
 
 
 ' trainerbattle 0x00
@@ -1347,13 +1293,14 @@ addparm 3 'Pointer to a byte value to compare with
 addparm 3 'Pointer to a byte value to compare with
 
 
-'addcmmd HashNamePoke #27
-'addparm 2
-'addparm 2
-'addparm 2
-'addparm 2
-'addparm 2
-'addparm 0
+alias special $2 store $1   'Call to a special, stores its result in a variable.
+addparm 7 special2          '
+addparm 1:var               'Var to store the result in
+addparm 1:special           'Special to call
+
+
+
+
 
 'addcmmd warp #39 'Warp to another level
 'addparm 0 'Bank to warp to

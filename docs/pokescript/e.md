@@ -4,15 +4,15 @@ This document lists all the commands and aliases for the default PokeScript Emer
 __Note:__ This document is automatically generated based on the script langdefinitions.
 
 ## List of commands
-`addfurniture` `additem` `additemtopc` `addpokemon` `addvar` `applymovement` `applymovement2` `boxset` `boxtypenormal` `boxtypesign` `braille` `buymart` `call` `callasm` `callasm2` `callstd` `checkanimation` `checkflag` `checkfurniture` `checkgender` `checkifroomforfurniture` `checkitem` `checkitempc` `checkitemspaceinbag` `checkitemtype` `checkmoney` `checkmove` `checkobedience` `checktrainer` `choosecontestpokemon` `clearbox` `clearflag` `closedoor` `closedoorpermanent` `closeonkeypress` `cmd2c` `cmd2d` `cmd8a` `cmd96` `cmda6` `cmdb1` `cmdb2` `cmdc3` `cmdd3` `cmdfb` `cmdfe` `compare` `comparefarbytetobyte` `comparefarbytetofarbyte` `comparefarbytetovar` `comparehiddenvar` `comparepointer` `comparevars` `comparevartobyte` `comparevartofarbyte` `copybyte` `copyscriptbanks` `copyvar` `copyvarifnotzero` `countpokemon` `createtempsprite` `cry` `darkenroom` `disabletrainer` `doorflush` `doweather` `egghandler` `enabletriner` `end` `endtrainerbattle` `endtrainerbattle2` `executeram` `faceplayer` `fadedefault` `fadein` `fadeout` `fadescreen` `fadescreen_slow` `fadesong` `fanfare` `fardisappear` `farreappear` `furnituredisplay` `getcoins` `getplayerxy` `givecoins` `givemoney` `hashpoke` `hidebox` `hidecoinbox` `hidemoneybox` `hidepokepic` `if` `if_call` `if_callstd` `if_jump` `if_jumpstd` `increasespritelevel` `itemnamedisplay` `jump` `jumpstd` `killscript` `lastbattle` `lasttrainerbattle` `lightroom` `loadbytefrompointer` `loadpointer` `lock` `lockall` `movedisplay` `moveofscreen` `movesprite` `movesprite2` `msgbox2` `msgbox3` `multi` `multichoice2` `multichoise3` `namedisplay` `namedisplayfirst` `nop` `nop0` `opendoor` `opendoorpermanent` `partynamedisplay` `pause` `picture` `playanimation` `playsfx` `playsong` `playsound` `pokemarkt3` `pokemart` `pokenav` `rand` `release` `releaseplayer` `removeitem` `removesprite` `removespriteat` `resetspritelevel` `resetvars` `resetweather` `return` `setbyte` `setcatchlocation` `setflag` `sethealingplace` `setmapfooter` `setmaptile` `setobedience` `setpokemonpp` `setvar` `setweather` `setworldmapflag` `showbox` `showcoinbox` `showmoneybox` `showpokepic` `showsprite` `showspriteat` `showyesno` `special` `special2` `spritebehave` `spriteface` `startcontest` `startwireles` `storeboxname` `storecomp` `storeitems` `storepartyslotforanimation` `storetext` `subvar` `takecoins` `takefurniture` `takemoney` `tempsriteface` `textcolor` `updatecoinbox` `updatemoneybox` `vardisplay` `waitbutton` `waitcry` `waitfanfare` `waitmovement` `waitmsgbox2` `waitspecial` `warp6` `warp_3` `warp_4` `warp_5` `warp_elevator` `warp_teleport` `warpteleport2` `wildbattle` `wlhandler` `writebytetooffset` 
+`addegg` `addfurniture` `additem` `additemtopc` `addpokemon` `addvar` `applymovement` `applymovement2` `boxset` `boxtypenormal` `boxtypesign` `braille` `buymart` `call` `callasm` `callasm2` `callstd` `checkanimation` `checkflag` `checkfurniture` `checkgender` `checkifroomforfurniture` `checkitem` `checkitempc` `checkitemspaceinbag` `checkitemtype` `checkmoney` `checkmove` `checkobedience` `checktrainer` `choosecontestpokemon` `clearbox` `clearflag` `closedoor` `closedoorpermanent` `closeonkeypress` `cmd2c` `cmd2d` `cmd8a` `cmd96` `cmda6` `cmdb1` `cmdb2` `cmdc3` `cmdd3` `cmdfb` `cmdfe` `compare` `comparefarbytetobyte` `comparefarbytetofarbyte` `comparefarbytetovar` `comparehiddenvar` `comparepointer` `comparevars` `comparevartobyte` `comparevartofarbyte` `copybyte` `copyscriptbanks` `copyvar` `copyvarifnotzero` `countpokemon` `createtempsprite` `cry` `darkenroom` `disabletrainer` `doorflush` `doweather` `enabletriner` `end` `endtrainerbattle` `endtrainerbattle2` `executeram` `faceplayer` `fadedefault` `fadein` `fadeout` `fadescreen` `fadescreen_slow` `fadesong` `fanfare` `fardisappear` `farreappear` `getcoins` `getplayerxy` `givecoins` `givemoney` `hidebox` `hidecoinbox` `hidemoneybox` `hidepokepic` `if` `if_call` `if_callstd` `if_jump` `if_jumpstd` `increasespritelevel` `jump` `jumpstd` `killscript` `lastbattle` `lasttrainerbattle` `lightroom` `loadbytefrompointer` `loadpointer` `lock` `lockall` `moveofscreen` `movesprite` `movesprite2` `msgbox2` `msgbox3` `multi` `multichoice2` `multichoise3` `nop` `nop0` `opendoor` `opendoorpermanent` `pause` `picture` `playanimation` `playsfx` `playsong` `playsound` `pokemarkt3` `pokemart` `pokenav` `puttext_boxname` `puttext_firstpkmn` `puttext_furniture` `puttext_gamestr` `puttext_item` `puttext_move` `puttext_partypkmn` `puttext_pkmn` `puttext_text` `puttext_var` `rand` `release` `releaseplayer` `removeitem` `removesprite` `removespriteat` `resetspritelevel` `resetvars` `resetweather` `return` `setbyte` `setcatchlocation` `setflag` `sethealingplace` `setmapfooter` `setmaptile` `setobedience` `setpokemonpp` `setvar` `setweather` `setworldmapflag` `showbox` `showcoinbox` `showmoneybox` `showpokepic` `showsprite` `showspriteat` `showyesno` `special` `special2` `spritebehave` `spriteface` `startcontest` `startwireles` `storeitems` `storepartyslotforanimation` `subvar` `takecoins` `takefurniture` `takemoney` `tempsriteface` `textcolor` `updatecoinbox` `updatemoneybox` `waitbutton` `waitcry` `waitfanfare` `waitmovement` `waitmsgbox2` `waitspecial` `warp6` `warp_3` `warp_4` `warp_5` `warp_elevator` `warp_teleport` `warpteleport2` `wildbattle` `wlhandler` `writebytetooffset` 
 
 ## List of aliasses
 An alias is a shortcort for common used constructions of command sequences. In PokeScript aliases can be used, as well as normal commands.
 
 * `givepokemon <arg0> <arg1> <arg2> `
+* `selectpokemon `
 * `namepokemon `
 * `healpokemon `
-* `selectpokemon `
 * `startwildbattle `
 * `startwildbattle1 `
 * `startwildbattle2 `
@@ -34,9 +34,7 @@ An alias is a shortcort for common used constructions of command sequences. In P
 * `getpokemonmenu `
 * `getpokedex `
 * `getnationaldex `
-* `starterpokemon <arg0> `
 * `vanish <arg0> `
-* `giveegg <arg0> `
 * `checkpokemon <arg0> `
 * `getname <arg0> `
 * `warplocation <arg0> <arg1> <arg2> <arg3> `
@@ -55,8 +53,6 @@ An alias is a shortcort for common used constructions of command sequences. In P
 * `ifvar <arg0> <arg1> <arg2> call <arg3> `
 * `ifflag <arg0> jump <arg1> `
 * `ifflag <arg0> call <arg1> `
-* `ifboy jump <arg0> `
-* `ifpartyfull jump <arg0> `
 * `trainerbattle <arg0> <arg1> <arg2> `
 * `trainerbattle <arg0> <arg1> <arg2> jump <arg3> `
 * `trainerbattle2 <arg0> <arg1> <arg2> <arg3> `
@@ -78,9 +74,18 @@ An alias is a shortcort for common used constructions of command sequences. In P
 * `compare pointer <arg0> var <arg1> `
 * `compare pointer <arg0> byte <arg1> `
 * `compare pointer <arg0> pointer <arg1> `
+* `special <arg0> store <arg1> `
 
 
 ## Commands in detail
+
+### addegg (0x7A)
+__Description__: Gives the player an egg.  
+__Usage__: `addegg <arg0> `  
+__Argments__:  
+    `word` `<arg0>`: Pokemon species to give as egg.  
+  
+
 
 ### addfurniture (0x4B)
 __Description__: _No description_  
@@ -109,12 +114,15 @@ __Argments__:
 
 
 ### addpokemon (0x79)
-__Description__: Gives the player a pokemon (Not to be used by player!)  
-__Usage__: `addpokemon <arg0> <arg1> <arg2> `  
+__Description__: Gives the player a pokemon. LASTRESULT: 0 if stored in party, 1 if stored in box, 2 if not stored (boxes full).  
+__Usage__: `addpokemon <arg0> <arg1> <arg2> <arg3> <arg4> <arg5> `  
 __Argments__:  
     `word` `<arg0>`: Pokemon species to give  
     `byte` `<arg1>`: Level of pokemon  
     `word` `<arg2>`: Item # to be held  
+    `int` `<arg3>`: Spacing, use 0x00  
+    `int` `<arg4>`: Spacing, use 0x00  
+    `byte` `<arg5>`: Spacing, use 0x00  
   
 
 
@@ -623,14 +631,6 @@ __Description__: Triggers the weather change set with SetWeather
 __Usage__: `doweather `  
 
 
-### egghandler (0x7A)
-__Description__: _No description_  
-__Usage__: `egghandler <arg0> `  
-__Argments__:  
-    `word` `<arg0>`: Poke  
-  
-
-
 ### enabletriner (0x62)
 __Description__: _No description_  
 __Usage__: `enabletriner <arg0> `  
@@ -738,15 +738,6 @@ __Argments__:
   
 
 
-### furnituredisplay (0x81)
-__Description__: _No description_  
-__Usage__: `furnituredisplay <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: _No description_  
-    `word` `<arg1>`: _No description_  
-  
-
-
 ### getcoins (0xB3)
 __Description__: Put the players number coins in a variable.  
 __Usage__: `getcoins <arg0> `  
@@ -778,15 +769,6 @@ __Usage__: `givemoney <arg0> <arg1> `
 __Argments__:  
     `int` `<arg0>`: Amount  
     `byte` `<arg1>`: ? (0 as default works fine)  
-  
-
-
-### hashpoke (0x7D)
-__Description__: _No description_  
-__Usage__: `hashpoke <arg0> <arg1> `  
-__Argments__:  
-    `word` `<arg0>`: _No description_  
-    `byte` `<arg1>`: _No description_  
   
 
 
@@ -880,15 +862,6 @@ __Argments__:
   
 
 
-### itemnamedisplay (0x80)
-__Description__: _No description_  
-__Usage__: `itemnamedisplay <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: slot  
-    `word` `<arg1>`: item id - check to see if this uses < or not  
-  
-
-
 ### jump (0x5)
 __Description__: Continue execution from another point.  
 __Usage__: `jump <arg0> `  
@@ -954,15 +927,6 @@ __Usage__: `lock `
 ### lockall (0x69)
 __Description__: Locks all players  
 __Usage__: `lockall `  
-
-
-### movedisplay (0x82)
-__Description__: _No description_  
-__Usage__: `movedisplay <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: slot as in namedisplay etc  
-    `word` `<arg1>`: move id, not variable  
-  
 
 
 ### moveofscreen (0x64)
@@ -1043,23 +1007,6 @@ __Argments__:
   
 
 
-### namedisplay (0x7D)
-__Description__: TODO: StorePokemon?!?  
-__Usage__: `namedisplay <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: bank of names  
-    `word` `<arg1>`: name number / poke  
-  
-
-
-### namedisplayfirst (0x7E)
-__Description__: TODO: StoreFirstPokemon?  
-__Usage__: `namedisplayfirst <arg0> `  
-__Argments__:  
-    `byte` `<arg0>`: bank of names  
-  
-
-
 ### nop (0x1)
 __Description__: Does Nothing  
 __Usage__: `nop `  
@@ -1085,15 +1032,6 @@ __Usage__: `opendoorpermanent <arg0> <arg1> `
 __Argments__:  
     `word` `<arg0>`: x-pos of door to open  
     `word` `<arg1>`: y-position  
-  
-
-
-### partynamedisplay (0x7F)
-__Description__: TODO: StorePartyPokemon?  
-__Usage__: `partynamedisplay <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: slot as in namedisplay  
-    `word` `<arg1>`: var, hint LASTRESULT  
   
 
 
@@ -1167,6 +1105,95 @@ __Description__: emerald only, equivalent to "msgbox2" so call "waitmsgbox2" aft
 __Usage__: `pokenav <arg0> `  
 __Argments__:  
     `Pointer to String` `<arg0>`: ptr to text  
+  
+
+
+### puttext_boxname (0xC6)
+__Description__: Puts the name of a box in a text textstring.  
+__Usage__: `puttext_boxname <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: Bank to sthore the boxname in (0 = [textstring0]  
+    `word` `<arg1>`: Number of the box to store.  
+  
+
+
+### puttext_firstpkmn (0x7E)
+__Description__: Puts first pokemon in party name in a textstring.  
+__Usage__: `puttext_firstpkmn <arg0> `  
+__Argments__:  
+    `byte` `<arg0>`: Bank id (0 = [textstring0])  
+  
+
+
+### puttext_furniture (0x81)
+__Description__: Puts a furniture name in a textstring.  
+__Usage__: `puttext_furniture <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: Bank id (0 = [textstring0])  
+    `word` `<arg1>`: Furniture ID  
+  
+
+
+### puttext_gamestr (0x84)
+__Description__: Puts an ingame string value in a textstring. These can be badge names, contest names, menu names, etc.  
+__Usage__: `puttext_gamestr <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: Bank id (0 = [textstring0])  
+    `word` `<arg1>`: string id to store  
+  
+
+
+### puttext_item (0x80)
+__Description__: Puts an itemname in a textbank.  
+__Usage__: `puttext_item <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: Bank id (0 = [textstring0])  
+    `word` `<arg1>`: item id  
+  
+
+
+### puttext_move (0x82)
+__Description__: Puts a move name in a textstring.  
+__Usage__: `puttext_move <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: Bank id (0 = [textstring0])  
+    `word` `<arg1>`: Move ID  
+  
+
+
+### puttext_partypkmn (0x7F)
+__Description__: Puts nickname of party pokemon in a textstring.  
+__Usage__: `puttext_partypkmn <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: Bank id (0 = [textstring0])  
+    `word` `<arg1>`:  Number of pokemon in team (values: 0 - 5)  
+  
+
+
+### puttext_pkmn (0x7D)
+__Description__: Puts a PokemonName in a textstring.  
+__Usage__: `puttext_pkmn <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: TextString id (0 = [textstring0])  
+    `word` `<arg1>`:  Pokemon name to store  
+  
+
+
+### puttext_text (0x85)
+__Description__: Puts a text string from ROM in a textstring  
+__Usage__: `puttext_text <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: Bank id (0 = [textstring0]  
+    `Pointer to String` `<arg1>`: Pointer to text to store in the var  
+  
+
+
+### puttext_var (0x83)
+__Description__: Puts a var-value in a textbank.  
+__Usage__: `puttext_var <arg0> <arg1> `  
+__Argments__:  
+    `byte` `<arg0>`: Bank id (0 = [textstring0])  
+    `word` `<arg1>`: variable  
   
 
 
@@ -1447,24 +1474,6 @@ __Description__: _No description_
 __Usage__: `startwireles `  
 
 
-### storeboxname (0xC6)
-__Description__:  \v\hxx boxno  
-__Usage__: `storeboxname <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: xx  
-    `word` `<arg1>`: boxno  
-  
-
-
-### storecomp (0x84)
-__Description__: _No description_  
-__Usage__: `storecomp <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: _No description_  
-    `word` `<arg1>`: _No description_  
-  
-
-
 ### storeitems (0xD4)
 __Description__:  \v\hxx id amount  
 __Usage__: `storeitems <arg0> <arg1> <arg2> `  
@@ -1481,15 +1490,6 @@ __Usage__: `storepartyslotforanimation <arg0> <arg1> `
 __Argments__:  
     `byte` `<arg0>`: ?  
     `word` `<arg1>`: variable containing animation  
-  
-
-
-### storetext (0x85)
-__Description__: thanks to "score_under" from PC for this definition  
-__Usage__: `storetext <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: slot  
-    `Pointer to String` `<arg1>`: pointer to text  
   
 
 
@@ -1537,10 +1537,10 @@ __Argments__:
 
 
 ### textcolor (0xC7)
-__Description__: _No description_  
+__Description__: Changes the text color in message boxes  
 __Usage__: `textcolor <arg0> `  
 __Argments__:  
-    `byte` `<arg0>`: 0=blue 1=red 2+=black  
+    `byte` `<arg0>`: Color to change to  
   
 
 
@@ -1560,15 +1560,6 @@ __Argments__:
     `byte` `<arg0>`: ? (0 as default works fine)  
     `byte` `<arg1>`: ? (0 as default works fine)  
     `byte` `<arg2>`: ? (0 as default works fine)  
-  
-
-
-### vardisplay (0x83)
-__Description__: _No description_  
-__Usage__: `vardisplay <arg0> <arg1> `  
-__Argments__:  
-    `byte` `<arg0>`: position 0, 1, or 2  
-    `word` `<arg1>`: variable  
   
 
 
@@ -1716,11 +1707,16 @@ __Argments__:
 
 ### Alias `givepokemon <arg0> <arg1> <arg2> `
 __Usage__: `givepokemon <arg0> <arg1> <arg2> `  
-__Description__:  Give pokemon to Player  
+__Description__: Give pokemon to Player  
 __Argments__:  
     `word` `<arg0>`: Pokemon species to give  
     `byte` `<arg1>`: Level of pokemon  
     `word` `<arg2>`: Item # to be held  
+
+### Alias `selectpokemon `
+__Usage__: `selectpokemon `  
+__Description__: Display "Select pokemon" dialog  
+__Argments__:  
 
 ### Alias `namepokemon `
 __Usage__: `namepokemon `  
@@ -1730,11 +1726,6 @@ __Argments__:
 ### Alias `healpokemon `
 __Usage__: `healpokemon `  
 __Description__: Heal all pokemon, include fadescreen animation.  
-__Argments__:  
-
-### Alias `selectpokemon `
-__Usage__: `selectpokemon `  
-__Description__: Display "Select pokemon" dialog  
 __Argments__:  
 
 ### Alias `startwildbattle `
@@ -1854,23 +1845,11 @@ __Usage__: `getnationaldex `
 __Description__: Enables the national dex.  
 __Argments__:  
 
-### Alias `starterpokemon <arg0> `
-__Usage__: `starterpokemon <arg0> `  
-__Description__: _No description_  
-__Argments__:  
-    `word` `<arg0>`: Var of pokemon to give  
-
 ### Alias `vanish <arg0> `
 __Usage__: `vanish <arg0> `  
 __Description__: _No description_  
 __Argments__:  
     `word` `<arg0>`: _No description_  
-
-### Alias `giveegg <arg0> `
-__Usage__: `giveegg <arg0> `  
-__Description__: _No description_  
-__Argments__:  
-    `word` `<arg0>`: pokemon to be given  
 
 ### Alias `checkpokemon <arg0> `
 __Usage__: `checkpokemon <arg0> `  
@@ -1995,18 +1974,6 @@ __Description__: If a flag is set to True, call the script at the given offset.
 __Argments__:  
     `word` `<arg0>`: flag  
     `pointer` `<arg1>`: pointer to call to  
-
-### Alias `ifboy jump <arg0> `
-__Usage__: `ifboy jump <arg0> `  
-__Description__: If the player is a boy, jump to script at the given offset  
-__Argments__:  
-    `pointer` `<arg0>`: pointer to jump to  
-
-### Alias `ifpartyfull jump <arg0> `
-__Usage__: `ifpartyfull jump <arg0> `  
-__Description__: If the players party is full, jump to the script at the given offset.  
-__Argments__:  
-    `pointer` `<arg0>`: pointer to jump to  
 
 ### Alias `trainerbattle <arg0> <arg1> <arg2> `
 __Usage__: `trainerbattle <arg0> <arg1> <arg2> `  
@@ -2165,4 +2132,11 @@ __Description__: Compares bytes at pointer locations
 __Argments__:  
     `pointer` `<arg0>`: Pointer to a byte value to compare with  
     `pointer` `<arg1>`: Pointer to a byte value to compare with  
+
+### Alias `special <arg0> store <arg1> `
+__Usage__: `special <arg0> store <arg1> `  
+__Description__: Call to a special, stores its result in a variable.  
+__Argments__:  
+    `word` `<arg0>`: Special to call  
+    `word` `<arg1>`: Var to store the result in  
 
