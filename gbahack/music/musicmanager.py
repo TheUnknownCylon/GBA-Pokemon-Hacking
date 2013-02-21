@@ -29,42 +29,43 @@ import gbahack.tools.filesystem as fs
    x.dumpFromRom()
 '''
 class RomMusic():
-  def __init__(self, rom, tablepointer):   
-    self.rom = rom
-    self.tablepointer = tablepointer
+    def __init__(self, rom, tablepointer):   
+        self.rom = rom
+        self.tablepointer = tablepointer
 
-  def dumpAll(self, romdir):
-    '''Get all songs from the ROM and store them in binary format in the specified dir.'''
-    reader = RomMusicReader(self.rom, self.tablepointer)
-    fs.removedirs(romdir)
-    fs.makedirs(romdir)
+    def dumpAll(self, romdir):
+        '''Get all songs from the ROM and store them in binary format in the specified dir.'''
+        reader = RomMusicReader(self.rom, self.tablepointer)
+        fs.removedirs(romdir)
+        fs.makedirs(romdir)
     
-    for songindex in range(0, len(reader.songtable)):
-      songdir = "%s/%d" %(romdir,songindex)
-      song = reader.getSong(songindex)
-      song.dumpRaw(songdir)
+        for songindex in range(0, len(reader.songtable)):
+            songdir = "%s/%d" % (romdir, songindex)
+            song = reader.getSong(songindex)
+            song.dumpRaw(songdir)
       
-  def writeSong(self, index, song):
-    '''Write a single song to the ROM.'''
-    writer = RomMusicWriter(self.rom, self.tablepointer)
-    writer.writeSong(index, song)
+    def writeSong(self, index, song):
+        '''Write a single song to the ROM.'''
+        writer = RomMusicWriter(self.rom, self.tablepointer)
+        writer.writeSong(index, song)
 
   
-  def writeSongs(self, songdict):
-    '''Get a dict of songs, the dict index represents the song id.
-    First all selected songs are removed from the ROM, and are written back.
-    It may remove some free space fragmentation.'''
-    writer = RomMusicWriter(self.rom, self.tablepointer)
+    def writeSongs(self, songdict):
+        '''Get a dict of songs, the dict index represents the song id.
+        First all selected songs are removed from the ROM, and are written back.
+        It may remove some free space fragmentation.'''
+        writer = RomMusicWriter(self.rom, self.tablepointer)
     
-    #check that we are going to write valid songs (pointers)
-    for index in songdict:
-      try: int(index)
-      except: raise Exception("All song indices should be integers, got something else: "+repr(index))
-      writer.assertSong(index)
+        # check that we are going to write valid songs (pointers)
+        for index in songdict:
+            try: int(index)
+            except: raise Exception("All song indices should be integers, got something else: " + repr(index))
+            writer.assertSong(index)
     
-    #Free all possible space
-    for index in songdict:
-      writer.truncSong(index)
+        # Free all possible space
+        for index in songdict:
+            writer.truncSong(index)
     
-    #Finally write!
-    writer.writeSongs(songdict)
+        # Finally write!
+        writer.writeSongs(songdict)
+

@@ -34,119 +34,129 @@ from array import array
 from gbahack.tools import mathexp
 
 class EndOfParsing(Exception):
-  pass
+    pass
 
 class SReader():
-  def __init__(self, sourcefile):
-    self.output = array('B')
+    def __init__(self, sourcefile):
+        self.output = array('B')
     
-    self.globalvars = []
-    self.defines = {}
-    self.openfiles = []
-    try: self.parsefile(sourcefile)
-    except EndOfParsing as e: pass
-    except Exception as e: raise e
+        self.globalvars = []
+        self.defines = {}
+        self.openfiles = []
+        try:
+            self.parsefile(sourcefile)
+        except EndOfParsing as e:
+            pass
+        except Exception as e:
+            raise e
 
     
-  def getBytes(self):
-    '''Returns the read song in a byte-array.'''
-    return self.output
+    def getBytes(self):
+        '''Returns the read song in a byte-array.'''
+        return self.output
     
-  def parsefile(self, file):
-    '''Parsers a file, line by line.'''
+    def parsefile(self, file):
+        '''Parsers a file, line by line.'''
+        
+        #Change directory so we can take includes relative from the file.
+        # After the file is parsed, the directory is restored to the current working directory
+        
+        mypath = os.getcwd()
+        try:
+            os.chdir(os.path.dirname(file))
+        except:
+            pass #take the error when opening the file
     
-    #Change directory so we can take includes relative from the file.
-    # After the file is parsed, the directory is restored to the current working directory
-    
-    mypath = os.getcwd()
-    try: os.chdir(os.path.dirname(file))
-    except: pass #take the error when opening the file
-    
-    try:
-      for line in open(file, 'r'): self._handle(line)
-    except Exception: raise
-    finally: os.chdir(mypath)
+        try:
+            for line in open(file, 'r'): self._handle(line)
+        except Exception:
+            raise
+        finally:
+            os.chdir(mypath)
       
-  def getGlobalKeys(self):
-    '''Returns a list of all global variables.'''
-    return self.globalvars
+    def getGlobalKeys(self):
+        '''Returns a list of all global variables.'''
+        return self.globalvars
       
       
-  def getDefined(self, key):
-    '''Returns the value for a global definition.'''
-    if key not in self.globalvars:
-      raise Exception("No such global variable: %s"%key)
-    return self.defines[key]
+    def getDefined(self, key):
+        '''Returns the value for a global definition.'''
+        if key not in self.globalvars:
+            raise Exception("No such global variable: %s"%key)
+        return self.defines[key]
     
   
-  def exp(self, expr={}):
-    '''Evaluates a mathematical expression, all defines can be passed
-    as varrefs in the expr variable. Returns always an integer'''
-    value = mathexp.eval_expr(expr, self.defines)
-    if value == None:
-      raise Exception("Error in .s file, could not evaluate: %s."%expr)
-    return int(value)
+    def exp(self, expr={}):
+        '''Evaluates a mathematical expression, all defines can be passed
+        as varrefs in the expr variable. Returns always an integer'''
+        value = mathexp.eval_expr(expr, self.defines)
+        if value == None:
+            raise Exception("Error in .s file, could not evaluate: %s."%expr)
+        return int(value)
   
   
-  def _handle(self, line):
-    #Remove human readable mess, split command and parameters
-    lineinfo = line.strip().split("@")[0].split("\t", 1)
-    if len(lineinfo) == 0: return
-    
-    command = lineinfo[0].split(" ")[0]
-    try: commandarg = lineinfo[0].split(" ")[1]
-    except: commandarg = None
-    if len(command) == 0: return
+    def _handle(self, line):
+        #Remove human readable mess, split command and parameters
+        lineinfo = line.strip().split("@")[0].split("\t", 1)
+        if len(lineinfo) == 0: return
+        
+        command = lineinfo[0].split(" ")[0]
+        try: commandarg = lineinfo[0].split(" ")[1]
+        except: commandarg = None
+        if len(command) == 0: return
 
-    param   = None
-    if len(lineinfo) > 1: param = lineinfo[1]
+        param   = None
+        if len(lineinfo) > 1: param = lineinfo[1]
     
-    if   command == ".equ":  self._handle_equ(param)
-    elif command == ".byte": self._handle_byte(param)
-    elif command == ".word": self._handle_word(param)
-    elif command == ".include": self._handle_include(commandarg)
-    elif command[-1] == ":" and param == None: self._handle_label(command[:-1])
-    elif command == ".global":  self._handle_global(param)
-
-    elif command == ".section": pass 
-    elif command == ".align":   pass
-    elif command == ".end":     raise EndOfParsing("hkjh")
+        if   command == ".equ":  self._handle_equ(param)
+        elif command == ".byte": self._handle_byte(param)
+        elif command == ".word": self._handle_word(param)
+        elif command == ".include": self._handle_include(commandarg)
+        elif command[-1] == ":" and param == None: self._handle_label(command[:-1])
+        elif command == ".global":  self._handle_global(param)
+        
+        elif command == ".section": pass 
+        elif command == ".align":   pass
+        elif command == ".end":     raise EndOfParsing("hkjh")
     
-    else: print ("Unknown command to parse: %s" %command)
+        else:
+            print ("Unknown command to parse: %s" %command)
 
     
       
-  def _handle_equ(self, param):
-    keyword = param.split(",")[0].strip()
-    value   = self.exp(param.split(",")[1].strip())
-    if keyword in self.defines:
-      print ("%s is already defined! Overwiting!" %keyword)
-    self.defines[keyword] = value
+    def _handle_equ(self, param):
+        keyword = param.split(",")[0].strip()
+        value   = self.exp(param.split(",")[1].strip())
+        if keyword in self.defines:
+            print ("%s is already defined! Overwiting!" %keyword)
+        self.defines[keyword] = value
     
-  def _handle_byte(self, param):
-    values = list(map(lambda x: x.strip(), param.split(",")))
-    for value in values:
-      self.output.fromstring(struct.pack("<B", self.exp(value)))
+    def _handle_byte(self, param):
+        values = list(map(lambda x: x.strip(), param.split(",")))
+        for value in values:
+            self.output.fromstring(struct.pack("<B", self.exp(value)))
   
-  def _handle_word(self, param):
-    values = list(map(lambda x: x.strip(), param.split(",")))
-    for value in values:
-      self.output.fromstring(struct.pack("<I", self.exp(value)))
+    def _handle_word(self, param):
+        values = list(map(lambda x: x.strip(), param.split(",")))
+        for value in values:
+            self.output.fromstring(struct.pack("<I", self.exp(value)))
+        
+    def _handle_label(self, label):
+        self._handle(".equ\t%s,%s"%(label,repr(len(self.output))))
       
-  def _handle_label(self, label):
-    self._handle(".equ\t%s,%s"%(label,repr(len(self.output))))
-      
-  def _handle_include(self, param):
-    if param == None:
-      raise Exception(".include requires a filename between "", example: .include \"myfile.s\"") 
+    def _handle_include(self, param):
+        if param == None:
+            raise Exception(".include requires a filename between "", example: .include \"myfile.s\"") 
     
-    values = list(map(lambda x: x.strip(), param.split(",")))
-    for value in values:
-      try: self.parsefile(value[1:-1])
-      except IOError: raise IOError("Could not no find or open include %s"%value)
+        values = list(map(lambda x: x.strip(), param.split(",")))
+        for value in values:
+            try:
+                self.parsefile(value[1:-1])
+            except IOError:
+                raise IOError("Could not no find or open include %s"%value)
     
-  def _handle_global(self, param):
-    values = list(map(lambda x: x.strip(), param.split(",")))
-    for value in values:
-      self.globalvars.append(value)
+    def _handle_global(self, param):
+        values = list(map(lambda x: x.strip(), param.split(",")))
+        for value in values:
+            self.globalvars.append(value)
   
