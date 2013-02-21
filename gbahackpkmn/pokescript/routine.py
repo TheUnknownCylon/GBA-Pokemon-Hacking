@@ -1,8 +1,7 @@
 
-from array import array
 from gbahack import Resource
 from gbahack.resource import PointerObserver
-from gbahackpkmn.pokescript.ast import *
+from gbahackpkmn.pokescript.ast import ASTCommand, ASTRoutine
 
 class Routine(Resource, PointerObserver):
     '''
@@ -19,8 +18,10 @@ class Routine(Resource, PointerObserver):
         
         Takes a full AST tree as arguments.
         '''
-        if asttree == None: asttree = []
-        if pointerlist == None: pointer = {}
+        if asttree == None:
+            asttree = []
+        if pointerlist == None:
+            pointerlist = {}
         
         self.asttree = asttree
         self.pointerlist = pointerlist
@@ -59,7 +60,7 @@ class Routine(Resource, PointerObserver):
         p = pointer
         while True:
             try:
-                p, astnode, refs = decompiler.decompileCommand(rom, p)
+                p, astnode, _ = decompiler.decompileCommand(rom, p)
                 asttree.append(astnode)
                 
                 if isinstance(astnode, ASTCommand) and astnode.code.endofscript:

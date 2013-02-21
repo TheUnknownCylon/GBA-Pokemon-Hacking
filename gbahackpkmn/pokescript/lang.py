@@ -26,10 +26,10 @@ import os
 import sys
 import re
 
-from array import array
 from gbahack.tools.numbers import toint
-from gbahackpkmn.pokescript.langcommands import *
 from gbahackpkmn.strings import PokeString
+from gbahackpkmn.pokescript.langcommands import ParamType, Command, Alias
+
 
 class ScriptLang():
     '''
@@ -152,9 +152,6 @@ class ScriptLang():
                     except:
                         if instructions[2][0:4] == "bind":
                             pass #TODO: Restriction
-                        elif instructions[2][0:7] == "select(":
-                            select = instructions[2][8:-1].split(",")
-                            defaultvalue = SELECT(select)
                             
                         elif instructions[2][0:5] == "mask(": #format: mask(number)
                             defaultvalue = toint(instructions[2][5:-1])
@@ -175,7 +172,7 @@ class ScriptLang():
         except: pass
 
         try: self.parse(os.path.basename(filename))
-        except Exception as e: raise
+        except Exception as e: raise e
         finally: os.chdir(mypath)
         
     

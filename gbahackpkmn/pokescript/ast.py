@@ -113,10 +113,10 @@ class ASTRoutine(ASTNode):
         self.name = name
         
     def encode(self, pointerlist):
-        bytearray = array('B')
+        astbytearray = array('B')
         for astnode in self.subtree:
-            bytearray.extend(astnode.encode(pointerlist))
-        return bytearray
+            astbytearray.extend(astnode.encode(pointerlist))
+        return astbytearray
         
         
     def text(self):
@@ -195,10 +195,10 @@ class ASTResourceMovement(ASTNode):
 
 
     def encode(self, pointerlist):
-        bytes = array('B')
+        astbytearray = array('B')
         for move in self.movement.getMovements():
-            bytes.append(move)
-        return bytes
+            astbytearray.append(move)
+        return astbytearray
     
     
     def rewriteASTs(self, rewriter):
@@ -246,7 +246,7 @@ class ASTCommand(ASTNode):
     
     
     def encode(self, pointerlist):
-        bytes = array('B')
+        astbytearray = array('B')
         command = self.code
         commandargs = []
         for arg in self.args:
@@ -256,9 +256,9 @@ class ASTCommand(ASTNode):
             else:
                 commandargs.append(arg)
         #print(commandargs)
-        bytes.extend(command.compile(*commandargs))
+        astbytearray.extend(command.compile(*commandargs))
         
-        return bytes
+        return astbytearray
     
     def childs(self):
         l = []

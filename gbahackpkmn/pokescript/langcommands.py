@@ -26,28 +26,27 @@ class ParamType:
     pointer_movement = 0x09
     
     @staticmethod
-    def ispointer(type):
-        if type == ParamType.pointer: return True
-        if type == ParamType.pointer_text: return True
-        if type == ParamType.pointer_movement: return True
+    def ispointer(ptype):
+        if ptype == ParamType.pointer or ptype == ParamType.pointer_text or ptype == ParamType.pointer_movement:
+            return True
         return False
     
     @classmethod
-    def rewrite(cls, type, value):
+    def rewrite(cls, ptype, value):
         try:
-            return cls.rewritehelper(type, value)
+            return cls.rewritehelper(ptype, value)
         except:
-            raise Exception("Could not rewrite value %s of type %X."%(repr(value), type))
+            raise Exception("Could not rewrite value %s of type %X."%(repr(value), ptype))
     
     @staticmethod
-    def rewritehelper(type, value):
-        if type == ParamType.byte:
+    def rewritehelper(ptype, value):
+        if ptype == ParamType.byte:
             return struct.pack("<B", value)
-        elif type == ParamType.word:
+        elif ptype == ParamType.word:
             return struct.pack("<H", value)
-        elif ParamType.ispointer(type) or type == ParamType.int:
+        elif ParamType.ispointer(ptype) or ptype == ParamType.int:
             return struct.pack("<I", value)
-        raise Exception("Could not rewrite value: got wrong argument type: %x."%type)
+        raise Exception("Could not rewrite value: got wrong argument ptype: %x."%ptype)
 
 
 class CodeCommand():
@@ -228,7 +227,7 @@ class Alias(CodeCommand):
             if ptype == ParamType.command: #param type
                 command = self.commands[pvalue.lower()]
                 commandargs = []
-                for i in range(0, command.neededparams):
+                for _ in range(0, command.neededparams):
                     value = params[paramstaken].defaultvalue
                     paramstaken += 1
 
@@ -302,8 +301,8 @@ class Command(CodeCommand):
              
         usedargs = 0
         
-        bytes = array('B')
-        bytes.append(self.code)
+        cbytes = array('B')
+        cbytes.append(self.code)
         
         for param in self.params:
             value = None
@@ -326,7 +325,7 @@ class Command(CodeCommand):
                 except:
                     raise Exception("The given parameter could not be converted to integer and is also not defined as a constant: "+repr(value))
                 
-            bytes.fromstring(ParamType.rewrite(param.ptype, value))
+            cbytes.fromstring(ParamType.rewrite(param.ptype, value))
         
-        return bytes
+        return cbytes
         

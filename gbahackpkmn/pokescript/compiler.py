@@ -9,8 +9,8 @@ from gbahack.tools.numbers import toint
 
 from gbahackpkmn.strings import PokeString
 from gbahackpkmn.movements import Movement as PokeMovement
+import gbahackpkmn.pokescript.ast as ast
 
-from gbahackpkmn.pokescript.ast import *
 from gbahackpkmn.pokescript.routine import Routine
 from gbahackpkmn.pokescript.script import ScriptGroup
 from gbahackpkmn.pokescript.langcommands import ParamType
@@ -108,7 +108,7 @@ class ScriptParser():
         #Handle inline commands: #inline $Variable = Hi I'm John!
         if command == "#inline":   
             offset  = args[0]  #TODO: Validate
-            ctype   = args[1]
+            #ctype   = args[1]  #TODO: Make use of it :)
             
             raise Exception("TODO, not supported yet") #TODO
             
@@ -121,7 +121,7 @@ class ScriptParser():
                 raise WrongCommandException()
                 
             for byte in args:
-                resource.ast().append(ASTByte(toint(byte)))
+                resource.ast().append(ast.ASTByte(toint(byte)))
             return resource
         
         #Parse movements
@@ -150,7 +150,7 @@ class ScriptParser():
         for alias in self.langdef.aliases:
             if alias.matches(line):
                 rawargs = self._prepargs(alias, alias.stripParams(line))
-                resource.ast().append(ASTCommand(alias, rawargs))
+                resource.ast().append(ast.ASTCommand(alias, rawargs))
                 return resource
             
         
@@ -162,7 +162,7 @@ class ScriptParser():
             lcommand = self.langdef.commands[command]
             rawargs = self._prepargs(lcommand, args)
 
-            resource.ast().append(ASTCommand(lcommand, rawargs))
+            resource.ast().append(ast.ASTCommand(lcommand, rawargs))
             return resource
         
         raise Exception("Could not parse line, no rules matched: %s"%line)
@@ -178,7 +178,7 @@ class ScriptParser():
             if commandparam.defaultvalue == None:
                 #print(" -> consume! "+repr(args[i_args]))
                 if ParamType.ispointer(commandparam.ptype):
-                    rawargs.append(ASTRef(args[i_args]))
+                    rawargs.append(ast.ASTRef(args[i_args]))
                 elif commandparam.definevaluestype != None:
                     defines = self.langdef.getDefines(commandparam.definevaluestype)
                     #Reversed defines lookup, not as elegant as I hoped it
@@ -190,7 +190,7 @@ class ScriptParser():
                             val = defines.index(key)
                         except:
                             val = next((dval for dval, dkey in defines.items() if dkey == key))
-                        rawargs.append(ASTDefinedValue(key, val))
+                        rawargs.append(ast.ASTDefinedValue(key, val))
                     except:
                         #There is no define for the value, parse it as is
                         # but then ofc. it should be an int.

@@ -3,7 +3,7 @@ from gbahackpkmn.pokescript.routine import Routine
 from gbahackpkmn.strings import PokeString
 from gbahackpkmn.movements import Movement as PokeMovement
 
-from gbahackpkmn.pokescript.ast import *
+from gbahackpkmn.pokescript.ast import NoRewriteChange, ASTResourceMovement, ASTResourceString, ASTRef, ASTRewriter, ASTRoutine, ASTPointerRef 
 from gbahackpkmn.pokescript.decompiler import Decompiler, DecompileTypes
 
 def loadGroup(rom, routinepointer):
@@ -116,7 +116,7 @@ class ScriptGroup():
     
     def getAST(self, varname):
         '''Returns an AST node for the given varname.'''
-        (resource, pointer) = self._resources[varname]
+        (resource, _) = self._resources[varname]
         
         if isinstance(resource, Routine):
             return ASTRoutine(varname, resource.ast())
@@ -134,7 +134,7 @@ class ScriptGroup():
     def getASTNodes(self):
         '''Returns a list of all AST Nodes attached to this scriptgroup.'''
         result = []
-        for varname, (resource, pointer) in self._resources.items():
+        for varname in self._resources:
             result.append(self.getAST(varname))
             
         return result
@@ -143,7 +143,7 @@ class ScriptGroup():
     def getPointerlist(self):
         '''Returns a dict of key:varname value:pointer.'''
         pointerlist = {}
-        for varname, (resource, pointer) in self._resources.items():
+        for varname, (_, pointer) in self._resources.items():
             pointerlist[varname] = pointer
         return pointerlist
 
@@ -151,7 +151,7 @@ class ScriptGroup():
     def getPointerVarnamelist(self):
         '''Returns a dict of key:pointer, value:varname.'''
         pointerlist = {}
-        for varname, (resource, pointer) in self._resources.items():
+        for varname, (_, pointer) in self._resources.items():
             if pointer != None:
                 pointerlist[pointer] = varname
         return pointerlist

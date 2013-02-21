@@ -1,8 +1,11 @@
-from gbahackpkmn.pokescript.ast import *
 from gbahackpkmn.strings import PokeString
 from gbahackpkmn.movements import Movement as PokeMovement
 from gbahackpkmn.pokescript.routine import Routine
 from gbahackpkmn.pokescript.langcommands import ParamType
+from array import array
+
+from gbahackpkmn.pokescript.ast import ASTByte, ASTPointerRef, ASTDefinedValue, ASTCommand
+
 
 import struct
 
@@ -132,7 +135,7 @@ class CommandDecompiler():
                 elif ParamType.ispointer(paramtype):
                     pointer = struct.unpack("<I", argbytes[p:p+4])[0]
                     if pointer > 0x08000000:
-                         pointer -= 0x08000000
+                        pointer -= 0x08000000
                     value = ASTPointerRef(pointer, _ptype_to_decompiletype(paramtype))  #TODO paramtype,
                     p += 4
             

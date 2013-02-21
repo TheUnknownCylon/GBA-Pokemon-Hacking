@@ -41,7 +41,6 @@ class ScriptBurner():
         #First pass
         print("---> pass 1")
         for name, (resource, oldpointer) in scriptgroup.getAll().items():
-            astnode = scriptgroup.getAST(name)
             try:
                 resource.setPointerlist(oldpointers)
             except:
@@ -62,9 +61,10 @@ class ScriptBurner():
         #Second pass
         print("---> pass 2")
         for name, (resource, oldpointer) in scriptgroup.getAll().items():
-            astnode = scriptgroup.getAST(name)
-            try: resource.setPointerlist(newpointers)
-            except: pass
+            try:
+                resource.setPointerlist(newpointers)
+            except:
+                pass
             
             #Do not update, but write at new location
             resource.write(rom, newpointers[name], force=True)
