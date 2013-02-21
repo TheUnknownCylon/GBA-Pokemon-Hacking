@@ -2,17 +2,17 @@
 
 '''
 This module contains code to encode/decode LZSS10 and LZSS11 encrypted data
-strings. With the exception of this message, this file is un unaltered version
-of the file "lzss3.py" located at https://github.com/magical/nlzss (rev.
-539a4dd28367fac8c9c8fec88ec9978f33b7f097). This file and its code is pusblished
+strings. With the exception of this message, and removal of PyLINT warnings, this file
+is ununaltered version of the file "lzss3.py" located at https://github.com/magical/nlzss
+(rev. 539a4dd28367fac8c9c8fec88ec9978f33b7f097). This file and its code is published
 under the MIT licence.
 '''
 
 import sys
-from sys import stdin, stdout, stderr, exit
-from os import SEEK_SET, SEEK_CUR, SEEK_END
+from sys import stdin, stderr, exit
+from os import SEEK_SET, SEEK_END
 from errno import EPIPE
-from struct import pack, unpack
+from struct import unpack
 
 __all__ = ('decompress', 'decompress_file', 'decompress_bytes',
            'decompress_overlay', 'DecompressionError')
@@ -125,7 +125,7 @@ def decompress_raw_lzss11(indata, decompressed_size):
                     for _ in range(count):
                         writebyte(data[-disp])
                 except IndexError:
-                    raise Exception(count, disp, len(data), sum(1 for x in it) )
+                    raise Exception(count, disp, len(data), sum(1 for _ in it) )
             else:
                 raise ValueError(flag)
 

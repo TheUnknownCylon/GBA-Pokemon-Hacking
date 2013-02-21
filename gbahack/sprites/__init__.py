@@ -43,9 +43,11 @@ def _genmatrix(blob, w, h):
     Blob should be an array of bytes.
     The image is build up from 8x8 pixel blocks.
     '''
-  
-    matrix = [[0 for col in range(w)] for row in range(h)]
 
+    matrix = [[0] * w for _ in range(h)]
+    #TODO: Find out why the following does not work:
+    #  matrix = [[0] * w] * h
+    
     numblocksinw = int(w / 8)
     numblocksinh = int(h / 8)
     
@@ -56,9 +58,9 @@ def _genmatrix(blob, w, h):
         for bw in range(0, numblocksinw):
             pmh = bh * 8 
             #read 8 pixels * 16 pixels (note: 1 byte in blob = 2 pixels)
-            for ph in range(0, 8):
+            for _ in range(0, 8):
                 pmw = bw * 8
-                for pw in range(0, 4):
+                for _ in range(0, 4):
                     pixels = blob[index]
                     pixel_left = pixels & 0x0F
                     pixel_right = pixels >> 4
@@ -71,6 +73,3 @@ def _genmatrix(blob, w, h):
                 pmh += 1
                 
     return matrix
-
-
-  

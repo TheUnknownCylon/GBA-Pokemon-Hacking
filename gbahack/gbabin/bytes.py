@@ -8,8 +8,8 @@ class ByteArrayReader():
     the bytearray, returning a new offset pointer.
     '''
     
-    def __init__(self, bytes):
-        self.bytes = bytes
+    def __init__(self, readbytes):
+        self.bytes = readbytes
         
     def skip(self, offset, length):
         '''Skips reading bytes. Can be used to calculate the new offset location.'''
@@ -67,7 +67,7 @@ class ByteArrayReader():
         return ep, self.bytes[offset: ep]
   
   
-    def find(self, bytes, offset):
+    def find(self, findbytes, offset):
         '''
         Finds a given bytestring, starts looking from a given offset.
         The provided bytestring should implement the buffer interface, and thus
@@ -75,10 +75,10 @@ class ByteArrayReader():
         Returns the offset for the found place in the ROM. If no offset was found,
         -1 is returned.
         '''
-        return self.bytes.find(bytes, offset)
+        return self.bytes.find(findbytes, offset)
     
     
-    def findall(self, bytes):
+    def findall(self, findbytes):
         '''
         Lookup all occurences of the given bytestring in the file.
         Returns a list of offsets.
@@ -86,7 +86,7 @@ class ByteArrayReader():
         offset = 0
         results = []
         while True:
-            offset = self.find(bytes, offset)
+            offset = self.find(findbytes, offset)
             if offset == -1:
                 break
             else:

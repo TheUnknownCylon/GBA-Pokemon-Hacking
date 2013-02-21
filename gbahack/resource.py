@@ -183,15 +183,15 @@ class Resource():
         if force == True and not pointer:
             raise Exception("Write to ROM: force is true, but no pointer was given.")
         
-        bytes = self.bytestring()
-        blength = len(bytes)
+        writebytes = self.bytestring()
+        blength = len(writebytes)
         
         #Determine where to write the data to
         writepointer = pointer        
         if not force == True:
             writepointer = rom.findSpace(pointer, blength)
         
-        rom.writeArray(writepointer, bytes)
+        rom.writeArray(writepointer, writebytes)
 
         return writepointer
             
@@ -209,5 +209,4 @@ class Resource():
             return self.write(rom, pointer, force=True)
         else:
             return self.write(rom, pointer, force)
-         
          

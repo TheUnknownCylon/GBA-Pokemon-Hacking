@@ -84,7 +84,7 @@ class RomDataType():
             
             for byte in v:
                 block.addByte(byte)
-            for i in range(0, t.length() - len(v)):
+            for _ in range(0, t.length() - len(v)):
                 block.addByte(t.getFill())
 
 

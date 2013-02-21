@@ -102,6 +102,6 @@ class ROM(RawFile):
     
     def getName(self):
         if "name" in self.metadata:
-            return metadata.name
+            return self.metadata.name
         else:
             return "Unknown"
