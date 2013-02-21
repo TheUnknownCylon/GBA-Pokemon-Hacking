@@ -802,7 +802,7 @@ __Argments__:
 
 
 ### hidepokepic (0x76)
-__Description__: _No description_  
+__Description__: Hides pokepic box if a Pokemon is shown in a box (`showpokepic`).  
 __Usage__: `hidepokepic `  
 
 
@@ -1393,12 +1393,12 @@ __Argments__:
 
 
 ### showpokepic (0x75)
-__Description__: _No description_  
+__Description__: Shows a Pokemon in a box  
 __Usage__: `showpokepic <arg0> <arg1> <arg2> `  
 __Argments__:  
-    `word` `<arg0>`: Variable containing pokemon. ID  
-    `byte` `<arg1>`: X-pos  
-    `byte` `<arg2>`: Y-pos  
+    `word` `<arg0>`: Species to show.  
+    `byte` `<arg1>`: X-pos of the box  
+    `byte` `<arg2>`: Y-pos os the box  
   
 
 

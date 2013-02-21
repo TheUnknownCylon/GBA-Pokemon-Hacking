@@ -495,12 +495,12 @@ addparm 0 'Y
 addparm 0 'Width
 addparm 0 'Height
 
-addcmmd showpokepic #75
-addparm 1:var 'Variable containing pokemon. ID
-addparm 0     'X-pos
-addparm 0     'Y-pos
+addcmmd showpokepic #75 'Shows a Pokemon in a box
+addparm 1:pkmn          'Species to show.
+addparm 0               'X-pos of the box
+addparm 0               'Y-pos os the box
 
-addcmmd hidepokepic #76
+addcmmd hidepokepic #76 'Hides pokepic box if a Pokemon is shown in a box (`showpokepic`).
 
 addcmmd picture #77
 addparm 0 'Num
