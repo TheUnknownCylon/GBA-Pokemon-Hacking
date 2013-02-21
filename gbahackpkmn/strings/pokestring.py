@@ -26,10 +26,10 @@ class PokeString(Resource):
     
     
     @staticmethod
-    def frombytes(bytes):
+    def frombytes(stringbytes):
         text = ""
         escaped = False
-        for byte in bytes:
+        for byte in stringbytes:
             if byte == 0xFF:
                 break
                 

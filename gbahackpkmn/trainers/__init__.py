@@ -75,26 +75,26 @@ class TrainerPokemon(Resource):
         return p
     
     def _bytestring(self, item=False, moves=False):
-        bytes = BBlock()
-        bytes.addByte(self.ailevel)
-        bytes.addByte(00)
-        bytes.addByte(self.level)
-        bytes.addByte(00)
-        bytes.addShort(self.species)
+        bblock = BBlock()
+        bblock.addByte(self.ailevel)
+        bblock.addByte(0)
+        bblock.addByte(self.level)
+        bblock.addByte(0)
+        bblock.addShort(self.species)
         if not item and not moves:
-            bytes.addShort(0)
+            bblock.addShort(0)
         elif item and not moves:
-            bytes.addShort(self.item or 0)
+            bblock.addShort(self.item or 0)
         else:
             if item:
-                bytes.addShort(self.item or 0)
-            bytes.addShort(self.move1 or 0)
-            bytes.addShort(self.move2 or 0)
-            bytes.addShort(self.move3 or 0)
-            bytes.addShort(self.move3 or 0)
+                bblock.addShort(self.item or 0)
+            bblock.addShort(self.move1 or 0)
+            bblock.addShort(self.move2 or 0)
+            bblock.addShort(self.move3 or 0)
+            bblock.addShort(self.move3 or 0)
             if not item:
-                bytes.addShort(0)
-        return bytes.toArray()
+                bblock.addShort(0)
+        return bblock.toArray()
 
 
 class TrainerPokemonWithItem(TrainerPokemon):
