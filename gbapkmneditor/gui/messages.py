@@ -1,7 +1,7 @@
 import sys
-from PyQt4.QtGui import QFileDialog, QMessageBox
+from PyQt4.QtGui import QMessageBox
 
-def showError(w, message, title="Error", quit=False):
+def showError(w, message, title="Error", quitapp=False):
     QMessageBox.warning(w, "Error", message)
     if quit:
         sys.exit(0)

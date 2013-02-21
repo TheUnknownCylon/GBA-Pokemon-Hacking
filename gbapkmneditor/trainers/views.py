@@ -1,6 +1,6 @@
 
 from PyQt4.QtCore import Qt, QSize
-from PyQt4.QtGui import QWidget, QScrollArea, QPushButton, QPixmap, QCheckBox, QLineEdit, QSizePolicy, QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QSpinBox, QLineEdit, QFormLayout
+from PyQt4.QtGui import QWidget, QScrollArea, QPushButton, QPixmap, QCheckBox, QSizePolicy, QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QSpinBox, QLineEdit
 
 from gbahackpkmn.trainers import TrainerPokemonWithItem, TrainerPokemonWithItemMoveset
 

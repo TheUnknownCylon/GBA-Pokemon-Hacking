@@ -11,7 +11,6 @@ from PyQt4.Qt import QPlainTextEdit
 from PyQt4.Qt import QRect
 from PyQt4.Qt import QTextEdit
 from PyQt4.Qt import QTextFormat
-from PyQt4.Qt import QVariant
 from PyQt4.Qt import QWidget
 from PyQt4.Qt import Qt
  

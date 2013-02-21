@@ -2,17 +2,16 @@
 
 import shlex
 import subprocess
-import sys
 import webbrowser
 
 from gbahackpkmn.pokemap import PokeMapManager
-from gbahackpkmn.pokescript import Decompiler, ScriptGroup, ScriptBurner
+from gbahackpkmn.pokescript import ScriptBurner
 from gbahackpkmn.pokescript.compiler import ScriptParser
 import gbahackpkmn.pokescript.script as pokescript
 from gbahackpkmn.pokescript.ast import ASTCommand, ASTCollector
 from gbahackpkmn.overworld import OverWorldSprites
 
-from gbapkmneditor.gui.messages import *
+from gbapkmneditor.gui.messages import showInfo, showError
 from gbapkmneditor.scripteditor.views import MainView
 
 
@@ -45,7 +44,7 @@ class Controller():
                 "There was an unexpected error, the program will quit.\n\n"+
                 "Possible cautions:\n1) the opened ROM is no GBA Pokemon Game, or\n2) the"+
                 "provided METADATA file is incomplete, or contains invalid values.\n\n"+
-                "DEBUG information:\n"+str(e), quit=False)
+                "DEBUG information:\n"+str(e), quitapp=False)
             raise e
         
     def getOverworld(self):
@@ -155,7 +154,7 @@ class Controller():
             print("______________________")
             print("Burning")
             b = ScriptBurner(rom)
-            newpointers = b.burn(sg)
+            _ = b.burn(sg) #newpointers
             
             print("_____________________")
             print("Update map pointer")

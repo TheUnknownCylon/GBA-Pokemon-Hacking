@@ -1,5 +1,5 @@
 
-from PyQt4.QtCore import Qt, QSize
+from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QWidget, QVBoxLayout, QSplitter, QLabel, QLineEdit, QPushButton, QTreeWidget, QTreeWidgetItem, QFont, QFormLayout
 
 from gbapkmneditor.gui import LNTextEdit

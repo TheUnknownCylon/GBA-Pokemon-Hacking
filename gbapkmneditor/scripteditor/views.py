@@ -1,6 +1,6 @@
 
 from PyQt4.QtCore import Qt, QSize
-from PyQt4.QtGui import QPushButton, QToolButton, QSizePolicy, QListWidget, QListWidgetItem, QSplitter, QMenu, QIntValidator, QPixmap, QLabel, QToolBar, QHBoxLayout, QVBoxLayout, QFont, QWidget, QLineEdit, QTreeWidget, QTreeWidgetItem
+from PyQt4.QtGui import QPushButton, QSizePolicy, QListWidget, QListWidgetItem, QIntValidator, QPixmap, QLabel, QToolBar, QHBoxLayout, QVBoxLayout, QFont, QWidget, QLineEdit, QTreeWidget, QTreeWidgetItem
 
 from gbapkmneditor.gui import LNTextEdit
 

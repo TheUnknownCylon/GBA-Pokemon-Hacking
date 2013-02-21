@@ -1,6 +1,5 @@
 
-from gbahackpkmn.trainers import Trainers, TrainerPokemon
-from gbahackpkmn.trainers.trainerclasses import TrainerClasses
+from gbahackpkmn.trainers import TrainerPokemon
 from gbapkmneditor.trainers.views import TrainerEditor
 from gbahackpkmn.strings import PokeString
 
