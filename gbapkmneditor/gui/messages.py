@@ -3,7 +3,7 @@ from PyQt4.QtGui import QMessageBox
 
 def showError(w, message, title="Error", quitapp=False):
     QMessageBox.warning(w, "Error", message)
-    if quit:
+    if quitapp:
         sys.exit(0)
 
 def showInfo(w, message):
