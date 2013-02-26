@@ -5,7 +5,9 @@ automated jobs. For example when you update a script, automatically update the
 script reference."""
 
 from gbahack.gbabin.datastruct import DataStruct, RomDataType as RT
+from gbahackpkmn.pokemap.scripts import MapScriptStruct
 from gbahackpkmn.pokemap.events import *
+from gbahackpkmn.pokemap.mapscripts import MapScripts
 
 class PokeMapManager():
     def __init__(self, rom):
@@ -41,13 +43,17 @@ class PokeMapBank():
   
     
 class PokeMap():
-    '''Representation of a map. It is aware of its map location.'''
+    '''Representation of a map. It is aware of its map location.
+    Current implementation is read-only.'''
     def __init__(self, rom, p):
         self.header = p
-        p, self.pointerfooter = rom.readPointer(p)
-        p, self.pointerevents = rom.readPointer(p)
-        p, self.pointermapsrc = rom.readPointer(p)
+        p, self.pointerfooter      = rom.readPointer(p)
+        p, self.pointerevents      = rom.readPointer(p)
+        p, self.pointermapscripts  = rom.readPointer(p)
         p, self.pointerconnections = rom.readPointer(p)
         #TODO: 3 x 4 bytes to read with additional map data
         
         self.events = PokeMapEvents(rom, self.pointerevents)
+        self.mapscripts = MapScripts(rom, self.pointermapscripts)
+
+

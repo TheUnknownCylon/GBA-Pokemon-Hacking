@@ -31,7 +31,7 @@ class Controller():
             self.mapmgr = PokeMapManager(self.rom)
             self.overworld = OverWorldSprites(self.rom)
             self.currentMap = None
-            self.currentMapEvent = None
+            self.currentScriptStruct = None
             self.currentScriptgroup = None
             self.currentResourceEditors = {}
             
@@ -58,11 +58,15 @@ class Controller():
 
     def mapchange(self, bankid, mapid):
         self.currentMap = self.mapmgr.getMap(bankid, mapid)
-        self.mainview.setScriptList(self.currentMap.events)
+        self.mainview.setScriptList(self.currentMap)
     
-    def mapeventselected(self, mapEvent):
-        self.currentMapEvent = mapEvent
-        scriptoffset = mapEvent.scriptpointer
+    def setScript(self, scriptEvent):
+        '''
+        Sets the current script, based on the info in the scriptEvent.
+        ScriptEvent should be a subclass of: gbahackpkmn.pokemap.MapScriptStruct.
+        '''
+        self.currentScriptStruct = scriptEvent
+        scriptoffset = scriptEvent.scriptpointer
         script = ""
         if scriptoffset:
             try:
@@ -113,6 +117,7 @@ class Controller():
         if sg != None:
             showInfo(self.mainview, "Test OK, the script contains no errors.")
         
+        
     def _compileandtest(self):
         try:
             sg = self._compile()
@@ -158,8 +163,8 @@ class Controller():
             
             print("_____________________")
             print("Update map pointer")
-            self.currentMapEvent.scriptpointer = sg.getPointerlist()['$start']
-            self.currentMap.events.write(self.currentMapEvent)
+            self.currentScriptStruct.scriptpointer = sg.getPointerlist()['$start']
+            self.currentMap.events.write(self.currentScriptStruct)
             
             print("")
             print("!! All done! Script injection was succesful!")

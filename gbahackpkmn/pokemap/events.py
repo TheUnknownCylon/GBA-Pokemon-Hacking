@@ -1,6 +1,6 @@
 
 from gbahack.gbabin.datastruct import DataStruct, RomDataType as RT
-
+from gbahackpkmn.pokemap import MapScriptStruct
 
 class PokeMapEvents():
     '''
@@ -78,7 +78,7 @@ class PokeMapEventsHeader(DataStruct):
     ]
 
 
-class PokeMapEventPerson(DataStruct):
+class PokeMapEventPerson(MapScriptStruct):
     fields = [
         (RT.byte, "event"), (RT.byte, "spriteid"), (RT.short, "uu0"),
         (RT.short, "posx"), (RT.short, "posy"),
@@ -89,7 +89,7 @@ class PokeMapEventPerson(DataStruct):
     ]
     
     
-class PokeMapEventScript(DataStruct):
+class PokeMapEventScript(MapScriptStruct):
     fields = [
         (RT.short, "posx"), (RT.short, "posy"),
         (RT.byte, "talklvl"), (RT.byte, "uu0"), (RT.short, "varnumber"),
@@ -98,7 +98,7 @@ class PokeMapEventScript(DataStruct):
     ]
   
 
-class PokeMapEventSignpost(DataStruct):
+class PokeMapEventSignpost(MapScriptStruct):
     '''Representation of a signpost. It is not aware of its location in the ROM.'''
     fields = [
         (RT.short, "posx"), (RT.short, "posy"),

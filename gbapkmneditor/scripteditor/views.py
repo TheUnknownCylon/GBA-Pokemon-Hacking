@@ -29,8 +29,8 @@ class MainView(QWidget):
         self.setWindowTitle('Pokemon GBA Script Editor')    
         self.show()
     
-    def setScriptList(self, eventsmap):
-        self.left.setScriptList(eventsmap)
+    def setScriptList(self, targetmap):
+        self.left.setScriptList(targetmap)
     
     def getScript(self):
         return self.main.getEditor().edit.toPlainText()
@@ -202,22 +202,19 @@ class leftwidget(QWidget):
     def emulate(self):
         self.callback.startEmulator()
     
-    def setScriptList(self, eventsmap):
-        '''EventsMap: from GbaHackPkmn'''
-        self.eventsmap = eventsmap
+    def setScriptList(self, targetmap):
+        '''Sets the scriptlist, targetmap should be of class PokeMap.'''
+        eventsmap = targetmap.events
+        mapscripts = targetmap.mapscripts
         
         self.scriptselect.clear()
-        
-        self._persons = []
-        self._signposts = []
-        self._scripts = []
         
         #persons
         personslist = QTreeWidgetItem(['Persons'])
         self.scriptselect.addTopLevelItem(personslist)
         for i in range(0, eventsmap.getNumberOfPersons()):
-            p = QTreeWidgetItem(personslist, ['Person %i'%(i+1)])
-            self._persons.append(p)
+            listitem = QTreeWidgetItem(personslist, ['Person %i'%(i+1)])
+            listitem.setData(Qt.UserRole, 0, eventsmap.getPerson(i))
             
             try:
                 spriteid = eventsmap.getPerson(i).spriteid
@@ -229,38 +226,46 @@ class leftwidget(QWidget):
                 imageLabel = QLabel()
                 imageLabel.setPixmap(image)
             
-                self.scriptselect.setItemWidget(p, 1, imageLabel)
+                self.scriptselect.setItemWidget(listitem, 1, imageLabel)
             except Exception as e:
                 print("Could not set sprite: "+str(e))
 
-        #Signposts
+        # signposts
         signpostslist = QTreeWidgetItem(['Signposts'])
         for i in range(0, eventsmap.getNumberOfSigns()):
-            p = QTreeWidgetItem(signpostslist, ['Signpost %i'%(i+1)])
-            self._signposts.append(p)
+            try:
+                event = eventsmap.getSign(i)
+                listitem = QTreeWidgetItem(signpostslist, ['Signpost %i'%(i+1)])
+                listitem.setData(Qt.UserRole, 0, event)
+            except:
+                print('Signpost was not a signpost but hidden item... skipping...')
+                pass
         self.scriptselect.addTopLevelItem(signpostslist)
         
-        #Scripts
+        # scripts
         scriptlist = QTreeWidgetItem(['Scripts'])
         for i in range(0, eventsmap.getNumberOfScripts()):
-            p = QTreeWidgetItem(scriptlist, ['Script %i'%(i+1)])
-            self._scripts.append(p)
+            listitem = QTreeWidgetItem(scriptlist, ['Script %i'%(i+1)])
+            listitem.setData(Qt.UserRole, 0, eventsmap.getScript(i))
         self.scriptselect.addTopLevelItem(scriptlist)
+        
+        # Scripts from mapheader
+        mapscriptslist = QTreeWidgetItem(['MapScripts'])
+        i = 0
+        for (_, mapscript) in mapscripts.mapscripts:
+            i+=1
+            listitem = QTreeWidgetItem(mapscriptslist, ['MapScripts %i'%(i)])
+            listitem.setData(Qt.UserRole, 0, mapscript)
+        self.scriptselect.addTopLevelItem(mapscriptslist)
         
         self.scriptselect.expandAll()
     
     
     def itemselected(self):
+        '''From the list of available scripts, the user has selected a one.
+        This method informs the controller which script was selected.'''
         selected = self.scriptselect.selectedItems()[0]
-        if selected in self._persons:
-            mapEvent = self.eventsmap.getPerson(self._persons.index(selected))
-        elif selected in self._scripts:
-            mapEvent = self.eventsmap.getScript(self._scripts.index(selected))
-        elif selected in self._signposts:
-            mapEvent = self.eventsmap.getSign(self._signposts.index(selected))
-        else:
-            return
-        self.callback.mapeventselected(mapEvent)
+        self.callback.setScript(selected.data(Qt.UserRole, 0))
         
     
     def setResoursesList(self, resourcelist):
