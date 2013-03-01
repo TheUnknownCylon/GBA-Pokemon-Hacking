@@ -16,6 +16,7 @@ class PokeScriptHighlighter(QSyntaxHighlighter):
         
         begin   = "^( |\t)*" #At the beginning of a string, layout allowed.
         newelem = "(^|\s)"   #Beginning of the line or any whitespace char.
+        endelem = "($|\s)"   #End of the line or any whitespace char
         
         resourcedef_st = QTextCharFormat()
         resourcedef_st.setFontWeight(QFont.Bold)
@@ -27,8 +28,8 @@ class PokeScriptHighlighter(QSyntaxHighlighter):
         
         number_st = QTextCharFormat()
         number_st.setForeground(Qt.darkBlue)
-        hexval = HighlightingRule(QRegExp(newelem+"0x[0-9A-Fa-f]+[\s]"), number_st)
-        number = HighlightingRule(QRegExp(newelem+"[0-9]+[\s]"), number_st)
+        hexval = HighlightingRule(QRegExp(newelem+"0x[0-9A-Fa-f]+"+endelem), number_st)
+        number = HighlightingRule(QRegExp(newelem+"[0-9]+"+endelem), number_st)
         
         scriptvar_st = QTextCharFormat()
         scriptvar_st.setForeground(Qt.red)
