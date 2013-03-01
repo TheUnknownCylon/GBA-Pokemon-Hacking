@@ -3,6 +3,7 @@ from PyQt4.QtCore import Qt, QSize
 from PyQt4.QtGui import QPushButton, QSizePolicy, QListWidget, QListWidgetItem, QIntValidator, QPixmap, QLabel, QToolBar, QHBoxLayout, QVBoxLayout, QFont, QWidget, QLineEdit, QTreeWidget, QTreeWidgetItem
 
 from gbapkmneditor.gui import LNTextEdit
+from gbapkmneditor.scripteditor.highlighter import PokeScriptHighlighter
 
 import tempfile
 (_, tmpfilename) = tempfile.mkstemp()
@@ -100,6 +101,8 @@ class ScriptEditorWidget(QWidget):
         font.setStyleHint(QFont.TypeWriter)
         sourceeditor.setFont(font)
         sourceeditor.setLineWrapMode(0)
+        
+        highlither = PokeScriptHighlighter(sourceeditor.edit.document())
         
         #Wrap it up
         layout = QVBoxLayout(self)
