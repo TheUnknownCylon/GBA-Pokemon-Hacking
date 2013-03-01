@@ -89,7 +89,7 @@ class ScriptParser():
         command = lineargs[0]
         args = lineargs[1:]
         
-        if command == "#org":
+        if command == "#script":
             offset = args[0]  #TODO Validate
             return self.routineDef(offset)
 

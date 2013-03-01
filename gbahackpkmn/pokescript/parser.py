@@ -104,7 +104,7 @@ class PokeScript():
         command = linenorm[0]
         args = linenorm[1:]
         
-        if command == "#org":
+        if command == "#script":
             offset = args[0]
             if offset[0] == "$":
                 return self.routineDef(offset[1:])

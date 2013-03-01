@@ -8,7 +8,7 @@ class Routine(Resource, PointerObserver):
     Game routine object.
     '''
     
-    name = "routine"
+    name = "script"
     
     def __init__(self, resourcemanager=None, asttree=None, pointerlist=None):
         '''

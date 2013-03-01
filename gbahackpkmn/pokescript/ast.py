@@ -120,7 +120,7 @@ class ASTRoutine(ASTNode):
         
         
     def text(self):
-        text = ["#org "+self.name]
+        text = ["#script "+self.name]
         for node in self.subtree:
             text.append(node.text())
         return '\n  '.join(text)

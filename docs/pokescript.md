@@ -9,19 +9,19 @@ Welcome to this guide. In this guide some basics of the PokeScript language is e
 
 A PokeScript always starts at one location. In this PokeScript implementation, this is the start point. A script contains of multiple statements that are executed in order. A script can contain multiple routines, which are instruction sets. A script finishes if it hits  an `end` statement. To make things a bit easier to understand, the following code shows an example of a simple script with one start-routine, and that ends immediately after starting:
 
-    #org $start
+    #script $start
       end
 
 Another routine example, where the script does not start is given below. (Note that later in this document an explanation is given why this is useful).
 
-    #org $my_own_routine
+    #script $my_own_routine
       end
 
 
 ## People and text
 In the game, there are a lot of talking people. If you talk to a person, a script is activated. In most cases, people say something interesting or funny to you. What they say is just a result of the script you are running. An example of a script you can use to let a person talk:
 
-    #org $start
+    #script $start
       message FACE $my_text
       end
 
@@ -42,7 +42,7 @@ Other forms of messages are also possible:
 
 If you do not want to talk immediately, but do some other stuff first, then it is a good idea to use a different PokeScript construction, where first the person you are talking to is locked (frozen) by calling `lock`, and faces the player by calling `faceplayer`, and once finished. At the end of the script, call `release` to clean up.
 
-    #org $start
+    #script $start
       lock         'Locks the script person (e.g. it stops walking)
       faceplayer   'Let the player look to the person
 
@@ -79,7 +79,7 @@ Pokemon isn't Pokemon if you can't fight to wild Pokemon, or to wild trainers (h
 ###Wild Pokemon battle
 In order to start a wild pokemon battle, two commands should be executed in order. First call `wildbattle <species> <level> <item>`, and next `startwildbattle`. An example is given below, where a wild Zigzagoon level 5 battle is started:
 
-    #org $start
+    #script $start
       wildbattle ZIGZAGOON 5 ORANBERRY
       startwildbattle
       end
@@ -89,7 +89,7 @@ Note that there also other startwildbattle commands, that start the wild battle 
 ###Trainer battle
 The command for a trainerbattle is `trainerbattle <trainer-number> <start-message> <lost-message>`. If the trainer was already defeated, the `trainerbattle` will not be executed. The following code demonstrates how to battle a trainer:
 
-    #org $start
+    #script $start
       trainerbattle 0x79 $string_0 $string_1
       normalmessage $string_2
       end
@@ -111,12 +111,12 @@ for this is getting an item after a battle, or getting a badge after defeating
 a gym leader. In this case, you have to extend the `trainerbattle` with a jump.
 As an illustration, the previous example is extended below:
 
-    #org $start
+    #script $start
       trainerbattle 0x79 $string_0 $string_1 jump $aftermatch
       normalmessage $string_2
     end
     
-    #org $aftermatch
+    #script $aftermatch
       message $fun
       giveitem potion 1
       release
@@ -141,7 +141,7 @@ Letting the player find an item can be done by calling `finditem <itemname> <num
 
 Example: All the Pokeballs you see everywhere in the game are handled as if it were normal scripts or players (note that the game hides the pokeball automatically if you set a unique VAR for the entity, for example in AdvanceMap):
 
-    #org $start
+    #script $start
       finditem POTION 0x1
       end
 

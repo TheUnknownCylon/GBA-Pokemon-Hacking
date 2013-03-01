@@ -85,7 +85,7 @@ class Controller():
             script += "' If you wish, can can add one.\n"
             script += "' To start, you can uncomment the following lines:\n\n"
             
-            script += "'#org $start\n"
+            script += "'#script $start\n"
             script += "'  end\n"
             
         self.mainview.setScript(script)
