@@ -45,7 +45,7 @@ class PokeScriptHighlighter(QSyntaxHighlighter):
         self.highlightingRules.append(typeintro)
 
     
-    def 2(self, text):
+    def highlightBlock(self, text):
         '''Highlights a text-block in the script.'''
         
         text = self.removecomment(text, 0)

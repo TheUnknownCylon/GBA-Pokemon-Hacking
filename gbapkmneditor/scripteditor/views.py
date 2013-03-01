@@ -102,7 +102,7 @@ class ScriptEditorWidget(QWidget):
         sourceeditor.setFont(font)
         sourceeditor.setLineWrapMode(0)
         
-        highlither = PokeScriptHighlighter(sourceeditor.edit.document())
+        highlighter = PokeScriptHighlighter(sourceeditor.edit.document())
         
         #Wrap it up
         layout = QVBoxLayout(self)
