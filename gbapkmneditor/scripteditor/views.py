@@ -1,6 +1,6 @@
 
 from PyQt4.QtCore import Qt, QSize
-from PyQt4.QtGui import QPushButton, QSizePolicy, QListWidget, QListWidgetItem, QIntValidator, QPixmap, QLabel, QToolBar, QHBoxLayout, QVBoxLayout, QFont, QWidget, QLineEdit, QTreeWidget, QTreeWidgetItem
+from PyQt4.QtGui import QPushButton, QSizePolicy, QListWidget, QListWidgetItem, QIntValidator, QPixmap, QLabel, QToolBar, QHBoxLayout, QVBoxLayout, QFont, QWidget, QLineEdit, QTreeWidget, QTreeWidgetItem, QAbstractItemView
 
 from gbapkmneditor.gui import LNTextEdit
 from gbapkmneditor.scripteditor.highlighter import PokeScriptHighlighter
@@ -57,7 +57,6 @@ class EditorControlWidget(QWidget):
         
         
     def initUI(self):
-        
         #Main resource is the scripteditor, and is always available
         scripteditor = ScriptEditorWidget(self.callback)
         
@@ -66,7 +65,6 @@ class EditorControlWidget(QWidget):
         layout.addWidget(scripteditor)
         self.layout = layout
         self.scripteditor = scripteditor
-    
     
     def setWidget(self, widget=None):
         if widget == None:
@@ -101,8 +99,7 @@ class ScriptEditorWidget(QWidget):
         font.setStyleHint(QFont.TypeWriter)
         sourceeditor.setFont(font)
         sourceeditor.setLineWrapMode(0)
-        
-        highlighter = PokeScriptHighlighter(sourceeditor.edit.document())
+        sourceeditor.setHighlighterClass(PokeScriptHighlighter)
         
         #Wrap it up
         layout = QVBoxLayout(self)
@@ -167,6 +164,7 @@ class leftwidget(QWidget):
         select_script.header().resizeSection(1, 20)
         select_script.setStyleSheet("outline: 0;")
         select_script.setFocusPolicy(Qt.NoFocus)
+        select_script.setSelectionMode(QAbstractItemView.ExtendedSelection)
 
         resources_l = QLabel("Script resources:", self)
         resourceselector = QListWidget(self)
@@ -267,8 +265,14 @@ class leftwidget(QWidget):
     def itemselected(self):
         '''From the list of available scripts, the user has selected a one.
         This method informs the controller which script was selected.'''
-        selected = self.scriptselect.selectedItems()[0]
-        self.callback.setScript(selected.data(Qt.UserRole, 0))
+        selectedscriptstructs = []
+        for selecteditem in self.scriptselect.selectedItems():
+            scriptstruct = selecteditem.data(Qt.UserRole, 0)
+            if scriptstruct != None:
+                selectedscriptstructs.append(scriptstruct)
+        
+        if len(selectedscriptstructs) > 0:
+            self.callback.setScripts(selectedscriptstructs)
         
     
     def setResoursesList(self, resourcelist):
@@ -295,3 +299,4 @@ class leftwidget(QWidget):
         data = self.resourceselector.item(index).data(Qt.UserRole)
         print(data)
         self.callback.resourceSelected(data)
+

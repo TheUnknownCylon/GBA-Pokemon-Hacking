@@ -1212,11 +1212,11 @@ addparm 8        'pointer to text losing
 addparm 3        'pointer
 
 ' trainerbattle4 0x09
-alias trainerbattle9 $1 $2 $3 'Special trainer battle (kind 0x09)
+alias trainerbattle9 $1 $2 $3 $4 'Special trainer battle (kind 0x09)
 addparm 0 0x5c   'addcmmd trainerbattle #5c
 addparm 0 0x09   'kind of battle 0
 addparm 1        'battle to start
-addparm 1 0x00   'mask
+addparm 1        'mask
 addparm 8        'pointer to text winning
 addparm 8        'pointer to text losing
 

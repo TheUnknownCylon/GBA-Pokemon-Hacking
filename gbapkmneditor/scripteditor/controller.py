@@ -1,8 +1,7 @@
-
-
 import shlex
 import subprocess
 import webbrowser
+from queue import PriorityQueue
 
 from gbahackpkmn.pokemap import PokeMapManager
 from gbahackpkmn.pokescript import ScriptBurner
@@ -11,9 +10,9 @@ import gbahackpkmn.pokescript.script as pokescript
 from gbahackpkmn.pokescript.ast import ASTCommand, ASTCollector
 from gbahackpkmn.overworld import OverWorldSprites
 
+from gbapkmneditor.tools import natsort
 from gbapkmneditor.gui.messages import showInfo, showError
 from gbapkmneditor.scripteditor.views import MainView
-
 
 pokescriptdocuri = "https://github.com/TheUnknownCylon/GBA-Pokemon-Hacking/blob/master/docs/pokescript.md#readme"
 
@@ -27,14 +26,12 @@ class Controller():
         '''Set up and show the main view.'''
         self.rom = rom
         self.config = config
+        
+        self.currentScriptgroup = None
+        self.startvars = {}
         try:
             self.mapmgr = PokeMapManager(self.rom)
             self.overworld = OverWorldSprites(self.rom)
-            self.currentMap = None
-            self.currentScriptStruct = None
-            self.currentScriptgroup = None
-            self.currentResourceEditors = {}
-            
             self.mainview = MainView(self)
             self.mapchange(4, 0)
             
@@ -57,56 +54,68 @@ class Controller():
         webbrowser.open(pokescriptdocuri)
 
     def mapchange(self, bankid, mapid):
-        self.currentMap = self.mapmgr.getMap(bankid, mapid)
-        self.mainview.setScriptList(self.currentMap)
-    
-    def setScript(self, scriptEvent):
+        currentMap = self.mapmgr.getMap(bankid, mapid) 
+        self.mainview.setScriptList(currentMap)
+        
+    def setScripts(self, scriptStructs):
         '''
         Sets the current script, based on the info in the scriptEvent.
         ScriptEvent should be a subclass of: gbahackpkmn.pokemap.MapScriptStruct.
+        Gets a list of objects that subclass gbahackpkmn.pokemap.scripts.scriptStruct.
         '''
-        self.currentScriptStruct = scriptEvent
-        scriptoffset = scriptEvent.scriptpointer
-        script = ""
-        if scriptoffset:
-            try:
-                self.currentScriptgroup = pokescript.loadGroup(self.rom, scriptoffset)
-                script = self.scriptToText(self.currentScriptgroup)
-                self.updateResources(self.currentScriptgroup)
-                self.resourceSelected(('scripteditor', None))
-                
-            except Exception as e:
-                script = "' error decompiling script 0x%X\n\n"%scriptoffset
-                script += "' DEBUG INFO: "+repr(e)
-                self.mainview.setScript(script)
-                raise e
-        else:
-            script = "' No script attatched to the selected event.\n"
-            script += "' If you wish, can can add one.\n"
-            script += "' To start, you can uncomment the following lines:\n\n"
-            
-            script += "'#script $start\n"
-            script += "'  end\n"
-            
-        self.mainview.setScript(script)
         
+        startvars = {}
+        
+        #Create a scriptgroup with all structs loaded
+        scriptgroup = pokescript.ScriptGroup()
+        startvarname = "$start"
+        
+        prescript = ""
+        uniqueid = 0
+        
+        for scriptstruct in scriptStructs:
+            scriptoffset = scriptstruct.scriptpointer
+            if len(scriptStructs) > 1:
+                startvarname = "$start[%d]"%uniqueid
+                uniqueid+=1
+            
+            startvars[startvarname] = scriptstruct
+            if scriptoffset:
+                pokescript.loadGroup(self.rom, scriptoffset, scriptgroup, startvarname)
+            else:
+                prescript += "'No script attatched to the selected scriptstruct %s\n"%repr(scriptstruct)
+                prescript += "' If you want to attatch a script, you can uncomment the following lines:\n\n"
+                prescript += "'#script %s\n"%startvarname
+                prescript += "'  end\n\n"
+
+        self.currentScriptgroup = scriptgroup
+        self.startvars = startvars
+        
+        self.updateResources(scriptgroup)
+        self.resourceSelected(('scripteditor', None))
+        self.mainview.setScript(prescript+self.scriptToText(scriptgroup))
+        
+
 
     def scriptToText(self, scriptgroup):
         '''
         Starts decompiling at a given pointers.
         Returns all the related scripts as a text-string.
         '''
-
+        starts = []
+        scripts = []
+        others = []
+        for varname in sorted(scriptgroup.getPointerlist().keys(), key=natsort):
+            if varname.startswith("$start"):
+                starts.append(varname)
+            elif varname.startswith("$script"):
+                scripts.append(varname)
+            else:
+                others.append(varname)
+        
         text = ""
-        try:
-            text += scriptgroup.getAST("$start").text()
-            text += "\n\n"
-        except:
-            pass
-            
-        for varname in sorted(scriptgroup.getPointerlist().keys()):
-            if varname != "$start":
-                text += scriptgroup.getAST(varname).text()+"\n\n"
+        for varname in starts + scripts + others:
+            text += scriptgroup.getAST(varname).text()+"\n\n"
         
         return text
     
@@ -150,8 +159,6 @@ class Controller():
             rom = self.rom
             
             #set pointers in new scriptgroup related to old scriptgroup
-            # TODO: remove old code
-            # TODO: move code scriptburner?
             for varname in sg.getPointerlist():
                 if varname in pointers:
                     sg.setPointer(varname, pointers[varname])
@@ -161,10 +168,15 @@ class Controller():
             b = ScriptBurner(rom)
             _ = b.burn(sg) #newpointers
             
-            print("_____________________")
-            print("Update map pointer")
-            self.currentScriptStruct.scriptpointer = sg.getPointerlist()['$start']
-            self.currentMap.events.write(self.currentScriptStruct)
+            print("______________________")
+            print("Update script pointers")
+            pointerslist = sg.getPointerlist()
+            for varname, resource in self.startvars.items():
+                try:
+                    resource.scriptpointer = pointerslist[varname]
+                except:
+                    resource.scriptpointer = 0
+                self.rom.getRM().store(resource)
             
             print("")
             print("!! All done! Script injection was succesful!")

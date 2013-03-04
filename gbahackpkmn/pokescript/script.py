@@ -6,43 +6,51 @@ from gbahackpkmn.movements import Movement as PokeMovement
 from gbahackpkmn.pokescript.ast import NoRewriteChange, ASTResourceMovement, ASTResourceString, ASTRef, ASTRewriter, ASTRoutine, ASTPointerRef 
 from gbahackpkmn.pokescript.decompiler import Decompiler, DecompileTypes
 
-def loadGroup(rom, routinepointer):
+def loadGroup(rom, routinepointer, sgroup=None, startvar=None):
     '''
     Decompiles a Pokescript at the given routinepointer, also loads
     related Resources (routines, strings, and movements) from the ROM and 
-    stores them into the resource group.
+    stores them into the resource group. A scriptgroup can be given as argument,
+    the loaded resources are then added to that scriptgroup, instead of creating
+    a new one.
+    Optinally, startvarname can be set; this will be used as the varname in the
+    scriptgroup for the resource at routinepointer.
     
-    Returns a new scriptgroup with all elements loaded.
+    Returns a scriptgroup object. A new if it was not set as argument,
+    and the same if it was set as argument.
     '''        
-    decompiler = Decompiler(rom)
-    decompilequeue = []    #Group of elements to decompile, stored in the queue
-    decompiled = {}        #Group of loaded pointers and their resources
-    sgroup = ScriptGroup() #ScriptGroup where all resources are added to
+
+    if sgroup == None:
+        sgroup = ScriptGroup()           # ScriptGroup where all resources are added to
+    decompiler = Decompiler(rom)         
+    decompilequeue = []                  # Group of elements to decompile, stored in the queue
+    decompiled = sgroup.getPointerVarnamelist() # Group of loaded pointers and their resources
     
     romlength = rom.size()
     decompilequeue.append((routinepointer, DecompileTypes.POKESCRIPT))
-        
+    
     while len(decompilequeue) > 0:
         pointer, dtype = decompilequeue.pop(0)
         
         if pointer in decompiled:    #skip if already decompiled.
             continue
         
-        print(">> DECOMPILING RESOURCE 0x%X"%pointer)
+        #print(">> DECOMPILING RESOURCE 0x%X"%pointer)
         resource = decompiler.decompile(pointer, dtype)
         decompiled[pointer] = resource
-        sgroup.register(resource, pointer)
+        sgroup.register(resource, pointer, varname=startvar)
+        startvar = None
         
         #some resources, such as the Routine, link to others.
         # queue those others.
         if isinstance(resource, Routine):
             for refpointer, reftype in resource.linkedPointers():
                 if 0 < refpointer and refpointer < romlength:
-                    print("+++ %X"%refpointer)
+                    #print("+++ %X"%refpointer)
                     decompilequeue.append((refpointer, reftype))
 
     #At this point, all resources are loaded.
-    # Replace, where possible, all pointerrefs to their corresponding
+    # Replace, where possible, all pointerrefs with their corresponding
     # varname refs.
     sgroup.pointers2varnames()
     return sgroup
