@@ -78,8 +78,14 @@ class ScriptParser():
     
     
     
-    def parseline(self, line, resource):
-        #print(">> %s"%line)
+    def parseline(self, line_raw, resource):
+        line = line_raw
+        
+        #remove any comments, if any
+        commentstart = line.find("'")
+        if commentstart >= 0:
+            line = line[:commentstart]
+        
         line = line.lstrip()
         lineargs = self._line2args(line)
         
@@ -138,7 +144,7 @@ class ScriptParser():
             if not isinstance(resource, PokeString):
                 raise WrongCommandException()
             
-            resource.append(line[1:].lstrip())
+            resource.append(line_raw[1:].lstrip())
             return resource
         
         
@@ -209,10 +215,11 @@ class ScriptParser():
         Normalizes the arguments. Returns a list of lowercased arguments.
         Note that this will not be sufficient for String parsing: multiple spaces
         are treated as single spaces.
-        '''
+        '''        
         line = line.strip()
-        if not line: return []
-        if line[0] == '\'': return []  #argument line
+        if not line:
+            return []
+              
         return line.lower().replace("\t", " ").strip().split()
     
     

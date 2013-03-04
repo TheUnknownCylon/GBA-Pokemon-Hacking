@@ -14,11 +14,7 @@ def analyzeScript(scriptgroup):
     brokenrefsfinder = FindBrokenRefs(scriptgroup.getPointerlist(), errors)
     argsvalidtor = ValidateArguments(errors)
     invalidends = FindScriptsWithoutEnd(errors)
-    
-    #Look up if there is a $start
-    if not scriptgroup.has('$start'):
-        errors.append((None, "There is no $start in the script."))
-    
+
     #Check all AST Nodes for warnings and errors
     for astnode in scriptgroup.getASTNodes():
         astnode.collectFromASTs([brokenrefsfinder, argsvalidtor, invalidends])

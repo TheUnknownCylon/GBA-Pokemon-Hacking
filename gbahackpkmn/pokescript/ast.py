@@ -358,7 +358,7 @@ class ASTByte(ASTNode):
         return array('B', [self.byte])
         
     def text(self):
-        return "0x%X" % self.byte
+        return "#raw 0x%X" % self.byte
          
     def rewriteASTs(self, rewriter):
         pass

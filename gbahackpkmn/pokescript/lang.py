@@ -59,9 +59,10 @@ class ScriptLang():
         '''It is possible to load defines from a pokemon game rom.
         Call this method with the rom as argument.'''
         # Load all values from ROM, remove spaces (easier parsing later on)
-        self.defines['pkmn'] = [x.replace(' ', '').upper() for x in gamerom.pokemondata.names().getAllDecoded()]
-        self.defines['move'] = [x.replace(' ', '').upper() for x in gamerom.movesdata.names().getAllDecoded()]
-        self.defines['item'] = [x.replace(' ', '').upper() for x in gamerom.itemsdata.namesList()]
+        pattern = re.compile('[\W_]+')
+        self.defines['pkmn'] = [pattern.sub('', x).upper() for x in gamerom.pokemondata.names().getAllDecoded()]
+        self.defines['move'] = [pattern.sub('', x).upper() for x in gamerom.movesdata.names().getAllDecoded()]
+        self.defines['item'] = [pattern.sub('', x).upper() for x in gamerom.itemsdata.namesList()]
     
         ##Renice the 0th elements, in-game these values are "?????", but
         ## in this langdef they will represented as "NONE"

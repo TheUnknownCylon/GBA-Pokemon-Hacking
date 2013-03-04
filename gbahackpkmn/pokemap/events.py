@@ -56,11 +56,6 @@ class PokeMapEvents():
             raise Exception("Sign index too high, there are only %d signs on this map."%self.header.numsigns)
         pointer = self.header.pointerSigns + signid * PokeMapEventSignpost.size()
         return self.rm.get(PokeMapEventSignpost, pointer)
-    
-    
-    def write(self, resource):
-        '''Writes a retrieved resource from here back to the ROM.'''
-        self.rm.store(resource)
         
     
 # ================ Below all event types are defined ========================

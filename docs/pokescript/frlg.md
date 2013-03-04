@@ -60,7 +60,7 @@ An alias is a shortcort for common used constructions of command sequences. In P
 * `trainerbattle4 <arg0> <arg1> <arg2> <arg3> `
 * `trainerbattle5 <arg0> <arg1> <arg2> `
 * `trainerbattle7 <arg0> <arg1> <arg2> <arg3> `
-* `trainerbattle9 <arg0> <arg1> <arg2> `
+* `trainerbattle9 <arg0> <arg1> <arg2> <arg3> `
 * `compare var <arg0> var <arg1> `
 * `compare var <arg0> byte <arg1> `
 * `compare var <arg0> word <arg1> `
@@ -2035,13 +2035,14 @@ __Argments__:
     `Pointer to String` `<arg2>`: pointer to text losing  
     `pointer` `<arg3>`: pointer  
 
-### Alias `trainerbattle9 <arg0> <arg1> <arg2> `
-__Usage__: `trainerbattle9 <arg0> <arg1> <arg2> `  
+### Alias `trainerbattle9 <arg0> <arg1> <arg2> <arg3> `
+__Usage__: `trainerbattle9 <arg0> <arg1> <arg2> <arg3> `  
 __Description__: Special trainer battle (kind 0x09)  
 __Argments__:  
     `word` `<arg0>`: battle to start  
-    `Pointer to String` `<arg1>`: pointer to text winning  
-    `Pointer to String` `<arg2>`: pointer to text losing  
+    `word` `<arg1>`: mask  
+    `Pointer to String` `<arg2>`: pointer to text winning  
+    `Pointer to String` `<arg3>`: pointer to text losing  
 
 ### Alias `compare var <arg0> var <arg1> `
 __Usage__: `compare var <arg0> var <arg1> `  
