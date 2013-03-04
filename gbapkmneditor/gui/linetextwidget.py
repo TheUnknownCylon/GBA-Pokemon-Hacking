@@ -112,6 +112,9 @@ class LNTextEdit(QFrame):
  
         self.edit = self.PlainTextEdit()
         self.number_bar = self.NumberBar(self.edit)
+        
+        self.highlighterclass = None
+        self.highlighter = None
  
         hbox = QHBoxLayout(self)
         hbox.setSpacing(0)
@@ -127,6 +130,10 @@ class LNTextEdit(QFrame):
  
     def setText(self, text):
         self.edit.setPlainText(text)
+        
+        #Qt bug prevents highlighter to work after a few sets...
+        # This work-around seems to 'fix' that.
+        self.setHighlighterClass(self.highlighterclass)
  
     def isModified(self):
         return self.edit.document().isModified()
@@ -136,4 +143,12 @@ class LNTextEdit(QFrame):
  
     def setLineWrapMode(self, mode):
         self.edit.setLineWrapMode(mode)
+    
+    def setHighlighterClass(self, highlighterclass):
+        self.highlighterclass = highlighterclass
+        if self.highlighter:
+            self.highlighter.setParent(None)
+        
+        if highlighterclass:
+            self.highlighter = highlighterclass(self.edit.document())
         
