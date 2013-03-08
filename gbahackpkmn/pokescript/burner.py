@@ -31,7 +31,10 @@ class ScriptBurner():
         #      Second round, rewrite with correct pointers.
         
         rom = self.rom
-        startpointer = 0x800000 #TODO 0x800000
+        if 'freespace' in rom.metadata:
+            startpointer = rom.metadata.freespace
+        else:
+            startpointer = 0x00800000
         
         oldpointers = scriptgroup.getPointerlist()        
         
@@ -53,7 +56,7 @@ class ScriptBurner():
                 
             else:
                 #A pointer was set, try to update the resource
-                newpointer = resource.update(rom, oldpointer)
+                newpointer = resource.update(rom, oldpointer, writeoffset=startpointer)
                 newpointers[name] = newpointer
                 
             scriptgroup.setPointer(name, newpointer)

@@ -189,24 +189,29 @@ class Resource():
         #Determine where to write the data to
         writepointer = pointer        
         if not force == True:
-            writepointer = rom.findSpace(pointer, blength)
+            writepointer = rom.findSpace(pointer or 0, blength)
         
         rom.writeArray(writepointer, writebytes)
 
         return writepointer
             
     
-    def update(self, rom, pointer, force=False):
+    def update(self, rom, offset, force=False, writeoffset=None):
         '''
         Updates the given resource in the rom. If the new resource is larger
         than the old one, the old data is removed, and the object is written
         at another location in the ROM. If the resource is smaller than the old
         one, the unused bytes are freed.
-        '''
-        old = self.delete(rom, pointer)
         
-        if self.blength() <= old.blength():
-            return self.write(rom, pointer, force=True)
+        The offset parameter should point to the start of the old offset.
+        The force parameter set to true ensures that the resource is written at the exact location, no matter what.
+        The writeoffset is an optional parameter, if the resource does not fit, a new location is looked up for after this offset.
+        '''
+        old = self.delete(rom, offset)
+        
+        if rom.findSpace(offset, self.blength()) == offset or force:
+            return self.write(rom, offset, force)
         else:
-            return self.write(rom, pointer, force)
-         
+            #Need to move the resource
+            return self.write(rom, writeoffset, force)
+        
