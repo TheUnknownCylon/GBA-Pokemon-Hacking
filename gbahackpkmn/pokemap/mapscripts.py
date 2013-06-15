@@ -28,15 +28,17 @@ class MapScripts(Resource):
             
             if scripttype == 0: #End of list
                 break
-            elif scripttype % 2:
-               #Pointer directly to a script.
+            elif scripttype in (1, 3, 5, 6, 7):
+                # [ptr] -> script
                 self.mapscripts.append((scripttype, rm.get(MapScript_SimpleScript, p)))
                 p, _ = rom.readPointer(p)
-            else:
-                #Pointer to an Adv script header (header with flag and val)
+            elif scripttype in (2, 4):
+                # [ptr] -> [var1][var2][ptr] -> script (runs when values of var1 and var2 match)
+                # Note: Variables in the range 0x0000-0x3FFF contain their number.
                 p, scriptheader = rom.readPointer(p)
-                self.mapscripts.append((scripttype, rm.get(MapScript_ScriptHeader, scriptheader)))
- 
+                self.mapscripts.append((scripttype, rm.get(MapScript_ConditionalScript, scriptheader)))
+            else:
+                raise Exception("Unknown mapscripttype")
                 
 
 class MapScript_SimpleScript(MapScriptStruct):
@@ -44,10 +46,10 @@ class MapScript_SimpleScript(MapScriptStruct):
     fields = [(RT.pointer, 'scriptpointer')]
 
 
-class MapScript_ScriptHeader(MapScriptStruct):
-    '''Script header for scripts with a flag and value appended to it.'''
+class MapScript_ConditionalScript(MapScriptStruct):
+    '''Script header for scripts with two vars prepended to it.'''
     fields = [
-        (RT.short, 'flag'),
-        (RT.short, 'value'),
+        (RT.short, 'var1'),
+        (RT.short, 'var2'),
         (RT.pointer, 'scriptpointer')
     ] 
